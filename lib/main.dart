@@ -1,5 +1,5 @@
 import 'package:ecomerce_app/home_page.dart';
-import 'package:ecomerce_app/item_details.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {

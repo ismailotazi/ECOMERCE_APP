@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final List Products = [
     {"iconename": Icons.laptop, "title": "Laptop"},
-    {"iconename": Icons.phone, "title": "Phone"},
+    {"iconename": Icons.phone_iphone, "title": "Phone"},
     {"iconename": Icons.watch, "title": "Watch"},
     {"iconename": Icons.headphones, "title": "Headphones"},
     {"iconename": Icons.print, "title": "Print"},
