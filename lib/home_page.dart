@@ -14,11 +14,11 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
 
   final List<Map<String, dynamic>> products = [
-    {"icon": Icons.laptop, "title": "Laptop"},
-    {"icon": Icons.phone_iphone, "title": "Phone"},
-    {"icon": Icons.watch, "title": "Watch"},
-    {"icon": Icons.headphones, "title": "Headphones"},
-    {"icon": Icons.print, "title": "Print"},
+    {"icon": Icons.electrical_services, "title": "Elictrical"},
+    {"icon": Icons.spa, "title": "Parfum"},
+    {"icon": Icons.checkroom, "title": "Clothes"},
+    {"icon": Icons.directions_run, "title": "Shoes"},
+    {"icon": Icons.remove_red_eye, "title": "Glasses"},
   ];
 
   final List<Map<String, dynamic>> bestSelling = [
@@ -45,6 +45,24 @@ class _HomePageState extends State<HomePage> {
       "title": "Macbook Pro",
       "subtitle": "Original • High Quality",
       "price": "\$1700",
+    },
+    {
+      "image": "images/shirt.jpg",
+      "title": "T-shirt Adidas",
+      "subtitle": "Original • High Quality",
+      "price": "\$300",
+    },
+    {
+      "image": "images/adidas.jpg",
+      "title": "Espadrille Adidas",
+      "subtitle": "Original • High Quality",
+      "price": "\$300",
+    },
+    {
+      "image": "images/rayban.jpg",
+      "title": "Glasses rayban",
+      "subtitle": "Original • High Quality",
+      "price": "\$120",
     },
   ];
 
