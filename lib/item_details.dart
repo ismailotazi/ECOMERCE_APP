@@ -1,6 +1,5 @@
 import 'package:ecomerce_app/cart_data.dart';
-import 'package:ecomerce_app/cart_page.dart';
-import 'package:ecomerce_app/home_page.dart';
+
 import 'package:flutter/material.dart';
 
 class ItemDetails extends StatelessWidget {

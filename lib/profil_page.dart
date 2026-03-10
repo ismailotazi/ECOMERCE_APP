@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'cart_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'home_page.dart';
 
 class ProfilPage extends StatefulWidget {
@@ -150,8 +151,12 @@ class _ProfilPageState extends State<ProfilPage> {
           ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
             title: const Text("Log Out", style: TextStyle(color: Colors.red)),
-            onTap: () {
+            onTap: () async {
               // هنا دير تسجيل الخروج
+
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.clear(); // clear role
+              Navigator.pushReplacementNamed(context, "login");
             },
           ),
         ],
