@@ -1,40 +1,214 @@
-// cart_page.dart
 import 'package:flutter/material.dart';
-import 'cart_data.dart'; // hna l-list dyal cartItems
+import 'cart_data.dart'; // global cartItems
 
-class CartPage extends StatelessWidget {
-  // optional data
-  final Map<String, dynamic>? data;
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
-  const CartPage({super.key, this.data});
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  final Map<int, int> quantities = {};
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < cartItems.length; i++) {
+      quantities[i] = 1;
+    }
+  }
+
+  double _calculateTotal(int index) {
+    String priceText = cartItems[index]["price"] ?? "\$0";
+    double price = double.tryParse(priceText.replaceAll("\$", "")) ?? 0.0;
+    return price * (quantities[index] ?? 1);
+  }
+
+  double get cartTotal {
+    double total = 0.0;
+    for (int i = 0; i < cartItems.length; i++) {
+      total += _calculateTotal(i);
+    }
+    return total;
+  }
+
+  String _getImage(Map<String, dynamic> item) {
+    if (item.containsKey("images") &&
+        item["images"] is List &&
+        item["images"].isNotEmpty) {
+      return item["images"][0];
+    } else if (item.containsKey("image")) {
+      return item["image"];
+    }
+    return "";
+  }
+
+  void _checkout() {
+    if (cartItems.isEmpty) return;
+
+    setState(() {
+      cartItems.clear();
+      quantities.clear();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("✅ Order placed successfully!")),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // ila jatch data jdida f ItemDetails, zidha l cartItems
-    if (data != null && data!.isNotEmpty && !cartItems.contains(data)) {
-      cartItems.add(data!);
-    }
-
     return Scaffold(
-      appBar: AppBar(title: const Text("Cart")),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          final item = cartItems[index];
-          return ListTile(
-            leading: Image.asset(item["image"], width: 50),
-            title: Text(item["title"]),
-            subtitle: Text(item["price"]),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete, color: Colors.red),
-              onPressed: () {
-                cartItems.removeAt(index);
-                (context as Element).markNeedsBuild();
-              },
+      appBar: AppBar(title: const Text("Cart"), backgroundColor: Colors.orange),
+      body: cartItems.isEmpty
+          ? const Center(child: Text("Your cart is empty 😢"))
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartItems.length,
+                    itemBuilder: (context, index) {
+                      final item = cartItems[index];
+                      final imgPath = _getImage(item);
+
+                      return Card(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 8,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              imgPath.isNotEmpty
+                                  ? Image.asset(
+                                      imgPath,
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.contain,
+                                    )
+                                  : const SizedBox(width: 80, height: 80),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item["title"] ?? "",
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      item["price"] ?? "",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.deepOrange,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if ((quantities[index] ?? 1) > 1)
+                                                // ignore: curly_braces_in_flow_control_structures
+                                                quantities[index] =
+                                                    (quantities[index] ?? 1) -
+                                                    1;
+                                            });
+                                          },
+                                          icon: const Icon(Icons.remove),
+                                        ),
+                                        Text(
+                                          "${quantities[index] ?? 1}",
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              quantities[index] =
+                                                  (quantities[index] ?? 1) + 1;
+                                            });
+                                          },
+                                          icon: const Icon(Icons.add),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Text(
+                                "\$${_calculateTotal(index).toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Total",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "\$${cartTotal.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: _checkout,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            "Checkout",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
     );
   }
 }

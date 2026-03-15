@@ -3,7 +3,6 @@ import 'package:ecomerce_app/admin_dashboard/product_page.dart';
 import 'package:flutter/material.dart';
 
 import 'orders_page.dart';
-import 'product_page.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});

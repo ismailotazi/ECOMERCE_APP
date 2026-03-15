@@ -54,7 +54,7 @@ class ProductSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         final item = list[index];
         return ListTile(
-          leading: Image.asset(item["image"], width: 50),
+          leading: Image.asset(item["image"][0], width: 50),
           title: Text(item["title"]),
           subtitle: Text(item["price"]),
           onTap: () {

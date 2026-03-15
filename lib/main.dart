@@ -1,5 +1,4 @@
 import 'package:ecomerce_app/admin_dashboard/admin_dashboard.dart';
-import 'package:ecomerce_app/admin_dashboard/admin_sidebar.dart';
 import 'package:ecomerce_app/admin_dashboard/orders_page.dart';
 import 'package:ecomerce_app/admin_dashboard/product_page.dart';
 import 'package:ecomerce_app/admin_dashboard/users_page.dart';
@@ -16,14 +15,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final role = prefs.getString('role');
-
   runApp(MyApp(initialRole: role));
 }
 
 class MyApp extends StatelessWidget {
   final String? initialRole;
   const MyApp({super.key, this.initialRole});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

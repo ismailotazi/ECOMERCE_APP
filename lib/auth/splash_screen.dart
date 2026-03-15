@@ -45,13 +45,13 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                "images/logo.png", // replace with your logo
+                "images/splash.png", // replace with your logo
                 width: 120,
                 height: 120,
               ),
               const SizedBox(height: 20),
               const Text(
-                "Ecom App",
+                "MiloStore",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
