@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "717172571493",
+    "project_id": "ecomercefixapp",
+    "storage_bucket": "ecomercefixapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717172571493:android:aad057121eaee580c6f58c",
+        "android_client_info": {
+          "package_name": "com.example.fix_clean_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGvDIOeHOwsPsmNTc9qdM6L_-DhIWLKc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
