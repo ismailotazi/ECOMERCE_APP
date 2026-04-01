@@ -31,23 +31,31 @@ class _RegisterPageState extends State<RegisterPage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      // Send verification email
+      await userCredential.user!.sendEmailVerification();
+
+      // Sign out to prevent automatic login
+      await FirebaseAuth.instance.signOut();
+
       // Firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
             'email': email,
-            'role': 'user', // بدل لـ 'admin' إذا بغيت
+            'role': 'user',
             'createdAt': FieldValue.serverTimestamp(),
           });
 
       if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Registration successful!')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Registration successful! Please verify your email.'),
+        ),
+      );
 
-      Navigator.pushReplacementNamed(context, "/home");
+      Navigator.pushReplacementNamed(context, "/login");
     } on FirebaseAuthException catch (e) {
       String message;
       switch (e.code) {

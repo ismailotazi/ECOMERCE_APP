@@ -18,33 +18,37 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> checkUser() async {
-    final user = FirebaseAuth.instance.currentUser;
+    User? user = FirebaseAuth.instance.currentUser;
 
-    // ❌ Ila user ma kaynach → Login
     if (user == null) {
       Navigator.pushReplacementNamed(context, "/login");
       return;
     }
 
+    await user.reload();
+    user = FirebaseAuth.instance.currentUser;
+
+    if (user != null && !user.emailVerified) {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacementNamed(context, "/login");
+      return;
+    }
+
     try {
-      // ✅ Nجيب role من Firestore
       final doc = await FirebaseFirestore.instance
           .collection("users")
-          .doc(user.uid)
+          .doc(user!.uid)
           .get();
-
       final role = doc.data()?["role"] ?? "user";
 
       if (!mounted) return;
 
-      // 🔥 Navigate حسب role
       if (role == "admin") {
         Navigator.pushReplacementNamed(context, "/admin");
       } else {
         Navigator.pushReplacementNamed(context, "/home");
       }
     } catch (e) {
-      // ❌ Error → رجع Login
       Navigator.pushReplacementNamed(context, "/login");
     }
   }
@@ -68,7 +72,6 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // LOGO
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -89,10 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 25),
-
-              // APP NAME
               const Text(
                 "MiloStore",
                 style: TextStyle(
@@ -102,17 +102,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   letterSpacing: 1,
                 ),
               ),
-
               const SizedBox(height: 10),
-
               const Text(
                 "Best Shopping Experience",
                 style: TextStyle(fontSize: 14, color: Colors.white70),
               ),
-
               const SizedBox(height: 30),
-
-              // LOADING
               const CircularProgressIndicator(
                 color: Colors.white,
                 strokeWidth: 3,

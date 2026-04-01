@@ -27,16 +27,47 @@ class _LoginPageState extends State<LoginPage> {
       final email = emailController.text.trim();
       final password = passwordController.text.trim();
 
-      // Firebase Auth login
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      // Firestore user role
+      User? user = userCredential.user;
+      await user?.reload();
+      user = FirebaseAuth.instance.currentUser;
+
+      if (user != null && !user.emailVerified) {
+        await FirebaseAuth.instance.signOut();
+        if (!mounted) return;
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Please verify your email first'),
+            action: SnackBarAction(
+              label: 'Resend',
+              onPressed: () async {
+                try {
+                  await user!.sendEmailVerification();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Verification email sent again'),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Error: $e')));
+                }
+              },
+            ),
+          ),
+        );
+        return;
+      }
+
+      // Firestore role
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(userCredential.user!.uid)
+          .doc(user!.uid)
           .get();
-
       final role = userDoc.exists ? userDoc['role'] : 'user';
 
       if (!mounted) return;
@@ -46,33 +77,11 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         Navigator.pushReplacementNamed(context, "/home");
       }
-    } on FirebaseAuthException catch (e) {
-      String message;
-      switch (e.code) {
-        case 'user-not-found':
-          message = 'User not found';
-          break;
-        case 'wrong-password':
-          message = 'Incorrect password';
-          break;
-        case 'invalid-email':
-          message = 'Invalid email format';
-          break;
-        case 'network-request-failed':
-          message = 'No internet connection';
-          break;
-        default:
-          message = e.message ?? 'Login failed';
-      }
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Unexpected error: $e')));
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
     } finally {
       if (mounted) setState(() => isLoading = false);
     }
@@ -124,9 +133,8 @@ class _LoginPageState extends State<LoginPage> {
                             border: OutlineInputBorder(),
                           ),
                           validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return "Please enter your email";
-                            }
+                            if (val == null || val.isEmpty)
+                              return "Enter your email";
                             if (!val.contains("@")) return "Invalid email";
                             return null;
                           },
@@ -150,12 +158,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return "Please enter your password";
-                            }
-                            if (val.length < 6) {
-                              return "Password must be at least 6 characters";
-                            }
+                            if (val == null || val.isEmpty)
+                              return "Enter your password";
+                            if (val.length < 6)
+                              return "Password must be at least 6 chars";
                             return null;
                           },
                         ),

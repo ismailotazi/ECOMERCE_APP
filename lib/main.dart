@@ -2,6 +2,7 @@ import 'package:ecomerce_app/admin_dashboard/admin_dashboard.dart';
 import 'package:ecomerce_app/admin_dashboard/orders_page.dart';
 import 'package:ecomerce_app/admin_dashboard/product_page.dart';
 import 'package:ecomerce_app/admin_dashboard/users_page.dart';
+import 'package:ecomerce_app/auth/auth_check.dart';
 import 'package:ecomerce_app/auth/forgot_password_page.dart';
 import 'package:ecomerce_app/auth/login_page.dart';
 import 'package:ecomerce_app/auth/register_page.dart';
@@ -43,11 +44,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: FirebaseAuth.instance.currentUser == null
-          ? LoginPage()
-          : HomePage(),
+      home: const AuthCheck(),
+
       // الصفحة الرئيسية حسب الدور
-      initialRoute: "/splash",
       routes: {
         "/login": (context) => const LoginPage(),
         "/register": (context) => const RegisterPage(),
