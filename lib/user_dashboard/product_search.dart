@@ -1,5 +1,5 @@
+import 'package:ecomerce_app/user_dashboard/item_details.dart';
 import 'package:flutter/material.dart';
-import 'package:ecomerce_app/item_details.dart';
 
 class ProductSearchDelegate extends SearchDelegate {
   final List<Map<String, dynamic>> products;
@@ -24,26 +24,22 @@ class ProductSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final results = products
-        .where(
-          (item) => item["title"].toString().toLowerCase().contains(
-            query.toLowerCase(),
-          ),
-        )
-        .toList();
+    final results = products.where((item) {
+      return item["name"].toString().toLowerCase().contains(
+        query.toLowerCase(),
+      );
+    }).toList();
 
     return _buildList(results);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestions = products
-        .where(
-          (item) => item["title"].toString().toLowerCase().contains(
-            query.toLowerCase(),
-          ),
-        )
-        .toList();
+    final suggestions = products.where((item) {
+      return item["name"].toString().toLowerCase().contains(
+        query.toLowerCase(),
+      );
+    }).toList();
 
     return _buildList(suggestions);
   }
@@ -58,27 +54,32 @@ class ProductSearchDelegate extends SearchDelegate {
       itemBuilder: (context, index) {
         final item = list[index];
 
-        // ===== get image safely =====
-        String image = "";
-        if (item.containsKey("images") &&
-            item["images"] is List &&
-            item["images"].isNotEmpty) {
-          image = item["images"][0];
-        } else if (item.containsKey("image")) {
-          image = item["image"];
-        }
+        final image = item["image"] ?? "";
 
         return ListTile(
           leading: image.isNotEmpty
-              ? Image.asset(image, width: 50, height: 50, fit: BoxFit.cover)
+              ? Image.network(
+                  image,
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 50,
+                      height: 50,
+                      color: Colors.grey.shade300,
+                      child: const Icon(Icons.image),
+                    );
+                  },
+                )
               : Container(
                   width: 50,
                   height: 50,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.image, size: 24),
+                  color: Colors.grey.shade300,
+                  child: const Icon(Icons.image),
                 ),
-          title: Text(item["title"] ?? "No title"),
-          subtitle: Text(item["price"] ?? ""),
+          title: Text(item["name"] ?? "No name"),
+          subtitle: Text("\$${item["price"]}"),
           onTap: () {
             Navigator.push(
               context,

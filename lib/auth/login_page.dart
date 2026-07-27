@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomerce_app/auth/register_page.dart';
 import 'package:ecomerce_app/auth/forgot_password_page.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,9 +16,11 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   bool isLoading = false;
   bool hidePassword = true;
 
+  // ================= EMAIL LOGIN =================
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -31,62 +34,169 @@ class _LoginPageState extends State<LoginPage> {
           .signInWithEmailAndPassword(email: email, password: password);
 
       User? user = userCredential.user;
+
       await user?.reload();
       user = FirebaseAuth.instance.currentUser;
 
+      // Verify email
       if (user != null && !user.emailVerified) {
         await FirebaseAuth.instance.signOut();
+
         if (!mounted) return;
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Please verify your email first'),
+            content: const Text("Verify your email first"),
             action: SnackBarAction(
-              label: 'Resend',
+              label: "Resend",
               onPressed: () async {
-                try {
-                  await user!.sendEmailVerification();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Verification email sent again'),
-                    ),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('Error: $e')));
-                }
+                await user!.sendEmailVerification();
               },
             ),
           ),
         );
+
         return;
       }
 
-      // Firestore role
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+      // Read user from Firestore
+      final doc = await FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
           .get();
-      final role = userDoc.exists ? userDoc['role'] : 'user';
+
+      if (!doc.exists) {
+        await FirebaseAuth.instance.signOut();
+
+        if (!mounted) return;
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("User data not found.")));
+
+        return;
+      }
+
+      final role = doc.data()?['role'] as String?;
 
       if (!mounted) return;
 
       if (role == 'admin') {
-        Navigator.pushReplacementNamed(context, "/admin");
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/mainAdmin",
+          (route) => false,
+        );
       } else {
-        Navigator.pushReplacementNamed(context, "/home");
+        Navigator.pushNamedAndRemoveUntil(context, "/main", (route) => false);
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      String message;
+
+      switch (e.code) {
+        case 'user-not-found':
+          message = 'User not found';
+          break;
+        case 'wrong-password':
+          message = 'Wrong password';
+          break;
+        case 'invalid-email':
+          message = 'Invalid email';
+          break;
+        default:
+          message = e.message ?? 'Login failed';
+      }
+
       if (!mounted) return;
+
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+      ).showSnackBar(SnackBar(content: Text(message)));
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
-      if (mounted) setState(() => isLoading = false);
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
     }
   }
 
+  // ================= GOOGLE LOGIN =================
+  Future<void> signInWithGoogle() async {
+    setState(() => isLoading = true);
+
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        setState(() => isLoading = false);
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+
+      final user = userCredential.user!;
+
+      final docRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid);
+
+      final snapshot = await docRef.get();
+
+      // First login
+      if (!snapshot.exists) {
+        await docRef.set({
+          'email': user.email,
+          'name': user.displayName,
+          'role': 'user',
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      }
+
+      // Read role
+      final userDoc = await docRef.get();
+      final role = userDoc.data()?['role'] as String?;
+
+      if (!mounted) return;
+
+      if (role == 'admin') {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/mainAdmin",
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, "/main", (route) => false);
+      }
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Google error: $e")));
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
+  }
+
+  // ================= UI =================
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,22 +234,19 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         const SizedBox(height: 25),
+
+                        // EMAIL
                         TextFormField(
                           controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
                             labelText: "Email",
                             prefixIcon: Icon(Icons.email),
                             border: OutlineInputBorder(),
                           ),
-                          validator: (val) {
-                            if (val == null || val.isEmpty)
-                              return "Enter your email";
-                            if (!val.contains("@")) return "Invalid email";
-                            return null;
-                          },
                         ),
                         const SizedBox(height: 15),
+
+                        // PASSWORD
                         TextFormField(
                           controller: passwordController,
                           obscureText: hidePassword,
@@ -157,15 +264,10 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() => hidePassword = !hidePassword),
                             ),
                           ),
-                          validator: (val) {
-                            if (val == null || val.isEmpty)
-                              return "Enter your password";
-                            if (val.length < 6)
-                              return "Password must be at least 6 chars";
-                            return null;
-                          },
                         ),
+
                         const SizedBox(height: 10),
+
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -180,7 +282,10 @@ class _LoginPageState extends State<LoginPage> {
                             child: const Text("Forgot Password?"),
                           ),
                         ),
+
                         const SizedBox(height: 15),
+
+                        // LOGIN BUTTON
                         SizedBox(
                           width: double.infinity,
                           height: 50,
@@ -193,7 +298,24 @@ class _LoginPageState extends State<LoginPage> {
                                 : const Text("Login"),
                           ),
                         ),
+
+                        const SizedBox(height: 15),
+                        const Text("OR"),
+                        const SizedBox(height: 15),
+
+                        // GOOGLE BUTTON
+                        SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: OutlinedButton.icon(
+                            onPressed: isLoading ? null : signInWithGoogle,
+                            icon: const Icon(Icons.login),
+                            label: const Text("Continue with Google"),
+                          ),
+                        ),
+
                         const SizedBox(height: 20),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
