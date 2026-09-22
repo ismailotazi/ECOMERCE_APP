@@ -41,13 +41,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDICGmXUGWIWBo3KDD7XxAyYD-H-JPNF2I',
-    appId: '1:570300953679:web:06ee5a7a0c0469adb7a63a',
-    messagingSenderId: '570300953679',
-    projectId: 'crapp-da159',
-    authDomain: 'crapp-da159.firebaseapp.com',
-    storageBucket: 'crapp-da159.firebasestorage.app',
-    measurementId: 'G-J1GX8PJ4F8',
+    apiKey: 'AIzaSyAaklL3ML94uka2qBhAGQ4aHhEjizeNK5c',
+    appId: '1:717172571493:web:d4e5417d48048f59c6f58c',
+    messagingSenderId: '717172571493',
+    projectId: 'ecomercefixapp',
+    authDomain: 'ecomercefixapp.firebaseapp.com',
+    storageBucket: 'ecomercefixapp.firebasestorage.app',
+    measurementId: 'G-SD8CDVWQJK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(

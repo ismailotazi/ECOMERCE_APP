@@ -1,0 +1,748 @@
+
+{
+  "createAccount": "إنشاء حساب",
+ 
+  "enterEmail": "أدخل البريد الإلكتروني",
+  "invalidEmail": "البريد الإلكتروني غير صالح",
+  "password": "كلمة المرور",
+  "enterPassword": "أدخل كلمة المرور",
+  "min6Chars": "6 أحرف على الأقل",
+
+
+  "accountCreatedVerifyEmail": "تم إنشاء الحساب بنجاح. يرجى تأكيد بريدك الإلكتروني قبل تسجيل الدخول.",
+  "emailAlreadyInUse": "هذا البريد الإلكتروني مستخدم بالفعل.",
+  "weakPassword": "كلمة المرور ضعيفة جدًا.",
+  "noInternetConnection": "لا يوجد اتصال بالإنترنت.",
+  "registrationFailed": "فشل إنشاء الحساب.",
+
+  "continueWithGoogle": "المتابعة باستخدام Google",
+  "googleError": "خطأ في Google: {error}",
+  "@googleError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyYourEmailFirst": "أكد بريدك الإلكتروني أولاً",
+   "resend": "إعادة الإرسال", 
+   "userDataNotFound": "لم يتم العثور على بيانات المستخدم.",
+
+    "wrongPassword": "كلمة المرور غير صحيحة", 
+    "loginFailed": "فشل تسجيل الدخول",
+     "login": "تسجيل الدخول",
+     "forgotPassword": "هل نسيت كلمة المرور؟", 
+     "dontHaveAnAccount": "ليس لديك حساب؟ ",
+      "register": "إنشاء حساب",
+  
+  "passwordResetEmailSent": "تم إرسال بريد إعادة تعيين كلمة المرور! تحقق من صندوق الوارد أو مجلد البريد العشوائي.",
+  "anErrorOccurred": "حدث خطأ",
+  "noUserFoundForEmail": "لم يتم العثور على مستخدم بهذا البريد الإلكتروني",
+  "invalidEmailAddress": "عنوان البريد الإلكتروني غير صالح",
+  "pleaseEnterYourEmail": "يرجى إدخال بريدك الإلكتروني",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "backToLogin": "العودة إلى تسجيل الدخول",
+  "forgotPasswordTitle": "نسيت كلمة المرور",
+  "enterEmailToResetPassword": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور",
+
+"verifyEmail": "تأكيد البريد الإلكتروني",
+"emailNotVerifiedYet": "لم يتم تأكيد البريد الإلكتروني بعد.",
+"verificationEmailSentSuccessfully": "تم إرسال بريد التحقق بنجاح.",
+"verificationEmailMessage": "لقد أرسلنا رسالة تحقق إلى بريدك الإلكتروني.\nيرجى تأكيد بريدك الإلكتروني قبل المتابعة.",
+"iveVerifiedMyEmail": "لقد أكدت بريدي الإلكتروني",
+"resendVerificationEmail": "إعادة إرسال بريد التحقق",
+"logout": "تسجيل الخروج",
+"or": "أو",
+
+  "searchProducts": "البحث عن المنتجات",
+  "noProductsFound": "لم يتم العثور على منتجات",
+  "categories": "الفئات",
+  "all": "الكل",
+  "bestSelling": "الأكثر مبيعًا",
+
+  "smartphones": "الهواتف الذكية",
+  "laptops": "أجهزة الكمبيوتر المحمولة",
+  "tablets": "الأجهزة اللوحية",
+  "smartwatches": "الساعات الذكية",
+  "audio": "الصوتيات",
+  "gaming": "الألعاب",
+  "electronics": "الإلكترونيات",
+  "homeAppliances": "الأجهزة المنزلية",
+
+  "perfumes": "العطور",
+  "beauty": "الجمال",
+
+  "clothing": "الملابس",
+  "shoes": "الأحذية",
+  "bags": "الحقائب",
+  "glasses": "النظارات",
+  "watches": "الساعات",
+  "jewelry": "المجوهرات",
+
+  "sports": "الرياضة",
+  "books": "الكتب",
+  "toys": "الألعاب",
+  "furniture": "الأثاث",
+  "food": "الطعام",
+  "health": "الصحة",
+  "automotive": "السيارات",
+
+  "other": "أخرى",
+  
+  "home": "الرئيسية",
+  "cart": "السلة",
+  "favorite": "المفضلة",
+  "profile": "الملف الشخصي",
+  
+
+  "rateThisProduct": "قيّم هذا المنتج",
+  "tellUsAboutThisProduct": "أخبرنا عن هذا المنتج...",
+  "reviewSubmittedSuccessfully": "تم إرسال التقييم بنجاح",
+  "submitReview": "إرسال التقييم",
+
+  "accountSettings": "إعدادات الحساب",
+  "editProfile": "تعديل الملف الشخصي",
+  "paymentMethods": "طرق الدفع",
+
+
+  "theme": "المظهر",
+  "termsOfService": "شروط الخدمة",
+  "privacyPolicy": "سياسة الخصوصية",
+  "helpAndSupport": "المساعدة والدعم",
+  "contactSupport": "التواصل مع الدعم",
+  "deleteAccount": "حذف الحساب",
+  "deleteAccountConfirmation": "هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.",
+
+  "deleteFailed": "فشل الحذف",
+  "logoutFailed": "فشل تسجيل الخروج",
+  
+ 
+  "french": "الفرنسية",
+
+
+
+  "orderHistory": "سجل الطلبات",
+  "noOrderYet": "لا توجد طلبات حتى الآن",
+  "pending": "قيد الانتظار",
+  "processing": "قيد المعالجة",
+  "shipped": "تم الشحن",
+  "delivered": "تم التوصيل",
+  "cancelled": "ملغاة",
+  
+  "order": "طلب",
+  "product": "منتج",
+
+
+  "firstNameIsRequired": "الاسم الأول مطلوب",
+  "firstNameMinLength": "يجب أن يحتوي الاسم الأول على حرفين على الأقل",
+  "firstNameMaxLength": "يجب ألا يتجاوز الاسم الأول 30 حرفًا",
+  "validFirstName": "يرجى إدخال اسم أول صالح",
+
+
+  "lastNameIsRequired": "اسم العائلة مطلوب",
+  "lastNameMinLength": "يجب أن يحتوي اسم العائلة على حرفين على الأقل",
+  "lastNameMaxLength": "يجب ألا يتجاوز اسم العائلة 30 حرفًا",
+  "validLastName": "يرجى إدخال اسم عائلة صالح",
+
+  "usernameOptional": "اسم المستخدم (اختياري)",
+
+  "phoneNumberRequired": "رقم الهاتف (مطلوب)",
+  "pleaseEnterPhoneNumber": "يرجى إدخال رقم هاتفك",
+
+
+
+  "countryRequired": "الدولة (مطلوب)",
+  "countryIsRequired": "الدولة مطلوبة",
+  "countryNameTooShort": "اسم الدولة قصير جدًا",
+  "countryNameTooLong": "اسم الدولة طويل جدًا",
+  "validCountryName": "يرجى إدخال اسم دولة صالح",
+
+  "cityRequired": "المدينة (مطلوب)",
+  "cityIsRequired": "المدينة مطلوبة",
+  "cityNameTooShort": "اسم المدينة قصير جدًا",
+
+  "validCityName": "يرجى إدخال اسم مدينة صالح",
+
+  "streetAddressOptional": "عنوان الشارع (اختياري)",
+  "zipCodeOptional": "الرمز البريدي (اختياري)",
+
+  "additionalInformation": "معلومات إضافية",
+  "genderOptional": "الجنس (اختياري)",
+  "male": "ذكر",
+
+
+  "dateOfBirthOptional": "تاريخ الميلاد (اختياري)",
+  "selectYourBirthDate": "اختر تاريخ ميلادك",
+
+
+  "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
+  
+  "clear": "مسح",
+  "noProductFound": "لم يتم العثور على أي منتج",
+  "tryAnotherKeyword": "حاول البحث بكلمة مفتاحية أخرى.",
+  "noName": "بدون اسم",
+  
+  "pleaseLogin": "يرجى تسجيل الدخول",
+
+
+  "orderDetails": "تفاصيل الطلب",
+  "orderId": "رقم الطلب",
+  "status": "الحالة",
+  "total": "المجموع",
+  "date": "التاريخ",
+  "products": "المنتجات",
+
+
+  
+  "productDetails": "تفاصيل المنتج",
+  "profilePhoto": "صورة الملف الشخصي",
+  "optional": "اختياري",
+  "taxIncluded": "الضريبة مشمولة",
+  "writeReview": "كتابة تقييم",
+  "outOfStock": "غير متوفر",
+  "itemsLeftInStock": "تبقى {count} قطعة فقط في المخزون",
+  "quantity": "الكمية",
+  "description": "الوصف",
+  "noDescriptionAvailable": "لا يوجد وصف متاح.",
+  "relatedProducts": "منتجات ذات صلة",
+  "noRelatedProducts": "لا توجد منتجات ذات صلة",
+  "customerReviews": "تقييمات العملاء",
+  "noReviewsYet": "لا توجد تقييمات بعد",
+  "noProducts": "لا توجد منتجات",
+  "qty": "الكمية",
+  "addToCart": "أضف إلى السلة",
+  "buyNow": "اشترِ الآن",
+  "addedToCart": "تمت الإضافة إلى السلة 🛒",
+  "unknown": "غير معروف",
+  "reviews": "المراجعات",
+
+  "favorites": "المفضلة",
+  "noFavoriteProducts": "لا توجد منتجات مفضلة",
+  "removedFromFavorites": "تمت الإزالة من المفضلة ❤️",
+
+  "checkout": "إتمام الطلب",
+  "deliveryInformation": "معلومات التوصيل",
+  "fullName": "الاسم الكامل",
+  "pleaseEnterYourFullName": "يرجى إدخال اسمك الكامل",
+  "nameTooLong": "الاسم طويل جدًا",
+  "pleaseEnterAValidName": "يرجى إدخال اسم صالح",
+  "pleaseEnterYourFirstAndLastName": "يرجى إدخال الاسم الأول واسم العائلة",
+  "phoneNumber": "رقم الهاتف",
+  "address": "العنوان",
+  "pleaseEnterYourAddress": "يرجى إدخال عنوانك",
+  "pleaseEnterAMoreCompleteAddress": "يرجى إدخال عنوان أكثر تفصيلًا",
+  "addressTooLong": "العنوان طويل جدًا",
+
+  "pleaseEnterYourCity": "يرجى إدخال مدينتك",
+  "cityNameTooLong": "اسم المدينة طويل جدًا",
+  "pleaseEnterAValidCity": "يرجى إدخال مدينة صالحة",
+  "saveYourInformation": "حفظ معلوماتك",
+  "forFasterCheckoutNextTime": "لتسريع إتمام الطلب في المرة القادمة",
+  "paymentMethod": "طريقة الدفع",
+  "cashOnDelivery": "الدفع عند الاستلام",
+  "payWhenYourOrderArrives": "ادفع عند وصول طلبك",
+ 
+  "transferBeforeShipping": "قم بالتحويل قبل الشحن",
+  "orderSummary": "ملخص الطلب",
+  "items": "المنتجات",
+  "payment": "الدفع",
+  "placeOrder": "تأكيد الطلب",
+  "orderPlacedSuccessfully": "تم تأكيد طلبك بنجاح 🎉",
+
+  "pleaseEnterYourPhoneNumber": "يرجى إدخال رقم هاتفك",
+  "pleaseEnterAValidAddress": "يرجى إدخال عنوان صالح",
+
+"pleaseEnterYourCountry": "يرجى إدخال بلدك",
+"pleaseEnterAValidCountry": "يرجى إدخال دولة صالحة",
+"yourCartIsEmpty": "سلة التسوق فارغة",
+"selected": "محدد",
+"deselectAll": "إلغاء تحديد الكل",
+"selectAll": "تحديد الكل",
+"pleaseSelectAtLeastOneProduct": "يرجى تحديد منتج واحد على الأقل",
+"bankTransfer": "التحويل البنكي",
+"unableToSelectImage": "تعذر اختيار الصورة",
+"noActiveBankAccountsAvailable": "لا توجد حسابات بنكية نشطة متاحة",
+"unableToLoadPaymentInformation": "تعذر تحميل معلومات الدفع",
+"copied": "تم النسخ",
+"copy": "نسخ",
+
+"transferYourOrderTotalToTheBankAccountBelow": "قم بتحويل إجمالي طلبك إلى الحساب البنكي أدناه.",
+"selectBankAccount": "اختر الحساب البنكي",
+"bankAccountDetails": "تفاصيل الحساب البنكي",
+"bank": "البنك",
+
+"paymentProof": "إثبات الدفع",
+"uploadTransferScreenshot": "قم برفع صورة التحويل",
+"tapToChooseAnImage": "اضغط لاختيار صورة",
+"paymentProofSelected": "تم اختيار إثبات الدفع",
+"afterCompletingTheTransfer": "بعد إتمام التحويل، اضغط على \"لقد قمت بالتحويل\" لمتابعة إتمام طلبك.",
+"bankTransferCurrentlyUnavailable": "التحويل البنكي غير متاح حاليًا. يرجى اختيار طريقة دفع أخرى.",
+"uploadFailed": "فشل رفع الملف",
+"iHaveTransferred": "لقد قمت بالتحويل",
+"userNotLoggedIn": "المستخدم غير مسجل الدخول",
+  "language": "اللغة",
+  "chooseYourPreferredLanguage": "اختر لغتك المفضلة",
+  "chooseLanguageDescription": "اختر اللغة التي تريد استخدامها في التطبيق.",
+  "english": "الإنجليزية",
+  "unitedStates": "الولايات المتحدة",
+
+  "france": "فرنسا",
+  "arabic": "العربية",
+  "morocco": "المغرب",
+  "systemDefault": "لغة النظام",
+  "followDeviceLanguage": "استخدام لغة الجهاز",
+  "languageSavedSuccessfully": "تم حفظ اللغة بنجاح",
+  "notifications": "الإشعارات",
+  "manageNotificationsDescription": "تحكم في كيفية تلقي التحديثات من التطبيق.",
+  "orderUpdates": "تحديثات الطلبات",
+  "orderUpdatesDescription": "تلقي تحديثات حول طلباتك.",
+  "offersDiscounts": "العروض والتخفيضات",
+  "offersDiscountsDescription": "احصل على إشعارات حول العروض الجديدة.",
+ 
+  "promotionsDescription": "تلقي الإشعارات الترويجية.",
+  "emailNotifications": "إشعارات البريد الإلكتروني",
+  "emailNotificationsDescription": "تلقي رسائل البريد الإلكتروني المهمة.",
+  "pushNotificationsFutureUpdate": "ستتوفر الإشعارات الفورية باستخدام Firebase Cloud Messaging في تحديث قادم.",
+  
+  "chooseYourPreferredTheme": "اختر مظهرك المفضل",
+  "selectHowAppAppear": "اختر الطريقة التي تريد أن يظهر بها التطبيق.",
+  "light": "فاتح",
+  "alwaysUseLightMode": "استخدام الوضع الفاتح دائمًا",
+  "dark": "داكن",
+  "alwaysUseDarkMode": "استخدام الوضع الداكن دائمًا",
+
+  "followDeviceSettings": "اتباع إعدادات الجهاز",
+  "themeSavedSuccessfully": "تم حفظ المظهر بنجاح",
+  "failedToSaveTheme": "فشل حفظ المظهر",
+  "add": "إضافة",
+
+  "users": "المستخدمون",
+  "noUsersFound": "لم يتم العثور على مستخدمين",
+  "noEmail": "لا يوجد بريد إلكتروني",
+
+  "deleteUserConfirmation": "هل أنت متأكد أنك تريد حذف {name}؟",
+
+  "unableToLoadOrders": "تعذر تحميل الطلبات.",
+"noOrdersFound": "لم يتم العثور على طلبات",
+"userHasNoOrders": "لم يقم هذا المستخدم بإجراء أي طلبات بعد.",
+"orderNumber": "الطلب رقم {orderNumber}",
+"viewDetails": "عرض التفاصيل",
+"completed": "مكتملة",
+"usersOrders": "طلبات المستخدم",
+"welcomeBack": "مرحبًا بعودتك",
+"dashboardSubtitle": "إليك ما يحدث اليوم",
+
+"recentOrders": "الطلبات الأخيرة",
+"noRecentOrders": "لا توجد طلبات حديثة",
+
+"totalRevenue": "إجمالي الإيرادات",
+"average": "المتوسط",
+"account": "الحساب",
+"storeManagement": "إدارة المتجر",
+"admin": "مسؤول",
+"user": "مستخدم",
+"noProductsAvailable": "لا توجد منتجات متاحة",
+"productDeleted": "تم حذف المنتج",
+"edit": "تعديل",
+"notificationSettings": "إعدادات الإشعارات",
+"chooseNotifications": "اختر الإشعارات التي تريد تلقيها.",
+"enableNotifications": "تفعيل الإشعارات",
+"turnAllNotificationsOnOrOff": "تفعيل أو تعطيل جميع الإشعارات",
+"newOrders": "طلبات جديدة",
+"receiveNotificationsForNewOrders": "تلقي إشعارات عند وجود طلبات جديدة",
+"newUsers": "مستخدمون جدد",
+"notifyWhenCustomerRegisters": "إشعار عند تسجيل عميل جديد",
+"lowStock": "مخزون منخفض",
+"alertWhenProductsRunningOut": "تنبيه عندما توشك المنتجات على النفاد",
+"promotions": "العروض الترويجية",
+"marketingPromotionalNotifications": "إشعارات التسويق والعروض الترويجية",
+"sound": "الصوت",
+"playSoundWhenReceivingNotifications": "تشغيل صوت عند تلقي الإشعارات",
+"vibration": "الاهتزاز",
+"vibrateWhenReceivingNotifications": "الاهتزاز عند تلقي الإشعارات",
+"markAllAsRead": "تحديد الكل كمقروء",
+"allNotificationsMarkedAsRead": "تم تحديد جميع الإشعارات كمقروءة",
+"noNotifications": "لا توجد إشعارات",
+"notificationDeleted": "تم حذف الإشعار",
+"newOrder": "طلب جديد",
+"newUser": "مستخدم جديد",
+"newProduct": "منتج جديد",
+"warning": "تحذير",
+"pleaseAddAtLeastOneImage": "يرجى إضافة صورة واحدة على الأقل",
+"productUpdatedSuccessfully": "تم تحديث المنتج بنجاح",
+"selectImages": "اختيار الصور",
+"replaceImage": "استبدال الصورة",
+"deleteImage": "حذف الصورة",
+"productName": "اسم المنتج",
+"enterProductName": "أدخل اسم المنتج",
+"nameIsTooShort": "الاسم قصير جدًا",
+"maximum25Characters": "الحد الأقصى 25 حرفًا",
+"nikeAirMaxHint": "مثال: Nike Air Max",
+"enterDescription": "أدخل الوصف",
+"descriptionIsTooShort": "الوصف قصير جدًا",
+"maximum80Characters": "الحد الأقصى 80 حرفًا",
+
+"price": "السعر",
+"enterPrice": "أدخل السعر",
+"invalidPrice": "السعر غير صالح",
+"priceMustBeGreaterThanZero": "يجب أن يكون السعر أكبر من 0",
+"maximumPrice": "الحد الأقصى للسعر هو 99999.99",
+"oldPrice": "السعر القديم",
+"invalidOldPrice": "السعر القديم غير صالح",
+"oldPriceMustBeGreaterThanZero": "يجب أن يكون السعر القديم أكبر من 0",
+"stock": "المخزون",
+"enterStockQuantity": "أدخل كمية المخزون",
+"invalidStock": "المخزون غير صالح",
+"stockCannotBeNegative": "لا يمكن أن يكون المخزون سالبًا",
+"maximumStock": "الحد الأقصى للمخزون هو 999999",
+"category": "الفئة",
+"pleaseSelectCategory": "يرجى اختيار فئة",
+"brand": "العلامة التجارية",
+"pleaseSelectBrand": "يرجى اختيار علامة تجارية",
+"updateProduct": "تحديث المنتج",
+
+"oldPriceHint": "مثال: 129.99",
+"stockHint": "مثال: 25",
+"accessories": "الإكسسوارات",
+"editProduct": "تعديل المنتج",
+"productNameHint": "مثال: Nike Air Max",
+
+
+
+"error": "خطأ",
+
+"priceHint": "مثال: 99.99",
+"shortDescriptionHint": "وصف قصير...",
+  "gallery": "المعرض",
+  "camera": "الكاميرا",
+  "selectImage": "اختيار صورة",
+  "pleaseSelectAnImage": "يرجى اختيار صورة",
+  "productAddedSuccessfully": "تمت إضافة المنتج بنجاح!",
+  "addProduct": "إضافة منتج",
+
+  "editUser": "تعديل المستخدم",
+  "personalInformation": "المعلومات الشخصية",
+  "firstName": "الاسم الأول",
+  "lastName": "اسم العائلة",
+  "username": "اسم المستخدم",
+  "phone": "رقم الهاتف",
+  "gender": "الجنس",
+
+  "female": "أنثى",
+  "dateOfBirth": "تاريخ الميلاد",
+  "selectDateOfBirth": "اختر تاريخ الميلاد",
+  "shippingAddress": "عنوان الشحن",
+  "country": "الدولة",
+  "city": "المدينة",
+  "streetAddress": "عنوان الشارع",
+  "zipCode": "الرمز البريدي",
+  "firstNameRequired": "الاسم الأول مطلوب",
+  "lastNameRequired": "اسم العائلة مطلوب",
+  "userUpdatedSuccessfully": "تم تحديث المستخدم بنجاح",
+  "failedToUpdateUser": "فشل تحديث المستخدم: {error}",
+  "saving": "جارٍ الحفظ...",
+
+  "usersDetails": "تفاصيل المستخدم",
+
+"contactInformation": "معلومات الاتصال",
+
+"totalOrders": "إجمالي الطلبات",
+"totalSpent": "إجمالي الإنفاق",
+"memberSince": "عضو منذ",
+"customerStatistics": "إحصائيات العميل",
+"quickActions": "إجراءات سريعة",
+"viewOrders": "عرض الطلبات",
+"deleteUser": "حذف المستخدم",
+"areYouSureDeleteUser": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟",
+"cancel": "إلغاء",
+"delete": "حذف",
+"userDeletedSuccessfully": "تم حذف المستخدم بنجاح",
+  "noUserFound": "لم يتم العثور على مستخدم",
+  "userNotFound": "المستخدم غير موجود",
+  "administrator": "مسؤول",
+  "menu": "القائمة",
+  "orders": "الطلبات",
+  "customers": "العملاء",
+
+  "revenue": "الإيرادات",
+  "analytics": "التحليلات",
+  "system": "النظام",
+  "settings": "الإعدادات",
+
+  "noOrders": "لا توجد طلبات",
+"unknownUser": "مستخدم غير معروف",
+"customer": "العميل",
+"orderTotal": "إجمالي الطلب",
+"paymentInformation": "معلومات الدفع",
+"paymentProofUploaded": "تم رفع إثبات الدفع",
+"paymentProofNotUploaded": "لم يتم رفع إثبات الدفع",
+"viewPaymentProof": "عرض إثبات الدفع",
+"orderStatus": "حالة الطلب",
+"orderUpdatedSuccessfully": "تم تحديث الطلب بنجاح",
+"editBankAccount": "تعديل الحساب البنكي",
+"addBankAccount": "إضافة حساب بنكي",
+"editBankInformation": "تعديل المعلومات البنكية",
+"bankInformation": "المعلومات البنكية",
+"updateBankAccountInfo": "حدّث معلومات الحساب البنكي الذي يمكن للعملاء استخدامه للتحويلات البنكية.",
+"addBankAccountInfo": "أضف الحساب البنكي الذي يمكن للعملاء استخدامه للتحويلات البنكية.",
+"bankName": "اسم البنك",
+"accountName": "اسم صاحب الحساب",
+"iban": "IBAN",
+"rib": "RIB",
+"swiftBic": "SWIFT / BIC",
+"phoneOptional": "الهاتف (اختياري)",
+"email": "البريد الإلكتروني",
+
+"customersCanUseAccount": "يمكن للعملاء استخدام هذا الحساب للتحويلات البنكية.",
+"bankAccountUpdatedSuccessfully": "تم تحديث الحساب البنكي بنجاح",
+"bankAccountAddedSuccessfully": "تمت إضافة الحساب البنكي بنجاح",
+"failedToUpdateBankAccount": "فشل تحديث الحساب البنكي",
+"failedToAddBankAccount": "فشلت إضافة الحساب البنكي",
+"updateBankAccount": "تحديث الحساب البنكي",
+"saveBankAccount": "حفظ الحساب البنكي",
+"bankNameRequired": "اسم البنك مطلوب",
+"enterValidBankName": "أدخل اسم بنك صالحًا",
+"accountNameRequired": "اسم صاحب الحساب مطلوب",
+"enterValidAccountName": "أدخل اسم صاحب حساب صالحًا",
+"ibanRequired": "IBAN مطلوب",
+"enterValidIban": "أدخل IBAN صالحًا",
+"invalidIbanLength": "طول IBAN غير صالح",
+"ribRequired": "RIB مطلوب",
+"ribExactly24Digits": "يجب أن يحتوي RIB على 24 رقمًا بالضبط",
+"enterValidSwiftBic": "أدخل رمز SWIFT / BIC صالحًا",
+"enterValidPhoneNumber": "أدخل رقم هاتف صالحًا",
+"enterValidEmailAddress": "أدخل عنوان بريد إلكتروني صالحًا",
+"paymentBanks": "البنوك الخاصة بالدفع",
+"bankAccountDisabled": "تم تعطيل الحساب البنكي",
+"bankAccountEnabled": "تم تفعيل الحساب البنكي",
+"unableToUpdateBankAccount": "تعذر تحديث الحساب البنكي",
+"deleteBankAccount": "حذف الحساب البنكي",
+"deleteBankConfirmation": "هل أنت متأكد من حذف \"{bankName}\"؟\n\nلن يتمكن العملاء بعد ذلك من استخدام هذا الحساب للتحويلات البنكية.",
+"bankAccountDeleted": "تم حذف الحساب البنكي",
+"unableToDeleteBankAccount": "تعذر حذف الحساب البنكي",
+"unableToLoadPaymentBanks": "تعذر تحميل الحسابات البنكية.",
+"tryAgain": "حاول مرة أخرى",
+"noBankAccountsYet": "لا توجد حسابات بنكية بعد",
+"addBankAccountToEnableTransfers": "أضف حسابًا بنكيًا لتفعيل الدفع عن طريق التحويل البنكي.",
+"unnamedBank": "بنك بدون اسم",
+"accountNameNotProvided": "اسم الحساب غير متوفر",
+"bankOptions": "خيارات الحساب",
+"disable": "تعطيل",
+"enable": "تفعيل",
+"active": "نشط",
+"inactive": "غير نشط",
+"changePassword": "تغيير كلمة المرور",
+"updateAdministratorPassword": "قم بتحديث كلمة مرور المسؤول الخاصة بك.",
+"currentPassword": "كلمة المرور الحالية",
+"newPassword": "كلمة المرور الجديدة",
+"confirmPassword": "تأكيد كلمة المرور",
+"enterCurrentPassword": "أدخل كلمة المرور الحالية",
+"passwordMinLength": "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل",
+"confirmYourPassword": "أكد كلمة المرور الخاصة بك",
+"passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+"updatePassword": "تحديث كلمة المرور",
+"passwordChangedSuccessfully": "تم تغيير كلمة المرور بنجاح",
+"somethingWentWrong": "حدث خطأ ما",
+"currentPasswordIncorrect": "كلمة المرور الحالية غير صحيحة",
+"passwordTooWeak": "كلمة المرور ضعيفة جدًا",
+"tooManyAttempts": "محاولات كثيرة جدًا. حاول مرة أخرى لاحقًا.",
+"pleaseSignInAgain": "يرجى تسجيل الدخول مرة أخرى والمحاولة.",
+"exportOrders": "تصدير الطلبات",
+"unableToLoadProfile": "تعذر تحميل الملف الشخصي",
+
+"account": "الحساب",
+"updateYourAdministratorProfile": "تحديث ملفك الشخصي كمسؤول",
+"updateYourAccountPassword": "تحديث كلمة مرور حسابك",
+
+"application": "التطبيق",
+"manageNotificationSettings": "إدارة إعدادات الإشعارات",
+
+"administration": "الإدارة",
+"viewStoreAnalytics": "عرض إحصائيات المتجر",
+"manageProducts": "إدارة المنتجات",
+"addEditOrDeleteProducts": "إضافة المنتجات أو تعديلها أو حذفها",
+"manageOrders": "إدارة الطلبات",
+"trackAndUpdateOrders": "تتبع الطلبات وتحديثها",
+"manageUsers": "إدارة المستخدمين",
+"viewRegisteredCustomers": "عرض العملاء المسجلين",
+"exportAllOrders": "تصدير جميع الطلبات",
+"backupDatabase": "نسخ احتياطي لقاعدة البيانات",
+"createBackup": "إنشاء نسخة احتياطية",
+"manageBankTransferAccounts": "إدارة حسابات التحويل البنكي",
+
+"about": "حول التطبيق",
+"appVersion": "إصدار التطبيق",
+"version101": "الإصدار 1.0.0",
+
+"accountDeletedSuccessfully": "تم حذف الحساب بنجاح",
+"forSecurityReasonsSignInAgain": "لأسباب أمنية، يرجى تسجيل الدخول مرة أخرى قبل حذف حسابك.",
+"failedToDeleteAccount": "فشل حذف الحساب",
+"permanentlyDeleteAccountConfirmation": "هل أنت متأكد أنك تريد حذف حسابك نهائيًا؟\n\nلا يمكن التراجع عن هذا الإجراء.",
+"storePerformanceOverview": "نظرة عامة على أداء المتجر",
+"noData": "لا توجد بيانات",
+"revenue": "الإيرادات",
+"success": "النجاح",
+"orderStatus": "حالة الطلبات",
+"businessOverview": "نظرة عامة على النشاط التجاري",
+"businessHealth": "حالة النشاط التجاري",
+"revenueGeneratedFromDeliveredOrders": "الإيرادات الناتجة عن الطلبات التي تم توصيلها",
+"usersRegistered": "تم تسجيل {count} مستخدم",
+"productsAvailable": "{count} منتج متاح",
+"ordersDeliveredSuccessfully": "تم توصيل {count} طلب بنجاح",
+
+"@usersRegistered": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@productsAvailable": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@ordersDeliveredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"logoutConfirmation": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+"pleaseSelectAtLeastOneCollection": "يرجى اختيار مجموعة واحدة على الأقل",
+"saveDatabaseBackup": "حفظ نسخة احتياطية من قاعدة البيانات",
+"backupCancelled": "تم إلغاء النسخ الاحتياطي",
+"databaseBackupSavedSuccessfully": "تم حفظ النسخة الاحتياطية لقاعدة البيانات بنجاح",
+"backupFailed": "فشل النسخ الاحتياطي: {error}",
+"selectDatabaseBackup": "اختيار نسخة احتياطية من قاعدة البيانات",
+"unableToReadSelectedFile": "تعذر قراءة الملف المحدد",
+"invalidBackupFile": "ملف النسخة الاحتياطية غير صالح",
+"restoreDatabase": "هل تريد استعادة قاعدة البيانات؟",
+"backupContains": "تحتوي هذه النسخة الاحتياطية على:",
+"collectionsCount": "{count} مجموعات",
+"documentsCount": "{count} مستندات",
+"existingDocumentsWillBeOverwritten": "سيتم استبدال المستندات الموجودة التي تحمل نفس المعرّفات.",
+"doYouWantToContinue": "هل تريد المتابعة؟",
+"restore": "استعادة",
+"databaseRestoredSuccessfully": "تمت استعادة قاعدة البيانات بنجاح ({count} مستند)",
+"restoreFailed": "فشل استعادة قاعدة البيانات: {error}",
+"databaseBackup": "نسخة احتياطية من قاعدة البيانات",
+"createBackupDescription": "أنشئ نسخة احتياطية من بيانات Firestore واحفظها كملف JSON.",
+"selectData": "اختيار البيانات",
+"chooseCollectionsToInclude": "اختر المجموعات التي تريد تضمينها.",
+"completedPercentage": "{percent}% مكتمل",
+"creatingBackup": "جارٍ إنشاء النسخة الاحتياطية...",
+"createBackup": "إنشاء نسخة احتياطية",
+"restoreBackup": "استعادة النسخة الاحتياطية",
+"backupFirestoreOnly": "تحتوي النسخة الاحتياطية على بيانات Firestore فقط. لا يتم تضمين صور المنتجات والملفات الشخصية المخزنة في Firebase Storage في نسخة JSON الاحتياطية هذه.",
+
+"@backupFailed": {
+  "placeholders": {
+    "error": {
+      "type": "String"
+    }
+  }
+},
+"@collectionsCount": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@documentsCount": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@databaseRestoredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@restoreFailed": {
+  "placeholders": {
+    "error": {
+      "type": "String"
+    }
+  }
+},
+"@completedPercentage": {
+  "placeholders": {
+    "percent": {
+      "type": "int"
+    }
+  }
+},
+"pleaseSelectProfilePicture": "يرجى اختيار صورة للملف الشخصي",
+"profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
+"profilePhotoRequired": "صورة الملف الشخصي *",
+"changeProfilePhoto": "تغيير صورة الملف الشخصي",
+"personalInformation": "المعلومات الشخصية",
+"firstNameIsRequired": "الاسم الأول مطلوب",
+"lastNameIsRequired": "اسم العائلة مطلوب",
+"usernameIsRequired": "اسم المستخدم مطلوب",
+"phoneOptional": "رقم الهاتف (اختياري)",
+"enterAValidPhoneNumber": "أدخل رقم هاتف صالحًا",
+"saveChanges": "حفظ التغييرات",
+"productDeletedSuccessfully": "تم حذف المنتج بنجاح",
+"productNotFound": "المنتج غير موجود",
+"statistics": "الإحصائيات",
+"rating": "التقييم",
+"discount": "الخصم",
+"deleteProduct": "حذف المنتج",
+"deleteProductConfirmation": "هل أنت متأكد أنك تريد حذف هذا المنتج؟",
+"productOutOfStock": "هذا المنتج غير متوفر في المخزون.",
+"onlyItemsAvailable": "متوفر فقط {stock} من هذا المنتج.",
+"@onlyItemsAvailable": {
+  "placeholders": {
+    "stock": {
+      "type": "int"
+    }
+  }
+},
+"alreadyInCart": "هذا المنتج موجود بالفعل في سلة التسوق.",
+"orderPlacedNotification": "تم تقديم الطلب",
+"orderPlacedNotificationBody": "تم تقديم طلبك {orderNumber} بنجاح.",
+"orderUpdatedNotification": "تم تحديث الطلب",
+"orderUpdatedNotificationBody": "طلبك {orderNumber} الآن {status}.",
+"newProductNotification": "منتج جديد",
+"newProductNotificationBody": "تمت إضافة منتج جديد: {productName}.",
+"promotionNotification": "عرض خاص",
+"promotionNotificationBody": "{productName} الآن في تخفيض!",
+"tapAgainToExit": "اضغط مرة أخرى للخروج",
+"newOrderNotificationBody": "قام {userName} بإنشاء الطلب {orderNumber}",
+"@newOrderNotificationBody": {
+  "description": "نص إشعار المسؤول عند إنشاء طلب جديد",
+  "placeholders": {
+    "userName": {},
+    "orderNumber": {}
+  }
+},
+"enterStock": "يرجى إدخال كمية المخزون.",
+"continueAsGuest": "المتابعة كزائر"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+

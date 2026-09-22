@@ -1,0 +1,751 @@
+
+{
+  "createAccount": "Créer un compte",
+
+  "enterEmail": "Entrez votre e-mail",
+  "invalidEmail": "E-mail invalide",
+  "password": "Mot de passe",
+  "enterPassword": "Entrez votre mot de passe",
+  "min6Chars": "6 caractères minimum",
+
+
+  "accountCreatedVerifyEmail": "Compte créé avec succès. Veuillez vérifier votre adresse e-mail avant de vous connecter.",
+  "emailAlreadyInUse": "Cette adresse e-mail est déjà utilisée.",
+  "weakPassword": "Le mot de passe est trop faible.",
+  "noInternetConnection": "Aucune connexion Internet.",
+  "registrationFailed": "Échec de la création du compte.",
+
+  "continueWithGoogle": "Continuer avec Google",
+  "googleError": "Erreur Google : {error}",
+  "@googleError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+"verifyYourEmailFirst": "Veuillez d'abord vérifier votre adresse e-mail",
+"resend": "Renvoyer",
+"userDataNotFound": "Données utilisateur introuvables.",
+
+"wrongPassword": "Mot de passe incorrect",
+"loginFailed": "Échec de la connexion",
+"login": "Connexion",
+"forgotPassword": "Mot de passe oublié ?",
+"dontHaveAnAccount": "Vous n'avez pas de compte ? ",
+"register": "S'inscrire",
+
+"passwordResetEmailSent": "E-mail de réinitialisation du mot de passe envoyé ! Vérifiez votre boîte de réception ou vos courriers indésirables.",
+"anErrorOccurred": "Une erreur s'est produite",
+"noUserFoundForEmail": "Aucun utilisateur trouvé pour cette adresse e-mail",
+"invalidEmailAddress": "Adresse e-mail invalide",
+"pleaseEnterYourEmail": "Veuillez saisir votre adresse e-mail",
+"resetPassword": "Réinitialiser le mot de passe",
+"backToLogin": "Retour à la connexion",
+"forgotPasswordTitle": "Mot de passe oublié",
+"enterEmailToResetPassword": "Entrez votre e-mail pour réinitialiser votre mot de passe",
+"verifyEmail": "Vérifier l'adresse e-mail",
+"emailNotVerifiedYet": "L'adresse e-mail n'est pas encore vérifiée.",
+"verificationEmailSentSuccessfully": "L'e-mail de vérification a été envoyé avec succès.",
+"verificationEmailMessage": "Nous avons envoyé un e-mail de vérification dans votre boîte de réception.\nVeuillez vérifier votre adresse e-mail avant de continuer.",
+"iveVerifiedMyEmail": "J'ai vérifié mon adresse e-mail",
+"resendVerificationEmail": "Renvoyer l'e-mail de vérification",
+"logout": "Se déconnecter",
+"or": "OU",
+
+  "searchProducts": "Rechercher des produits",
+  "noProductsFound": "Aucun produit trouvé",
+  "categories": "Catégories",
+  "all": "Tous",
+  "bestSelling": "Meilleures ventes",
+
+
+  "smartphones": "Smartphones",
+  "laptops": "Ordinateurs portables",
+  "tablets": "Tablettes",
+  "smartwatches": "Montres connectées",
+  "audio": "Audio",
+  "gaming": "Jeux vidéo",
+  "electronics": "Électronique",
+  "homeAppliances": "Électroménager",
+
+  "perfumes": "Parfums",
+  "beauty": "Beauté",
+
+  "clothing": "Vêtements",
+  "shoes": "Chaussures",
+  "bags": "Sacs",
+  "glasses": "Lunettes",
+  "watches": "Montres",
+  "jewelry": "Bijoux",
+
+  "sports": "Sports",
+  "books": "Livres",
+  "toys": "Jouets",
+  "furniture": "Meubles",
+  "food": "Alimentation",
+  "health": "Santé",
+  "automotive": "Automobile",
+
+  "other": "Autre",
+ 
+  "home": "Accueil",
+  "cart": "Panier",
+  "favorite": "Favoris",
+  "profile": "Profil",
+  
+
+  "rateThisProduct": "Évaluez ce produit",
+  "tellUsAboutThisProduct": "Parlez-nous de ce produit...",
+  "reviewSubmittedSuccessfully": "Avis envoyé avec succès",
+  "submitReview": "Envoyer l’avis",
+  
+  "accountSettings": "Paramètres du compte",
+  "editProfile": "Modifier le profil",
+  "paymentMethods": "Modes de paiement",
+
+
+  "theme": "Thème",
+  "termsOfService": "Conditions d'utilisation",
+  "privacyPolicy": "Politique de confidentialité",
+  "helpAndSupport": "Aide et assistance",
+  "contactSupport": "Contacter l'assistance",
+  "deleteAccount": "Supprimer le compte",
+  "deleteAccountConfirmation": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.",
+
+  "deleteFailed": "Échec de la suppression",
+  "logoutFailed": "Échec de la déconnexion",
+
+
+  
+  "orderHistory": "Historique des commandes",
+  "noOrderYet": "Aucune commande pour le moment",
+  "pending": "En attente",
+  "processing": "En traitement",
+  "shipped": "Expédiée",
+  "delivered": "Livrée",
+  "cancelled": "Annulée",
+  
+  "order": "Commande",
+  "product": "Produit",
+  
+  "firstNameIsRequired": "Le prénom est obligatoire",
+  "firstNameMinLength": "Le prénom doit contenir au moins 2 caractères",
+  "firstNameMaxLength": "Le prénom ne doit pas dépasser 30 caractères",
+  "validFirstName": "Veuillez saisir un prénom valide",
+
+  "lastNameIsRequired": "Le nom est obligatoire",
+  "lastNameMinLength": "Le nom doit contenir au moins 2 caractères",
+  "lastNameMaxLength": "Le nom ne doit pas dépasser 30 caractères",
+  "validLastName": "Veuillez saisir un nom valide",
+
+  "usernameOptional": "Nom d'utilisateur (facultatif)",
+
+  "phoneNumberRequired": "Numéro de téléphone (obligatoire)",
+  "pleaseEnterPhoneNumber": "Veuillez saisir votre numéro de téléphone",
+
+
+
+  "countryRequired": "Pays (obligatoire)",
+  "countryIsRequired": "Le pays est obligatoire",
+  "countryNameTooShort": "Le nom du pays est trop court",
+  "countryNameTooLong": "Le nom du pays est trop long",
+  "validCountryName": "Veuillez saisir un nom de pays valide",
+
+  "cityRequired": "Ville (obligatoire)",
+  "cityIsRequired": "La ville est obligatoire",
+  "cityNameTooShort": "Le nom de la ville est trop court",
+
+  "validCityName": "Veuillez saisir un nom de ville valide",
+
+  "streetAddressOptional": "Adresse (facultatif)",
+  "zipCodeOptional": "Code postal (facultatif)",
+
+  "additionalInformation": "Informations supplémentaires",
+  "genderOptional": "Genre (facultatif)",
+
+
+
+  "dateOfBirthOptional": "Date de naissance (facultatif)",
+  "selectYourBirthDate": "Sélectionnez votre date de naissance",
+
+
+  "profileUpdatedSuccessfully": "Profil mis à jour avec succès",
+  
+  "clear": "Effacer",
+  "noProductFound": "Aucun produit trouvé",
+  "tryAnotherKeyword": "Essayez avec un autre mot-clé.",
+  "noName": "Sans nom",
+  
+  "pleaseLogin": "Veuillez vous connecter",
+
+
+  "orderDetails": "Détails de la commande",
+  "orderId": "ID de commande",
+  "status": "Statut",
+  "total": "Total",
+  "date": "Date",
+  "products": "Produits",
+
+
+  "productDetails": "Détails du produit",
+  "profilePhoto": "Photo de profil",
+  "optional": "Facultatif",
+  "taxIncluded": "Taxes incluses",
+  "writeReview": "Écrire un avis",
+  "outOfStock": "Rupture de stock",
+  "itemsLeftInStock": "Plus que {count} articles en stock",
+  "quantity": "Quantité",
+  "description": "Description",
+  "noDescriptionAvailable": "Aucune description disponible.",
+  "relatedProducts": "Produits similaires",
+  "noRelatedProducts": "Aucun produit similaire",
+  "customerReviews": "Avis des clients",
+  "noReviewsYet": "Aucun avis pour le moment",
+  "noProducts": "Aucun produit",
+  "qty": "Qté",
+  "addToCart": "Ajouter au panier",
+  "buyNow": "Acheter maintenant",
+  "addedToCart": "Ajouté au panier 🛒",
+  "unknown": "Inconnu",
+  "reviews": "Avis",
+
+  "favorites": "Favoris",
+  "noFavoriteProducts": "Aucun produit favori",
+  "removedFromFavorites": "Retiré des favoris ❤️",
+  
+  "checkout": "Paiement",
+  "deliveryInformation": "Informations de livraison",
+  "fullName": "Nom complet",
+  "pleaseEnterYourFullName": "Veuillez saisir votre nom complet",
+  "nameTooLong": "Le nom est trop long",
+  "pleaseEnterAValidName": "Veuillez saisir un nom valide",
+  "pleaseEnterYourFirstAndLastName": "Veuillez saisir votre prénom et votre nom",
+  "phoneNumber": "Numéro de téléphone",
+  "address": "Adresse",
+  "pleaseEnterYourAddress": "Veuillez saisir votre adresse",
+  "pleaseEnterAMoreCompleteAddress": "Veuillez saisir une adresse plus complète",
+  "addressTooLong": "L'adresse est trop longue",
+
+  "pleaseEnterYourCity": "Veuillez saisir votre ville",
+  "cityNameTooLong": "Le nom de la ville est trop long",
+  "pleaseEnterAValidCity": "Veuillez saisir une ville valide",
+  "saveYourInformation": "Enregistrer vos informations",
+  "forFasterCheckoutNextTime": "Pour un paiement plus rapide la prochaine fois",
+  "paymentMethod": "Mode de paiement",
+  "cashOnDelivery": "Paiement à la livraison",
+  "payWhenYourOrderArrives": "Payez lorsque votre commande arrive",
+  
+  "transferBeforeShipping": "Effectuez le virement avant l'expédition",
+  "orderSummary": "Résumé de la commande",
+  "items": "Articles",
+  "payment": "Paiement",
+  "placeOrder": "Passer la commande",
+  "orderPlacedSuccessfully": "Commande passée avec succès 🎉",
+
+  "pleaseEnterYourPhoneNumber": "Veuillez saisir votre numéro de téléphone",
+  "pleaseEnterAValidAddress": "Veuillez saisir une adresse valide",
+
+"pleaseEnterYourCountry": "Veuillez entrer votre pays",
+"pleaseEnterAValidCountry": "Veuillez entrer un pays valide",
+"yourCartIsEmpty": "Votre panier est vide",
+"selected": "Sélectionné",
+"deselectAll": "Tout désélectionner",
+"selectAll": "Tout sélectionner",
+"pleaseSelectAtLeastOneProduct": "Veuillez sélectionner au moins un produit",
+"bankTransfer": "Virement bancaire",
+"unableToSelectImage": "Impossible de sélectionner l'image",
+"noActiveBankAccountsAvailable": "Aucun compte bancaire actif disponible",
+"unableToLoadPaymentInformation": "Impossible de charger les informations de paiement",
+"copied": "copié",
+"copy": "Copier",
+
+"transferYourOrderTotalToTheBankAccountBelow": "Transférez le montant total de votre commande vers le compte bancaire ci-dessous.",
+"selectBankAccount": "Sélectionner un compte bancaire",
+"bankAccountDetails": "Détails du compte bancaire",
+"bank": "Banque",
+
+"paymentProof": "Preuve de paiement",
+"uploadTransferScreenshot": "Téléverser une capture du virement",
+"tapToChooseAnImage": "Appuyez pour choisir une image",
+"paymentProofSelected": "Preuve de paiement sélectionnée",
+"afterCompletingTheTransfer": "Après avoir effectué le virement, appuyez sur \"J'ai effectué le virement\" pour continuer votre commande.",
+"bankTransferCurrentlyUnavailable": "Le virement bancaire est actuellement indisponible. Veuillez choisir un autre mode de paiement.",
+"uploadFailed": "Échec du téléchargement",
+"iHaveTransferred": "J'ai effectué le virement",
+"userNotLoggedIn": "Utilisateur non connecté",
+  "language": "Langue",
+  "chooseYourPreferredLanguage": "Choisissez votre langue préférée",
+  "chooseLanguageDescription": "Choisissez la langue que vous souhaitez utiliser dans l'application.",
+  "english": "Anglais",
+  "unitedStates": "États-Unis",
+  "french": "Français",
+  "france": "France",
+  "arabic": "Arabe",
+  "morocco": "Maroc",
+  "systemDefault": "Langue du système",
+  "followDeviceLanguage": "Suivre la langue de l'appareil",
+  "languageSavedSuccessfully": "Langue enregistrée avec succès",
+  "notifications": "Notifications",
+  "manageNotificationsDescription": "Gérez la façon dont vous recevez les mises à jour de l'application.",
+  "orderUpdates": "Mises à jour des commandes",
+  "orderUpdatesDescription": "Recevez des mises à jour concernant vos commandes.",
+  "offersDiscounts": "Offres et réductions",
+  "offersDiscountsDescription": "Soyez informé des nouvelles offres.",
+
+  "promotionsDescription": "Recevez des notifications promotionnelles.",
+  "emailNotifications": "Notifications par e-mail",
+  "emailNotificationsDescription": "Recevez les e-mails importants.",
+  "pushNotificationsFutureUpdate": "Les notifications push avec Firebase Cloud Messaging seront disponibles dans une prochaine mise à jour.",
+
+  "theme": "Thème",
+  "chooseYourPreferredTheme": "Choisissez votre thème préféré",
+  "selectHowAppAppear": "Sélectionnez l'apparence que vous souhaitez pour l'application.",
+  "light": "Clair",
+  "alwaysUseLightMode": "Toujours utiliser le mode clair",
+  "dark": "Sombre",
+  "alwaysUseDarkMode": "Toujours utiliser le mode sombre",
+
+  "followDeviceSettings": "Suivre les paramètres de l'appareil",
+  "themeSavedSuccessfully": "Thème enregistré avec succès",
+  "failedToSaveTheme": "Échec de l'enregistrement du thème",
+  "add": "Ajouter",
+  "users": "Utilisateurs",
+  "noUsersFound": "Aucun utilisateur trouvé",
+  "noEmail": "Aucun e-mail",
+
+  "deleteUserConfirmation": "Êtes-vous sûr de vouloir supprimer {name} ?",
+ 
+  "unableToLoadOrders": "Impossible de charger les commandes.",
+"noOrdersFound": "Aucune commande trouvée",
+"userHasNoOrders": "Cet utilisateur n'a encore passé aucune commande.",
+"orderNumber": "Commande n°{orderNumber}",
+"viewDetails": "Voir les détails",
+"completed": "Terminé",
+"usersOrders": "Commandes de l'utilisateur",
+"welcomeBack": "Bon retour",
+"dashboardSubtitle": "Voici ce qui se passe aujourd'hui",
+
+"recentOrders": "Commandes récentes",
+"noRecentOrders": "Aucune commande récente",
+
+"totalRevenue": "Chiffre d'affaires total",
+"average": "Moyenne",
+"account": "Compte",
+"storeManagement": "Gestion de la boutique",
+"admin": "Administrateur",
+"user": "Utilisateur",
+"noProductsAvailable": "Aucun produit disponible",
+"productDeleted": "Produit supprimé",
+"edit": "Modifier",
+"notificationSettings": "Paramètres des notifications",
+"chooseNotifications": "Choisissez les notifications que vous souhaitez recevoir.",
+"enableNotifications": "Activer les notifications",
+"turnAllNotificationsOnOrOff": "Activer ou désactiver toutes les notifications",
+"newOrders": "Nouvelles commandes",
+"receiveNotificationsForNewOrders": "Recevoir des notifications pour les nouvelles commandes",
+"newUsers": "Nouveaux utilisateurs",
+"notifyWhenCustomerRegisters": "Être averti lorsqu'un client s'inscrit",
+"lowStock": "Stock faible",
+"alertWhenProductsRunningOut": "Alerter lorsque les produits sont presque épuisés",
+"promotions": "Promotions",
+"marketingPromotionalNotifications": "Notifications marketing et promotionnelles",
+"sound": "Son",
+"playSoundWhenReceivingNotifications": "Jouer un son lors de la réception de notifications",
+"vibration": "Vibration",
+"vibrateWhenReceivingNotifications": "Vibrer lors de la réception de notifications",
+"markAllAsRead": "Tout marquer comme lu",
+"allNotificationsMarkedAsRead": "Toutes les notifications ont été marquées comme lues",
+"noNotifications": "Aucune notification",
+"notificationDeleted": "Notification supprimée",
+"newOrder": "Nouvelle commande",
+"newUser": "Nouvel utilisateur",
+"newProduct": "Nouveau produit",
+"warning": "Avertissement",
+"pleaseAddAtLeastOneImage": "Veuillez ajouter au moins une image",
+"productUpdatedSuccessfully": "Produit mis à jour avec succès",
+"selectImages": "Sélectionner des images",
+"replaceImage": "Remplacer l'image",
+"deleteImage": "Supprimer l'image",
+"productName": "Nom du produit",
+"enterProductName": "Entrez le nom du produit",
+"nameIsTooShort": "Le nom est trop court",
+"maximum25Characters": "Maximum 25 caractères",
+"nikeAirMaxHint": "ex. Nike Air Max",
+"enterDescription": "Entrez la description",
+"descriptionIsTooShort": "La description est trop courte",
+"maximum80Characters": "Maximum 80 caractères",
+
+"price": "Prix",
+"enterPrice": "Entrez le prix",
+"invalidPrice": "Prix invalide",
+"priceMustBeGreaterThanZero": "Le prix doit être supérieur à 0",
+"maximumPrice": "Le prix maximum est de 99999.99",
+"oldPrice": "Ancien prix",
+"invalidOldPrice": "Ancien prix invalide",
+"oldPriceMustBeGreaterThanZero": "L'ancien prix doit être supérieur à 0",
+"stock": "Stock",
+"enterStockQuantity": "Entrez la quantité en stock",
+"invalidStock": "Stock invalide",
+"stockCannotBeNegative": "Le stock ne peut pas être négatif",
+"maximumStock": "Le stock maximum est de 999999",
+"category": "Catégorie",
+"pleaseSelectCategory": "Veuillez sélectionner une catégorie",
+"brand": "Marque",
+"pleaseSelectBrand": "Veuillez sélectionner une marque",
+"updateProduct": "Mettre à jour le produit",
+
+"oldPriceHint": "ex. 129.99",
+"stockHint": "ex. 25",
+"accessories": "Accessoires",
+"editProduct": "Modifier le produit",
+"productNameHint": "ex. Nike Air Max",
+
+"error": "Erreur",
+
+"priceHint": "ex. 99.99",
+"shortDescriptionHint": "Courte description...",
+
+  "gallery": "Galerie",
+  "camera": "Appareil photo",
+  "selectImage": "Sélectionner une image",
+  "pleaseSelectAnImage": "Veuillez sélectionner une image",
+  "productAddedSuccessfully": "Produit ajouté avec succès !",
+  "addProduct": "Ajouter un produit",
+
+  "editUser": "Modifier l'utilisateur",
+  "personalInformation": "Informations personnelles",
+  "firstName": "Prénom",
+  "lastName": "Nom",
+  "username": "Nom d'utilisateur",
+  "phone": "Téléphone",
+  "gender": "Genre",
+  "male": "Homme",
+  "female": "Femme",
+  "dateOfBirth": "Date de naissance",
+  "selectDateOfBirth": "Sélectionner la date de naissance",
+  "shippingAddress": "Adresse de livraison",
+  "country": "Pays",
+  "city": "Ville",
+  "streetAddress": "Adresse",
+  "zipCode": "Code postal",
+  "firstNameRequired": "Le prénom est obligatoire",
+  "lastNameRequired": "Le nom est obligatoire",
+  "userUpdatedSuccessfully": "Utilisateur mis à jour avec succès",
+  "failedToUpdateUser": "Échec de la mise à jour de l'utilisateur : {error}",
+  "saving": "Enregistrement...",
+
+  "usersDetails": "Détails de l'utilisateur",
+
+"contactInformation": "Coordonnées",
+
+"totalOrders": "Total des commandes",
+"totalSpent": "Total dépensé",
+"memberSince": "Membre depuis",
+"customerStatistics": "Statistiques du client",
+"quickActions": "Actions rapides",
+"viewOrders": "Voir les commandes",
+"deleteUser": "Supprimer l'utilisateur",
+"areYouSureDeleteUser": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+"cancel": "Annuler",
+"delete": "Supprimer",
+"userDeletedSuccessfully": "Utilisateur supprimé avec succès",
+  "noUserFound": "Aucun utilisateur trouvé",
+  "userNotFound": "Utilisateur introuvable",
+  "administrator": "Administrateur",
+  "menu": "MENU",
+  "orders": "Commandes",
+  "customers": "Clients",
+
+  "revenue": "Revenus",
+  "analytics": "Analyses",
+  "system": "SYSTÈME",
+  "settings": "Paramètres",
+
+  "noOrders": "Aucune commande",
+"unknownUser": "Utilisateur inconnu",
+"customer": "Client",
+"orderTotal": "Total de la commande",
+"paymentInformation": "Informations de paiement",
+"paymentProofUploaded": "Preuve de paiement téléchargée",
+"paymentProofNotUploaded": "Preuve de paiement non téléchargée",
+"viewPaymentProof": "Voir la preuve de paiement",
+"orderStatus": "Statut de la commande",
+"orderUpdatedSuccessfully": "Commande mise à jour avec succès",
+"editBankAccount": "Modifier le compte bancaire",
+"addBankAccount": "Ajouter un compte bancaire",
+"editBankInformation": "Modifier les informations bancaires",
+"bankInformation": "Informations bancaires",
+"updateBankAccountInfo": "Mettez à jour les informations du compte bancaire que les clients peuvent utiliser pour les virements bancaires.",
+"addBankAccountInfo": "Ajoutez le compte bancaire que les clients peuvent utiliser pour les virements bancaires.",
+"bankName": "Nom de la banque",
+"accountName": "Nom du titulaire",
+"iban": "IBAN",
+"rib": "RIB",
+"swiftBic": "SWIFT / BIC",
+"phoneOptional": "Téléphone (facultatif)",
+"email": "E-mail",
+
+"customersCanUseAccount": "Les clients peuvent utiliser ce compte pour les virements bancaires.",
+"bankAccountUpdatedSuccessfully": "Compte bancaire mis à jour avec succès",
+"bankAccountAddedSuccessfully": "Compte bancaire ajouté avec succès",
+"failedToUpdateBankAccount": "Échec de la mise à jour du compte bancaire",
+"failedToAddBankAccount": "Échec de l'ajout du compte bancaire",
+"updateBankAccount": "Mettre à jour le compte bancaire",
+"saveBankAccount": "Enregistrer le compte bancaire",
+"bankNameRequired": "Le nom de la banque est requis",
+"enterValidBankName": "Entrez un nom de banque valide",
+"accountNameRequired": "Le nom du titulaire est requis",
+"enterValidAccountName": "Entrez un nom de titulaire valide",
+"ibanRequired": "L'IBAN est requis",
+"enterValidIban": "Entrez un IBAN valide",
+"invalidIbanLength": "Longueur de l'IBAN invalide",
+"ribRequired": "Le RIB est requis",
+"ribExactly24Digits": "Le RIB doit contenir exactement 24 chiffres",
+"enterValidSwiftBic": "Entrez un code SWIFT / BIC valide",
+"enterValidPhoneNumber": "Entrez un numéro de téléphone valide",
+"enterValidEmailAddress": "Entrez une adresse e-mail valide",
+"paymentBanks": "Banques de paiement",
+"bankAccountDisabled": "Compte bancaire désactivé",
+"bankAccountEnabled": "Compte bancaire activé",
+"unableToUpdateBankAccount": "Impossible de mettre à jour le compte bancaire",
+"deleteBankAccount": "Supprimer le compte bancaire",
+"deleteBankConfirmation": "Êtes-vous sûr de vouloir supprimer \"{bankName}\" ?\n\nLes clients ne pourront plus utiliser ce compte pour les virements bancaires.",
+"bankAccountDeleted": "Compte bancaire supprimé",
+"unableToDeleteBankAccount": "Impossible de supprimer le compte bancaire",
+"unableToLoadPaymentBanks": "Impossible de charger les comptes bancaires.",
+"tryAgain": "Réessayer",
+"noBankAccountsYet": "Aucun compte bancaire pour le moment",
+"addBankAccountToEnableTransfers": "Ajoutez un compte bancaire pour activer les paiements par virement bancaire.",
+"unnamedBank": "Banque sans nom",
+"accountNameNotProvided": "Nom du compte non renseigné",
+"bankOptions": "Options du compte",
+"disable": "Désactiver",
+"enable": "Activer",
+"active": "Actif",
+"inactive": "Inactif",
+"changePassword": "Changer le mot de passe",
+"updateAdministratorPassword": "Mettez à jour votre mot de passe administrateur.",
+"currentPassword": "Mot de passe actuel",
+"newPassword": "Nouveau mot de passe",
+"confirmPassword": "Confirmer le mot de passe",
+"enterCurrentPassword": "Entrez votre mot de passe actuel",
+"passwordMinLength": "Le mot de passe doit contenir au moins 6 caractères",
+"confirmYourPassword": "Confirmez votre mot de passe",
+"passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+"updatePassword": "Mettre à jour le mot de passe",
+"passwordChangedSuccessfully": "Mot de passe modifié avec succès",
+"somethingWentWrong": "Une erreur s'est produite",
+"currentPasswordIncorrect": "Le mot de passe actuel est incorrect",
+"passwordTooWeak": "Le mot de passe est trop faible",
+"tooManyAttempts": "Trop de tentatives. Réessayez plus tard.",
+"pleaseSignInAgain": "Veuillez vous reconnecter et réessayer.",
+"exportOrders": "Exporter les commandes",
+"unableToLoadProfile": "Impossible de charger le profil",
+
+"account": "Compte",
+"updateYourAdministratorProfile": "Mettre à jour votre profil administrateur",
+"updateYourAccountPassword": "Mettre à jour le mot de passe de votre compte",
+
+"application": "Application",
+"manageNotificationSettings": "Gérer les paramètres de notification",
+
+"administration": "Administration",
+"viewStoreAnalytics": "Voir les statistiques de la boutique",
+"manageProducts": "Gérer les produits",
+"addEditOrDeleteProducts": "Ajouter, modifier ou supprimer des produits",
+"manageOrders": "Gérer les commandes",
+"trackAndUpdateOrders": "Suivre et mettre à jour les commandes",
+"manageUsers": "Gérer les utilisateurs",
+"viewRegisteredCustomers": "Voir les clients inscrits",
+"exportAllOrders": "Exporter toutes les commandes",
+"backupDatabase": "Sauvegarder la base de données",
+"createBackup": "Créer une sauvegarde",
+"manageBankTransferAccounts": "Gérer les comptes de virement bancaire",
+
+"about": "À propos",
+"appVersion": "Version de l'application",
+"version101": "Version 1.0.0",
+
+"accountDeletedSuccessfully": "Compte supprimé avec succès",
+"forSecurityReasonsSignInAgain": "Pour des raisons de sécurité, veuillez vous reconnecter avant de supprimer votre compte.",
+"failedToDeleteAccount": "Échec de la suppression du compte",
+"permanentlyDeleteAccountConfirmation": "Êtes-vous sûr de vouloir supprimer définitivement votre compte ?\n\nCette action est irréversible.",
+"storePerformanceOverview": "Aperçu des performances de la boutique",
+"noData": "Aucune donnée",
+"revenue": "Chiffre d'affaires",
+"success": "Réussite",
+"orderStatus": "Statut des commandes",
+"businessOverview": "Vue d'ensemble de l'activité",
+"businessHealth": "État de l'activité",
+"revenueGeneratedFromDeliveredOrders": "Chiffre d'affaires généré par les commandes livrées",
+"usersRegistered": "{count} utilisateurs inscrits",
+"productsAvailable": "{count} produits disponibles",
+"ordersDeliveredSuccessfully": "{count} commandes livrées avec succès",
+
+"@usersRegistered": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@productsAvailable": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@ordersDeliveredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"logoutConfirmation": "Êtes-vous sûr de vouloir vous déconnecter ?",
+"pleaseSelectAtLeastOneCollection": "Veuillez sélectionner au moins une collection",
+"saveDatabaseBackup": "Enregistrer la sauvegarde de la base de données",
+"backupCancelled": "Sauvegarde annulée",
+"databaseBackupSavedSuccessfully": "Sauvegarde de la base de données enregistrée avec succès",
+"backupFailed": "Échec de la sauvegarde : {error}",
+"selectDatabaseBackup": "Sélectionner une sauvegarde de la base de données",
+"unableToReadSelectedFile": "Impossible de lire le fichier sélectionné",
+"invalidBackupFile": "Fichier de sauvegarde invalide",
+"restoreDatabase": "Restaurer la base de données ?",
+"backupContains": "Cette sauvegarde contient :",
+"collectionsCount": "{count} collections",
+"documentsCount": "{count} documents",
+"existingDocumentsWillBeOverwritten": "Les documents existants ayant les mêmes identifiants seront écrasés.",
+"doYouWantToContinue": "Voulez-vous continuer ?",
+"restore": "Restaurer",
+"databaseRestoredSuccessfully": "Base de données restaurée avec succès ({count} documents)",
+"restoreFailed": "Échec de la restauration : {error}",
+"databaseBackup": "Sauvegarde de la base de données",
+"createBackupDescription": "Créez une sauvegarde de vos données Firestore et enregistrez-la sous forme de fichier JSON.",
+"selectData": "Sélectionner les données",
+"chooseCollectionsToInclude": "Choisissez les collections à inclure.",
+"completedPercentage": "{percent} % terminé",
+"creatingBackup": "Création de la sauvegarde...",
+"createBackup": "Créer une sauvegarde",
+"restoreBackup": "Restaurer la sauvegarde",
+"backupFirestoreOnly": "La sauvegarde contient uniquement les données Firestore. Les images des produits et des profils stockées dans Firebase Storage ne sont pas incluses dans cette sauvegarde JSON.",
+
+"@backupFailed": {
+  "placeholders": {
+    "error": {
+      "type": "String"
+    }
+  }
+},
+"@collectionsCount": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@documentsCount": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@databaseRestoredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@restoreFailed": {
+  "placeholders": {
+    "error": {
+      "type": "String"
+    }
+  }
+},
+"@completedPercentage": {
+  "placeholders": {
+    "percent": {
+      "type": "int"
+    }
+  }
+},
+"pleaseSelectProfilePicture": "Veuillez sélectionner une photo de profil",
+"profileUpdatedSuccessfully": "Profil mis à jour avec succès",
+"profilePhotoRequired": "Photo de profil *",
+"changeProfilePhoto": "Modifier la photo de profil",
+"personalInformation": "Informations personnelles",
+"firstNameIsRequired": "Le prénom est obligatoire",
+"lastNameIsRequired": "Le nom est obligatoire",
+"usernameIsRequired": "Le nom d'utilisateur est obligatoire",
+"phoneOptional": "Téléphone (facultatif)",
+"enterAValidPhoneNumber": "Entrez un numéro de téléphone valide",
+"saveChanges": "Enregistrer les modifications",
+"productDeletedSuccessfully": "Produit supprimé avec succès",
+"productNotFound": "Produit introuvable",
+"statistics": "Statistiques",
+"rating": "Évaluation",
+"discount": "Réduction",
+"deleteProduct": "Supprimer le produit",
+"deleteProductConfirmation": "Êtes-vous sûr de vouloir supprimer ce produit ?",
+"productOutOfStock": "Ce produit est en rupture de stock.",
+"onlyItemsAvailable": "Seulement {stock} articles disponibles.",
+"@onlyItemsAvailable": {
+  "placeholders": {
+    "stock": {
+      "type": "int"
+    }
+  }
+},
+"alreadyInCart": "Ce produit est déjà dans votre panier.",
+"orderPlacedNotification": "Commande passée",
+"orderPlacedNotificationBody": "Votre commande {orderNumber} a été passée avec succès.",
+"orderUpdatedNotification": "Commande mise à jour",
+"orderUpdatedNotificationBody": "Votre commande {orderNumber} est maintenant {status}.",
+"newProductNotification": "Nouveau produit",
+"newProductNotificationBody": "Un nouveau produit a été ajouté : {productName}.",
+"promotionNotification": "Offre spéciale",
+"promotionNotificationBody": "{productName} est maintenant en promotion !",
+"tapAgainToExit": "Appuyez à nouveau pour quitter",
+"newOrderNotificationBody": "{userName} a passé la commande {orderNumber}",
+"@newOrderNotificationBody": {
+  "description": "Corps de notification admin pour une nouvelle commande",
+  "placeholders": {
+    "userName": {},
+    "orderNumber": {}
+  }
+},
+"enterStock": "Veuillez saisir la quantité en stock.",
+"continueAsGuest": "Continuer en tant qu’invité"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+

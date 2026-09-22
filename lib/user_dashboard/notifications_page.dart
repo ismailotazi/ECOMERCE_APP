@@ -1,130 +1,134 @@
-import 'package:flutter/material.dart';
+// import 'package:ecomerce_app/l10n/app_localizations.dart';
+// import 'package:ecomerce_app/theme/custom_back_button.dart';
+// import 'package:flutter/material.dart';
 
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({super.key});
+// class NotificationsPage extends StatelessWidget {
+//   const NotificationsPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Notifications"), centerTitle: true),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
+//   @override
+//   Widget build(BuildContext context) {
+//     final t = AppLocalizations.of(context)!;
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(t.notifications),
+//         leading: const CustomBackButton(),
+//         centerTitle: true,
+//       ),
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           padding: const EdgeInsets.all(20),
+//           child: Column(
+//             children: [
+//               const SizedBox(height: 20),
 
-            CircleAvatar(
-              radius: 45,
-              backgroundColor: Colors.orange.withValues(alpha: .12),
-              child: const Icon(
-                Icons.notifications_active,
-                size: 45,
-                color: Colors.orange,
-              ),
-            ),
+//               CircleAvatar(
+//                 radius: 45,
+//                 backgroundColor: Colors.orange.withValues(alpha: .12),
+//                 child: const Icon(
+//                   Icons.notifications_active,
+//                   size: 45,
+//                   color: Colors.orange,
+//                 ),
+//               ),
 
-            const SizedBox(height: 20),
+//               const SizedBox(height: 20),
 
-            const Text(
-              "Notifications",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+//               Text(
+//                 t.notifications,
+//                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+//               ),
 
-            const SizedBox(height: 8),
+//               const SizedBox(height: 8),
 
-            const Text(
-              "Manage how you receive updates from the app.",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey, fontSize: 15),
-            ),
+//               Text(
+//                 t.manageNotificationsDescription,
+//                 textAlign: TextAlign.center,
+//                 style: TextStyle(color: Colors.grey, fontSize: 15),
+//               ),
 
-            const SizedBox(height: 30),
+//               const SizedBox(height: 30),
 
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: SwitchListTile(
-                value: true,
-                onChanged: (_) {},
-                secondary: const Icon(Icons.shopping_bag_outlined),
-                title: const Text("Order Updates"),
-                subtitle: const Text("Receive updates about your orders."),
-              ),
-            ),
+//               Card(
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(18),
+//                 ),
+//                 child: SwitchListTile(
+//                   value: true,
+//                   onChanged: (_) {},
+//                   secondary: const Icon(Icons.shopping_bag_outlined),
+//                   title: Text(t.orderUpdates),
+//                   subtitle: Text(t.orderUpdatesDescription),
+//                 ),
+//               ),
 
-            const SizedBox(height: 12),
+//               const SizedBox(height: 12),
 
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: SwitchListTile(
-                value: true,
-                onChanged: (_) {},
-                secondary: const Icon(Icons.local_offer_outlined),
-                title: const Text("Offers & Discounts"),
-                subtitle: const Text("Get notified about new deals."),
-              ),
-            ),
+//               Card(
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(18),
+//                 ),
+//                 child: SwitchListTile(
+//                   value: true,
+//                   onChanged: (_) {},
+//                   secondary: const Icon(Icons.local_offer_outlined),
+//                   title: Text(t.offersDiscounts),
+//                   subtitle: Text(t.offersDiscountsDescription),
+//                 ),
+//               ),
 
-            const SizedBox(height: 12),
+//               const SizedBox(height: 12),
 
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: SwitchListTile(
-                value: false,
-                onChanged: (_) {},
-                secondary: const Icon(Icons.campaign_outlined),
-                title: const Text("Promotions"),
-                subtitle: const Text("Receive promotional notifications."),
-              ),
-            ),
+//               Card(
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(18),
+//                 ),
+//                 child: SwitchListTile(
+//                   value: false,
+//                   onChanged: (_) {},
+//                   secondary: const Icon(Icons.campaign_outlined),
+//                   title: Text(t.promotions),
+//                   subtitle: Text(t.promotionsDescription),
+//                 ),
+//               ),
 
-            const SizedBox(height: 12),
+//               const SizedBox(height: 12),
 
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: SwitchListTile(
-                value: true,
-                onChanged: (_) {},
-                secondary: const Icon(Icons.email_outlined),
-                title: const Text("Email Notifications"),
-                subtitle: const Text("Receive important emails."),
-              ),
-            ),
+//               Card(
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(18),
+//                 ),
+//                 child: SwitchListTile(
+//                   value: true,
+//                   onChanged: (_) {},
+//                   secondary: const Icon(Icons.email_outlined),
+//                   title: Text(t.emailNotifications),
+//                   subtitle: Text(t.emailNotificationsDescription),
+//                 ),
+//               ),
+//               const SizedBox(height: 30),
 
-            const SizedBox(height: 30),
+//               Card(
+//                 elevation: 2,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(18),
+//                 ),
+//                 child: Padding(
+//                   padding: EdgeInsets.all(18),
+//                   child: Row(
+//                     children: [
+//                       Icon(Icons.info_outline, color: Colors.blue),
+//                       SizedBox(width: 12),
+//                       Expanded(child: Text(t.pushNotificationsFutureUpdate)),
+//                     ],
+//                   ),
+//                 ),
+//               ),
 
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(18),
-                child: Row(
-                  children: [
-                    Icon(Icons.info_outline, color: Colors.blue),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        "Push notifications with Firebase Cloud Messaging will be available in a future update.",
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 30),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//               const SizedBox(height: 30),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

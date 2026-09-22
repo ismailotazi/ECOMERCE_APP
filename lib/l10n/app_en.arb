@@ -1,0 +1,743 @@
+
+{
+  "createAccount": "Create Account",
+
+  "enterEmail": "Enter email",
+  "invalidEmail": "Invalid email",
+  "password": "Password",
+  "enterPassword": "Enter password",
+  "min6Chars": "Min 6 chars",
+
+
+  "accountCreatedVerifyEmail": "Account created successfully. Please verify your email before logging in.",
+  "emailAlreadyInUse": "This email is already in use.",
+  "weakPassword": "Password is too weak.",
+  "noInternetConnection": "No internet connection.",
+  "registrationFailed": "Registration failed.",
+
+  "continueWithGoogle": "Continue with Google",
+  "googleError": "Google error: {error}",
+  "@googleError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "verifyYourEmailFirst": "Verify your email first",
+  "resend": "Resend",
+  "userDataNotFound": "User data not found.",
+ 
+  "wrongPassword": "Wrong password",
+  "loginFailed": "Login failed",
+  "login": "Login",
+  "forgotPassword": "Forgot Password?",
+  "dontHaveAnAccount": "Don't have an account? ",
+  "register": "Register",
+
+  "passwordResetEmailSent": "Password reset email sent! Check your inbox or spam folder.",
+  "anErrorOccurred": "An error occurred",
+  "noUserFoundForEmail": "No user found for this email",
+  "invalidEmailAddress": "Invalid email address",
+  "pleaseEnterYourEmail": "Please enter your email",
+  "resetPassword": "Reset Password",
+  "backToLogin": "Back to Login",
+  "forgotPasswordTitle": "Forgot Password",
+  "enterEmailToResetPassword": "Enter your email to reset your password",
+
+  "verifyEmail": "Verify Email",
+  "emailNotVerifiedYet": "Email is not verified yet.",
+  "verificationEmailSentSuccessfully": "Verification email sent successfully.",
+  "verificationEmailMessage": "We've sent a verification email to your inbox.\nPlease verify your email before continuing.",
+  "iveVerifiedMyEmail": "I've Verified My Email",
+  "resendVerificationEmail": "Resend Verification Email",
+  "logout": "Logout",
+
+"or": "OR",
+
+  "searchProducts": "Search products",
+  "noProductsFound": "No products found",
+  "categories": "Categories",
+  "all": "All",
+  "bestSelling": "Best Selling",
+ 
+
+  "smartphones": "Smartphones",
+  "laptops": "Laptops",
+  "tablets": "Tablets",
+  "smartwatches": "Smartwatches",
+  "audio": "Audio",
+  "gaming": "Gaming",
+  "electronics": "Electronics",
+  "homeAppliances": "Home Appliances",
+
+  "perfumes": "Perfumes",
+  "beauty": "Beauty",
+
+  "clothing": "Clothing",
+  "shoes": "Shoes",
+  "bags": "Bags",
+  "glasses": "Glasses",
+  "watches": "Watches",
+  "jewelry": "Jewelry",
+
+  "sports": "Sports",
+  "books": "Books",
+  "toys": "Toys",
+  "furniture": "Furniture",
+  "food": "Food",
+  "health": "Health",
+  "automotive": "Automotive",
+
+  "other": "Other",
+
+  "home": "Home",
+  "cart": "Cart",
+  "favorite": "Favorite",
+  "profile": "Profile",
+  
+
+  "rateThisProduct": "Rate this product",
+  "tellUsAboutThisProduct": "Tell us about this product...",
+  "reviewSubmittedSuccessfully": "Review submitted successfully",
+  "submitReview": "Submit Review",
+
+  "accountSettings": "Account Settings",
+  "editProfile": "Edit Profile",
+  "paymentMethods": "Payment Methods",
+
+
+
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+  "helpAndSupport": "Help & Support",
+  "contactSupport": "Contact Support",
+  "deleteAccount": "Delete Account",
+  "deleteAccountConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+
+  "deleteFailed": "Delete failed",
+  "logoutFailed": "Logout failed",
+ 
+
+ 
+  "orderHistory": "Order History",
+  "noOrderYet": "No order yet",
+  "pending": "Pending",
+  "processing": "Processing",
+  "shipped": "Shipped",
+  "delivered": "Delivered",
+  "cancelled": "Cancelled",
+  
+  "order": "Order",
+  "product": "Product",
+ 
+
+  "firstNameIsRequired": "First name is required",
+  "firstNameMinLength": "First name must be at least 2 characters",
+  "firstNameMaxLength": "First name must not exceed 30 characters",
+  "validFirstName": "Please enter a valid first name",
+
+
+  "lastNameIsRequired": "Last name is required",
+  "lastNameMinLength": "Last name must be at least 2 characters",
+  "lastNameMaxLength": "Last name must not exceed 30 characters",
+  "validLastName": "Please enter a valid last name",
+
+  "usernameOptional": "Username (Optional)",
+
+  "phoneNumberRequired": "Phone Number (Required)",
+  "pleaseEnterPhoneNumber": "Please enter your phone number",
+
+
+
+  "countryRequired": "Country (Required)",
+  "countryIsRequired": "Country is required",
+  "countryNameTooShort": "Country name is too short",
+  "countryNameTooLong": "Country name is too long",
+  "validCountryName": "Please enter a valid country name",
+
+  "cityRequired": "City (Required)",
+  "cityIsRequired": "City is required",
+  "cityNameTooShort": "City name is too short",
+
+  "validCityName": "Please enter a valid city name",
+
+  "streetAddressOptional": "Street Address (Optional)",
+  "zipCodeOptional": "ZIP Code (Optional)",
+
+  "additionalInformation": "Additional Information",
+  "genderOptional": "Gender (Optional)",
+
+
+
+  "dateOfBirthOptional": "Date of Birth (Optional)",
+  "selectYourBirthDate": "Select your birth date",
+
+
+  "profileUpdatedSuccessfully": "Profile updated successfully",
+
+  "clear": "Clear",
+  "noProductFound": "No product found",
+  "tryAnotherKeyword": "Try searching with another keyword.",
+  "noName": "No name",
+  
+  "pleaseLogin": "Please login",
+ 
+ 
+  "orderDetails": "Order Details",
+  "orderId": "Order ID",
+  "status": "Status",
+  "total": "Total",
+  "date": "Date",
+  
+
+
+  
+  "productDetails": "Product Details",
+  "profilePhoto": "Profile Photo",
+  "optional": "Optional",
+  "taxIncluded": "Tax included",
+  "writeReview": "Write Review",
+  "outOfStock": "Out of Stock",
+  "itemsLeftInStock": "Only {count} items left in stock",
+  "quantity": "Quantity",
+  "description": "Description",
+  "noDescriptionAvailable": "No description available.",
+  "relatedProducts": "Related Products",
+  "noRelatedProducts": "No related products",
+  "customerReviews": "Customer Reviews",
+  "noReviewsYet": "No reviews yet",
+  "noProducts": "No products",
+  "qty": "Qty",
+  "addToCart": "Add to Cart",
+  "buyNow": "Buy Now",
+  "addedToCart": "Added to cart 🛒",
+  "unknown": "Unknown",
+  "reviews": "Reviews",
+  "favorites": "Favorites",
+  "noFavoriteProducts": "No favorite products",
+  "removedFromFavorites": "Removed from favorites ❤️",
+  
+  "checkout": "Checkout",
+  "deliveryInformation": "Delivery Information",
+  "fullName": "Full Name",
+  "pleaseEnterYourFullName": "Please enter your full name",
+  "nameTooLong": "Name is too long",
+  "pleaseEnterAValidName": "Please enter a valid name",
+  "pleaseEnterYourFirstAndLastName": "Please enter your first and last name",
+  "phoneNumber": "Phone Number",
+  "address": "Address",
+  "pleaseEnterYourAddress": "Please enter your address",
+  "pleaseEnterAMoreCompleteAddress": "Please enter a more complete address",
+  "addressTooLong": "Address is too long",
+
+  "pleaseEnterYourCity": "Please enter your city",
+  "cityNameTooLong": "City name is too long",
+  "pleaseEnterAValidCity": "Please enter a valid city",
+  "saveYourInformation": "Save your information",
+  "forFasterCheckoutNextTime": "For faster checkout next time",
+  "paymentMethod": "Payment Method",
+  "cashOnDelivery": "Cash on Delivery",
+  "payWhenYourOrderArrives": "Pay when your order arrives",
+ 
+  "transferBeforeShipping": "Transfer before shipping",
+  "orderSummary": "Order Summary",
+  "items": "Items",
+  "payment": "Payment",
+  "placeOrder": "Place Order",
+  "orderPlacedSuccessfully": "Order placed successfully 🎉",
+
+  "pleaseEnterYourPhoneNumber": "Please enter your phone number",
+  "pleaseEnterAValidAddress": "Please enter a valid address",
+
+"pleaseEnterYourCountry": "Please enter your country",
+"pleaseEnterAValidCountry": "Please enter a valid country",
+"yourCartIsEmpty": "Your cart is empty",
+"selected": "Selected",
+"deselectAll": "Deselect All",
+"selectAll": "Select All",
+"pleaseSelectAtLeastOneProduct": "Please select at least one product",
+"bankTransfer": "Bank Transfer",
+"unableToSelectImage": "Unable to select image",
+"noActiveBankAccountsAvailable": "No active bank accounts available",
+"unableToLoadPaymentInformation": "Unable to load payment information",
+"copied": "copied",
+"copy": "Copy",
+
+"transferYourOrderTotalToTheBankAccountBelow": "Transfer your order total to the bank account below.",
+"selectBankAccount": "Select Bank Account",
+"bankAccountDetails": "Bank Account Details",
+"bank": "Bank",
+"email": "Email",
+"paymentProof": "Payment Proof",
+"uploadTransferScreenshot": "Upload transfer screenshot",
+"tapToChooseAnImage": "Tap to choose an image",
+"paymentProofSelected": "Payment proof selected",
+"afterCompletingTheTransfer": "After completing the transfer, tap \"I Have Transferred\" to continue placing your order.",
+"bankTransferCurrentlyUnavailable": "Bank Transfer is currently unavailable. Please choose another payment method.",
+"uploadFailed": "Upload failed",
+"iHaveTransferred": "I Have Transferred",
+"userNotLoggedIn": "User not logged in",
+  "language": "Language",
+  "chooseYourPreferredLanguage": "Choose your preferred language",
+  "chooseLanguageDescription": "Choose the language you want to use in the app.",
+  "english": "English",
+  "unitedStates": "United States",
+  "french": "Français",
+  "france": "France",
+  "arabic": "العربية",
+  "morocco": "Morocco",
+  "systemDefault": "System Default",
+  "followDeviceLanguage": "Follow device language",
+  "languageSavedSuccessfully": "Language saved successfully",
+  "notifications": "Notifications",
+  "manageNotificationsDescription": "Manage how you receive updates from the app.",
+  "orderUpdates": "Order Updates",
+  "orderUpdatesDescription": "Receive updates about your orders.",
+  "offersDiscounts": "Offers & Discounts",
+  "offersDiscountsDescription": "Get notified about new deals.",
+
+  "promotionsDescription": "Receive promotional notifications.",
+  "emailNotifications": "Email Notifications",
+  "emailNotificationsDescription": "Receive important emails.",
+  "pushNotificationsFutureUpdate": "Push notifications with Firebase Cloud Messaging will be available in a future update.",
+
+  "theme": "Theme",
+  "chooseYourPreferredTheme": "Choose your preferred theme",
+  "selectHowAppAppear": "Select how you want the app to appear.",
+  "light": "Light",
+  "alwaysUseLightMode": "Always use light mode",
+  "dark": "Dark",
+  "alwaysUseDarkMode": "Always use dark mode",
+
+  "followDeviceSettings": "Follow device settings",
+  "themeSavedSuccessfully": "Theme saved successfully",
+  "failedToSaveTheme": "Failed to save theme",
+ "add": "Add",
+
+  "users": "Users",
+  "noUsersFound": "No users found",
+  "noEmail": "No email",
+
+  "deleteUserConfirmation": "Are you sure you want to delete {name}?",
+
+  "unableToLoadOrders": "Unable to load orders.",
+"noOrdersFound": "No Orders Found",
+"userHasNoOrders": "This user hasn't placed any orders yet.",
+"orderNumber": "Order #{orderNumber}",
+"viewDetails": "View Details",
+"completed": "Completed",
+"usersOrders": "User Orders",
+"welcomeBack": "Welcome back",
+"dashboardSubtitle": "Here's what's happening today",
+
+"recentOrders": "Recent Orders",
+"noRecentOrders": "No recent orders",
+
+"totalRevenue": "Total Revenue",
+"average": "Average",
+"account": "Account",
+"storeManagement": "Store Management",
+"admin": "Administrator",
+"user": "User",
+"noProductsAvailable": "No products available",
+"productDeleted": "Product deleted",
+"edit": "Edit",
+"notificationSettings": "Notification Settings",
+"chooseNotifications": "Choose which notifications you want to receive.",
+"enableNotifications": "Enable Notifications",
+"turnAllNotificationsOnOrOff": "Turn all notifications on or off",
+"newOrders": "New Orders",
+"receiveNotificationsForNewOrders": "Receive notifications for new orders",
+"newUsers": "New Users",
+"notifyWhenCustomerRegisters": "Notify when a customer registers",
+"lowStock": "Low Stock",
+"alertWhenProductsRunningOut": "Alert when products are running out",
+"promotions": "Promotions",
+"marketingPromotionalNotifications": "Marketing & promotional notifications",
+"sound": "Sound",
+"playSoundWhenReceivingNotifications": "Play a sound when receiving notifications",
+"vibration": "Vibration",
+"vibrateWhenReceivingNotifications": "Vibrate when receiving notifications",
+"markAllAsRead": "Mark all as read",
+"allNotificationsMarkedAsRead": "All notifications marked as read",
+"noNotifications": "No notifications",
+"notificationDeleted": "Notification deleted",
+"newOrder": "New Order",
+"newUser": "New User",
+"newProduct": "New Product",
+"warning": "Warning",
+"pleaseAddAtLeastOneImage": "Please add at least one image",
+"productUpdatedSuccessfully": "Product updated successfully",
+"selectImages": "Select Images",
+"replaceImage": "Replace Image",
+"deleteImage": "Delete Image",
+"productName": "Product Name",
+"enterProductName": "Enter product name",
+"nameIsTooShort": "Name is too short",
+"maximum25Characters": "Maximum 25 characters",
+"nikeAirMaxHint": "e.g. Nike Air Max",
+"enterDescription": "Enter description",
+"descriptionIsTooShort": "Description is too short",
+"maximum80Characters": "Maximum 80 characters",
+
+"price": "Price",
+"enterPrice": "Enter price",
+"invalidPrice": "Invalid price",
+"priceMustBeGreaterThanZero": "Price must be greater than 0",
+"maximumPrice": "Maximum price is 99999.99",
+"oldPrice": "Old Price",
+"invalidOldPrice": "Invalid old price",
+"oldPriceMustBeGreaterThanZero": "Old price must be greater than 0",
+"stock": "Stock",
+"enterStockQuantity": "Enter stock quantity",
+"invalidStock": "Invalid stock",
+"stockCannotBeNegative": "Stock cannot be negative",
+"maximumStock": "Maximum stock is 999999",
+"category": "Category",
+"pleaseSelectCategory": "Please select a category",
+"brand": "Brand",
+"pleaseSelectBrand": "Please select a brand",
+"updateProduct": "Update Product",
+
+"oldPriceHint": "e.g. 129.99",
+"stockHint": "e.g. 25",
+"accessories": "Accessories",
+"editProduct": "Edit Product",
+"productNameHint": "e.g. Nike Air Max",
+
+"error": "Error",
+
+"priceHint": "e.g. 99.99",
+"shortDescriptionHint": "Short description...",
+
+  "gallery": "Gallery",
+  "camera": "Camera",
+  "selectImage": "Select Image",
+  "pleaseSelectAnImage": "Please select an image",
+  "productAddedSuccessfully": "Product added successfully!",
+  "addProduct": "Add Product",
+  "editUser": "Edit User",
+  "personalInformation": "Personal Information",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "username": "Username",
+  "phone": "Phone",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "dateOfBirth": "Date of Birth",
+  "selectDateOfBirth": "Select date of birth",
+  "shippingAddress": "Shipping Address",
+  "country": "Country",
+  "city": "City",
+  "streetAddress": "Street Address",
+  "zipCode": "ZIP Code",
+  "firstNameRequired": "First name is required",
+  "lastNameRequired": "Last name is required",
+  "userUpdatedSuccessfully": "User updated successfully",
+  "failedToUpdateUser": "Failed to update user: {error}",
+  "saving": "Saving...",
+
+  "usersDetails": "Users Details",
+
+"contactInformation": "Contact Information",
+
+"totalOrders": "Total Orders",
+"totalSpent": "Total Spent",
+"memberSince": "Member Since",
+"customerStatistics": "Customer Statistics",
+"quickActions": "Quick Actions",
+"viewOrders": "View Orders",
+"deleteUser": "Delete User",
+"areYouSureDeleteUser": "Are you sure you want to delete this user?",
+"cancel": "Cancel",
+"delete": "Delete",
+"userDeletedSuccessfully": "User deleted successfully",
+  "noUserFound": "No user found",
+  "userNotFound": "User not found",
+  "administrator": "Administrator",
+  "menu": "MENU",
+  "orders": "Orders",
+  "customers": "Customers",
+  "products": "Products",
+  "revenue": "Revenue",
+  "analytics": "Analytics",
+  "system": "SYSTEM",
+  "settings": "Settings",
+ 
+  "noOrders": "No Orders",
+"unknownUser": "Unknown User",
+"customer": "Customer",
+"orderTotal": "Order Total",
+"paymentInformation": "Payment Information",
+"paymentProofUploaded": "Payment proof uploaded",
+"paymentProofNotUploaded": "Payment proof not uploaded",
+"viewPaymentProof": "View Payment Proof",
+"orderStatus": "Order Status",
+"orderUpdatedSuccessfully": "Order updated successfully",
+"editBankAccount": "Edit Bank Account",
+"addBankAccount": "Add Bank Account",
+"editBankInformation": "Edit Bank Information",
+"bankInformation": "Bank Information",
+"updateBankAccountInfo": "Update the bank account information customers can use for bank transfers.",
+"addBankAccountInfo": "Add the bank account customers can use for bank transfers.",
+"bankName": "Bank Name",
+"accountName": "Account Name",
+"iban": "IBAN",
+"rib": "RIB",
+"swiftBic": "SWIFT / BIC",
+"phoneOptional": "Phone (Optional)",
+
+"customersCanUseAccount": "Customers can use this account for bank transfers.",
+"bankAccountUpdatedSuccessfully": "Bank account updated successfully",
+"bankAccountAddedSuccessfully": "Bank account added successfully",
+"failedToUpdateBankAccount": "Failed to update bank account",
+"failedToAddBankAccount": "Failed to add bank account",
+"updateBankAccount": "Update Bank Account",
+"saveBankAccount": "Save Bank Account",
+"bankNameRequired": "Bank name is required",
+"enterValidBankName": "Enter a valid bank name",
+"accountNameRequired": "Account name is required",
+"enterValidAccountName": "Enter a valid account name",
+"ibanRequired": "IBAN is required",
+"enterValidIban": "Enter a valid IBAN",
+"invalidIbanLength": "Invalid IBAN length",
+"ribRequired": "RIB is required",
+"ribExactly24Digits": "RIB must contain exactly 24 digits",
+"enterValidSwiftBic": "Enter a valid SWIFT / BIC code",
+"enterValidPhoneNumber": "Enter a valid phone number",
+"enterValidEmailAddress": "Enter a valid email address",
+"paymentBanks": "Payment Banks",
+"bankAccountDisabled": "Bank account disabled",
+"bankAccountEnabled": "Bank account enabled",
+"unableToUpdateBankAccount": "Unable to update bank account",
+"deleteBankAccount": "Delete Bank Account",
+"deleteBankConfirmation": "Are you sure you want to delete \"{bankName}\"?\n\nCustomers will no longer be able to use this account for bank transfers.",
+"bankAccountDeleted": "Bank account deleted",
+"unableToDeleteBankAccount": "Unable to delete bank account",
+"unableToLoadPaymentBanks": "Unable to load payment banks.",
+"tryAgain": "Try Again",
+"noBankAccountsYet": "No bank accounts yet",
+"addBankAccountToEnableTransfers": "Add a bank account to enable bank transfer payments.",
+"unnamedBank": "Unnamed Bank",
+"accountNameNotProvided": "Account name not provided",
+"bankOptions": "Bank options",
+"disable": "Disable",
+"enable": "Enable",
+"active": "Active",
+"inactive": "Inactive",
+"changePassword": "Change Password",
+"updateAdministratorPassword": "Update your administrator password.",
+"currentPassword": "Current Password",
+"newPassword": "New Password",
+"confirmPassword": "Confirm Password",
+"enterCurrentPassword": "Enter your current password",
+"passwordMinLength": "Password must contain at least 6 characters",
+"confirmYourPassword": "Confirm your password",
+"passwordsDoNotMatch": "Passwords do not match",
+"updatePassword": "Update Password",
+"passwordChangedSuccessfully": "Password changed successfully",
+"somethingWentWrong": "Something went wrong",
+"currentPasswordIncorrect": "Current password is incorrect",
+"passwordTooWeak": "Password is too weak",
+"tooManyAttempts": "Too many attempts. Try again later.",
+"pleaseSignInAgain": "Please sign in again and retry.",
+"exportOrders": "Export Orders",
+"unableToLoadProfile": "Unable to load profile",
+
+"account": "Account",
+"updateYourAdministratorProfile": "Update your administrator profile",
+"updateYourAccountPassword": "Update your account password",
+
+"application": "Application",
+"manageNotificationSettings": "Manage notification settings",
+
+"administration": "Administration",
+"viewStoreAnalytics": "View store analytics",
+"manageProducts": "Manage Products",
+"addEditOrDeleteProducts": "Add, edit or delete products",
+"manageOrders": "Manage Orders",
+"trackAndUpdateOrders": "Track and update orders",
+"manageUsers": "Manage Users",
+"viewRegisteredCustomers": "View registered customers",
+"exportAllOrders": "Export all orders",
+"backupDatabase": "Backup Database",
+"createBackup": "Create a backup",
+"manageBankTransferAccounts": "Manage bank transfer accounts",
+
+"about": "About",
+"appVersion": "App Version",
+"version101": "Version 1.0.0",
+
+"accountDeletedSuccessfully": "Account deleted successfully",
+"forSecurityReasonsSignInAgain": "For security reasons, please sign in again before deleting your account.",
+"failedToDeleteAccount": "Failed to delete account",
+"permanentlyDeleteAccountConfirmation": "Are you sure you want to permanently delete your account?\n\nThis action cannot be undone.",
+"storePerformanceOverview": "Store performance overview",
+"noData": "No Data",
+"revenue": "Revenue",
+"success": "Success",
+"orderStatus": "Order Status",
+"businessOverview": "Business Overview",
+"businessHealth": "Business Health",
+"revenueGeneratedFromDeliveredOrders": "Revenue generated from delivered orders",
+"usersRegistered": "{count} users registered",
+"productsAvailable": "{count} products available",
+"ordersDeliveredSuccessfully": "{count} orders delivered successfully",
+
+"@usersRegistered": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@productsAvailable": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@ordersDeliveredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"logoutConfirmation": "Are you sure you want to sign out?",
+"pleaseSelectAtLeastOneCollection": "Please select at least one collection",
+"saveDatabaseBackup": "Save Database Backup",
+"backupCancelled": "Backup cancelled",
+"databaseBackupSavedSuccessfully": "Database backup saved successfully",
+"backupFailed": "Backup failed: {error}",
+"selectDatabaseBackup": "Select Database Backup",
+"unableToReadSelectedFile": "Unable to read the selected file",
+"invalidBackupFile": "Invalid backup file",
+"restoreDatabase": "Restore Database?",
+"backupContains": "This backup contains:",
+"collectionsCount": "{count} collections",
+"documentsCount": "{count} documents",
+"existingDocumentsWillBeOverwritten": "Existing documents with the same IDs will be overwritten.",
+"doYouWantToContinue": "Do you want to continue?",
+"restore": "Restore",
+"databaseRestoredSuccessfully": "Database restored successfully ({count} documents)",
+"restoreFailed": "Restore failed: {error}",
+"databaseBackup": "Database Backup",
+"createBackupDescription": "Create a backup of your Firestore data and save it as a JSON file.",
+"selectData": "Select Data",
+"chooseCollectionsToInclude": "Choose which collections you want to include.",
+"completedPercentage": "{percent}% completed",
+"creatingBackup": "Creating Backup...",
+"createBackup": "Create Backup",
+"restoreBackup": "Restore Backup",
+"backupFirestoreOnly": "The backup contains Firestore data only. Product and profile images stored in Firebase Storage are not included in this JSON backup.",
+
+"@backupFailed": {
+  "placeholders": {
+    "error": {
+      "type": "String"
+    }
+  }
+},
+"@collectionsCount": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@documentsCount": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@databaseRestoredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+"@restoreFailed": {
+  "placeholders": {
+    "error": {
+      "type": "String"
+    }
+  }
+},
+"@completedPercentage": {
+  "placeholders": {
+    "percent": {
+      "type": "int"
+    }
+  }
+},
+"pleaseSelectProfilePicture": "Please select a profile picture",
+"profileUpdatedSuccessfully": "Profile updated successfully",
+"profilePhotoRequired": "Profile Photo *",
+"changeProfilePhoto": "Change Profile Photo",
+"personalInformation": "Personal Information",
+"firstNameIsRequired": "First name is required",
+"lastNameIsRequired": "Last name is required",
+"usernameIsRequired": "Username is required",
+"phoneOptional": "Phone (Optional)",
+"enterAValidPhoneNumber": "Enter a valid phone number",
+"saveChanges": "Save Changes",
+"productDeletedSuccessfully": "Product deleted successfully",
+"productNotFound": "Product not found",
+"statistics": "Statistics",
+"rating": "Rating",
+"discount": "Discount",
+"deleteProduct": "Delete Product",
+"deleteProductConfirmation": "Are you sure you want to delete this product?",
+"productOutOfStock": "This product is out of stock.",
+"onlyItemsAvailable": "Only {stock} items available.",
+"@onlyItemsAvailable": {
+  "placeholders": {
+    "stock": {
+      "type": "int"
+    }
+  }
+},
+"alreadyInCart": "This product is already in your cart.",
+"orderPlacedNotification": "Order Placed",
+"orderPlacedNotificationBody": "Your order {orderNumber} has been placed successfully.",
+"orderUpdatedNotification": "Order Updated",
+"orderUpdatedNotificationBody": "Your order {orderNumber} is now {status}.",
+"newProductNotification": "New Product",
+"newProductNotificationBody": "A new product has been added: {productName}.",
+"promotionNotification": "Special Offer",
+"promotionNotificationBody": "{productName} is now on sale!",
+"tapAgainToExit": "Tap again to exit",
+"newOrderNotificationBody": "{userName} placed order {orderNumber}",
+"@newOrderNotificationBody": {
+  "description": "Admin notification body for a new order",
+  "placeholders": {
+    "userName": {},
+    "orderNumber": {}
+  }
+},
+"enterStock": "Please enter stock quantity.",
+"continueAsGuest": "Continue as Guest"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
