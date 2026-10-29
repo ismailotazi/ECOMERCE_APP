@@ -1,15 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecomerce_app/admin_dashboard/edit_user_page.dart';
+
 import 'package:ecomerce_app/admin_dashboard/user_orders_page.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:ecomerce_app/theme/app_colors.dart';
 import 'package:ecomerce_app/theme/custom_back_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsPage extends StatelessWidget {
   final String userId;
 
   const UserDetailsPage({super.key, required this.userId});
+
+  String _getInitials(Map<String, dynamic> data) {
+    String getInitial(dynamic value) {
+      final name = value?.toString().trim() ?? '';
+      return name.isEmpty ? 'N' : name.characters.first.toUpperCase();
+    }
+
+    return '${getInitial(data["firstName"])}${getInitial(data["lastName"])}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +35,17 @@ class UserDetailsPage extends StatelessWidget {
         title: Text(t.usersDetails),
       ),
       body: SafeArea(
-        child: FutureBuilder<DocumentSnapshot>(
-          future: FirebaseFirestore.instance
-              .collection("users")
-              .doc(userId)
-              .get(),
+        child: FutureBuilder<List<DocumentSnapshot>>(
+          future: Future.wait([
+            FirebaseFirestore.instance.collection("users").doc(userId).get(),
+
+            FirebaseFirestore.instance
+                .collection("users")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .get(),
+          ]),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
                   color: Theme.of(context).colorScheme.primary,
@@ -39,7 +53,16 @@ class UserDetailsPage extends StatelessWidget {
               );
             }
 
-            if (!snapshot.data!.exists) {
+            if (!snapshot.hasData || snapshot.data!.length < 2) {
+              return Center(
+                child: Text(t.somethingWentWrong, textAlign: TextAlign.center),
+              );
+            }
+
+            final userSnapshot = snapshot.data![0];
+            final adminSnapshot = snapshot.data![1];
+
+            if (!userSnapshot.exists || !adminSnapshot.exists) {
               return Center(
                 child: Text(
                   t.userNotFound,
@@ -47,8 +70,43 @@ class UserDetailsPage extends StatelessWidget {
                 ),
               );
             }
+            final data = userSnapshot.data() as Map<String, dynamic>;
+            final adminData = adminSnapshot.data() as Map<String, dynamic>;
 
-            final data = snapshot.data!.data() as Map<String, dynamic>;
+            final adminStoreId = adminData["storeId"]?.toString();
+
+            if (adminData["role"]?.toString() != "admin" ||
+                adminData["isActive"] != true ||
+                adminStoreId == null ||
+                adminStoreId.isEmpty) {
+              return Center(
+                child: Text(t.somethingWentWrong, textAlign: TextAlign.center),
+              );
+            }
+
+            final userLegacyStoreId = data["storeId"]?.toString();
+
+            bool isUserInAdminStore = userLegacyStoreId == adminStoreId;
+
+            if (!isUserInAdminStore) {
+              final stores = data["stores"];
+
+              if (stores is Map<String, dynamic>) {
+                final membership = stores[adminStoreId];
+
+                if (membership is Map<String, dynamic>) {
+                  isUserInAdminStore =
+                      membership["role"] == "user" &&
+                      membership["isActive"] == true;
+                }
+              }
+            }
+
+            if (!isUserInAdminStore || data["role"]?.toString() != "user") {
+              return Center(
+                child: Text(t.somethingWentWrong, textAlign: TextAlign.center),
+              );
+            }
 
             return Center(
               child: ConstrainedBox(
@@ -67,23 +125,19 @@ class UserDetailsPage extends StatelessWidget {
                             backgroundColor: Theme.of(
                               context,
                             ).colorScheme.primaryContainer,
-                            backgroundImage:
-                                data["photoUrl"] != null &&
-                                    data["photoUrl"].toString().isNotEmpty
-                                ? NetworkImage(data["photoUrl"])
-                                : null,
-                            child:
-                                data["photoUrl"] == null ||
-                                    data["photoUrl"].toString().isEmpty
-                                ? Icon(
-                                    Icons.person,
-                                    size: isDesktop ? 60 : 55,
+                            child: Text(
+                              _getInitials(data),
+                              style: Theme.of(context).textTheme.headlineMedium
+                                  ?.copyWith(
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onPrimaryContainer,
-                                  )
-                                : null,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: isDesktop ? 36 : 32,
+                                  ),
+                            ),
                           ),
+
                           SizedBox(height: isDesktop ? 18 : 15),
                           Text(
                             "${data["firstName"]} ${data["lastName"]}",
@@ -91,17 +145,7 @@ class UserDetailsPage extends StatelessWidget {
                                 ?.copyWith(fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "@${data["username"]}",
-                            style: Theme.of(context).textTheme.bodyLarge
-                                ?.copyWith(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurfaceVariant,
-                                  fontSize: 16,
-                                ),
-                          ),
+
                           const SizedBox(height: 8),
                           Text(
                             data["email"] ?? "",
@@ -185,44 +229,6 @@ class UserDetailsPage extends StatelessWidget {
 
                             const Divider(),
 
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: CircleAvatar(
-                                backgroundColor: AppColors.warning.withValues(
-                                  alpha: .15,
-                                ),
-                                child: Icon(
-                                  Icons.people,
-                                  color: AppColors.warning,
-                                ),
-                              ),
-                              title: Text(t.gender),
-                              subtitle: Text(data["gender"] ?? "-"),
-                            ),
-
-                            const Divider(),
-
-                            ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: CircleAvatar(
-                                backgroundColor: AppColors.secondary.withValues(
-                                  alpha: .15,
-                                ),
-                                child: Icon(
-                                  Icons.cake,
-                                  color: AppColors.secondary,
-                                ),
-                              ),
-                              title: Text(t.dateOfBirth),
-                              subtitle: Text(
-                                data["birthDate"] != null
-                                    ? "${(data["birthDate"] as Timestamp).toDate().day}/"
-                                          "${(data["birthDate"] as Timestamp).toDate().month}/"
-                                          "${(data["birthDate"] as Timestamp).toDate().year}"
-                                    : "-",
-                              ),
-                            ),
-
                             SizedBox(height: isDesktop ? 28 : 25),
 
                             Card(
@@ -291,22 +297,6 @@ class UserDetailsPage extends StatelessWidget {
                                       title: Text(t.streetAddress),
                                       subtitle: Text(data["address"] ?? "-"),
                                     ),
-
-                                    const Divider(),
-
-                                    ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      leading: CircleAvatar(
-                                        backgroundColor: AppColors.secondary
-                                            .withValues(alpha: .15),
-                                        child: Icon(
-                                          Icons.markunread_mailbox,
-                                          color: AppColors.secondary,
-                                        ),
-                                      ),
-                                      title: Text(t.zipCode),
-                                      subtitle: Text(data["zipCode"] ?? "-"),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -318,6 +308,7 @@ class UserDetailsPage extends StatelessWidget {
                               future: FirebaseFirestore.instance
                                   .collection("orders")
                                   .where("userId", isEqualTo: userId)
+                                  .where("storeId", isEqualTo: adminStoreId)
                                   .get(),
                               builder: (context, orderSnapshot) {
                                 if (!orderSnapshot.hasData) {
@@ -335,11 +326,17 @@ class UserDetailsPage extends StatelessWidget {
                                 double totalSpent = 0;
 
                                 for (var order in orders) {
-                                  final data =
+                                  final orderData =
                                       order.data() as Map<String, dynamic>;
 
-                                  totalSpent += (data["totalPrice"] ?? 0)
-                                      .toDouble();
+                                  final totalPrice = orderData["totalPrice"];
+
+                                  if (totalPrice is num) {
+                                    totalSpent += totalPrice.toDouble();
+                                  } else if (totalPrice is String) {
+                                    totalSpent +=
+                                        double.tryParse(totalPrice) ?? 0;
+                                  }
                                 }
 
                                 return Card(
@@ -403,7 +400,7 @@ class UserDetailsPage extends StatelessWidget {
                                           ),
                                           title: Text(t.totalSpent),
                                           trailing: Text(
-                                            "\$${totalSpent.toStringAsFixed(2)}",
+                                            "${totalSpent.toStringAsFixed(2)} ${t.currencySymbol}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium
@@ -506,39 +503,6 @@ class UserDetailsPage extends StatelessWidget {
                                       width: double.infinity,
                                       child: ElevatedButton.icon(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: AppColors.info,
-                                          foregroundColor: AppColors.white,
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 14,
-                                          ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              14,
-                                            ),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) => EditUserPage(
-                                                userId: userId,
-                                                initialData: data,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        icon: const Icon(Icons.edit),
-                                        label: Text(t.editUser),
-                                      ),
-                                    ),
-
-                                    const SizedBox(height: 12),
-
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: ElevatedButton.icon(
-                                        style: ElevatedButton.styleFrom(
                                           backgroundColor: AppColors.error,
                                           foregroundColor: AppColors.white,
                                           padding: const EdgeInsets.symmetric(
@@ -632,579 +596,3 @@ class UserDetailsPage extends StatelessWidget {
     );
   }
 }
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:ecomerce_app/admin_dashboard/edit_user_page.dart';
-// import 'package:ecomerce_app/admin_dashboard/user_orders_page.dart';
-// import 'package:ecomerce_app/l10n/app_localizations.dart';
-// import 'package:ecomerce_app/theme/app_colors.dart';
-// import 'package:ecomerce_app/theme/custom_back_button.dart';
-// import 'package:flutter/material.dart';
-
-// class UserDetailsPage extends StatelessWidget {
-//   final String userId;
-
-//   const UserDetailsPage({super.key, required this.userId});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context)!;
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-
-//         leading: const CustomBackButton(),
-//         title: Text(t.usersDetails),
-//       ),
-
-//       body: SafeArea(
-//         child: FutureBuilder<DocumentSnapshot>(
-//           future: FirebaseFirestore.instance
-//               .collection("users")
-//               .doc(userId)
-//               .get(),
-
-//           builder: (context, snapshot) {
-//             if (!snapshot.hasData) {
-//               return Center(
-//                 child: CircularProgressIndicator(
-//                   color: Theme.of(context).colorScheme.primary,
-//                 ),
-//               );
-//             }
-
-//             if (!snapshot.data!.exists) {
-//               return Center(
-//                 child: Text(
-//                   t.userNotFound,
-//                   style: Theme.of(context).textTheme.bodyLarge,
-//                 ),
-//               );
-//             }
-
-//             final data = snapshot.data!.data() as Map<String, dynamic>;
-
-//             return ListView(
-//               padding: const EdgeInsets.all(20),
-//               children: [
-//                 Center(
-//                   child: Column(
-//                     children: [
-//                       CircleAvatar(
-//                         radius: 55,
-//                         backgroundColor: Theme.of(
-//                           context,
-//                         ).colorScheme.primaryContainer,
-//                         backgroundImage:
-//                             data["photoUrl"] != null &&
-//                                 data["photoUrl"].toString().isNotEmpty
-//                             ? NetworkImage(data["photoUrl"])
-//                             : null,
-//                         child:
-//                             data["photoUrl"] == null ||
-//                                 data["photoUrl"].toString().isEmpty
-//                             ? Icon(
-//                                 Icons.person,
-//                                 size: 55,
-//                                 color: Theme.of(
-//                                   context,
-//                                 ).colorScheme.onPrimaryContainer,
-//                               )
-//                             : null,
-//                       ),
-//                       const SizedBox(height: 15),
-
-//                       Text(
-//                         "${data["firstName"]} ${data["lastName"]}",
-//                         style: Theme.of(context).textTheme.headlineSmall
-//                             ?.copyWith(fontWeight: FontWeight.bold),
-//                       ),
-
-//                       const SizedBox(height: 6),
-
-//                       Text(
-//                         "@${data["username"]}",
-//                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-//                           color: Theme.of(context).colorScheme.onSurfaceVariant,
-//                           fontSize: 16,
-//                         ),
-//                       ),
-//                       const SizedBox(height: 8),
-//                       Text(
-//                         data["email"] ?? "",
-//                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-//                           color: Theme.of(context).colorScheme.onSurfaceVariant,
-//                         ),
-//                       ),
-
-//                       const SizedBox(height: 20),
-//                       Container(
-//                         padding: const EdgeInsets.symmetric(
-//                           horizontal: 18,
-//                           vertical: 8,
-//                         ),
-//                         decoration: BoxDecoration(
-//                           color: AppColors.info.withValues(alpha: .15),
-//                           borderRadius: BorderRadius.circular(30),
-//                         ),
-//                         child: Text(
-//                           t.user,
-//                           style: TextStyle(
-//                             color: AppColors.info,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-
-//                       const SizedBox(height: 30),
-//                     ],
-//                   ),
-//                 ),
-//                 const SizedBox(height: 25),
-//                 Card(
-//                   elevation: 2,
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(18),
-//                   ),
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(18),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           t.contactInformation,
-//                           style: Theme.of(context).textTheme.titleMedium
-//                               ?.copyWith(fontWeight: FontWeight.bold),
-//                         ),
-
-//                         const SizedBox(height: 20),
-
-//                         ListTile(
-//                           contentPadding: EdgeInsets.zero,
-//                           leading: CircleAvatar(
-//                             backgroundColor: AppColors.info.withValues(
-//                               alpha: .15,
-//                             ),
-//                             child: Icon(Icons.email, color: AppColors.info),
-//                           ),
-//                           title: Text(t.email),
-//                           subtitle: Text(data["email"] ?? "-"),
-//                         ),
-
-//                         const Divider(),
-
-//                         ListTile(
-//                           contentPadding: EdgeInsets.zero,
-//                           leading: CircleAvatar(
-//                             backgroundColor: AppColors.success.withValues(
-//                               alpha: .15,
-//                             ),
-//                             child: Icon(Icons.phone, color: AppColors.success),
-//                           ),
-//                           title: Text(t.phone),
-//                           subtitle: Text(data["phone"] ?? "-"),
-//                         ),
-
-//                         const Divider(),
-
-//                         ListTile(
-//                           contentPadding: EdgeInsets.zero,
-//                           leading: CircleAvatar(
-//                             backgroundColor: AppColors.warning.withValues(
-//                               alpha: .15,
-//                             ),
-//                             child: Icon(Icons.people, color: AppColors.warning),
-//                           ),
-//                           title: Text(t.gender),
-//                           subtitle: Text(data["gender"] ?? "-"),
-//                         ),
-
-//                         const Divider(),
-
-//                         ListTile(
-//                           contentPadding: EdgeInsets.zero,
-//                           leading: CircleAvatar(
-//                             backgroundColor: AppColors.secondary.withValues(
-//                               alpha: .15,
-//                             ),
-//                             child: Icon(Icons.cake, color: AppColors.secondary),
-//                           ),
-//                           title: Text(t.dateOfBirth),
-//                           subtitle: Text(
-//                             data["birthDate"] != null
-//                                 ? "${(data["birthDate"] as Timestamp).toDate().day}/"
-//                                       "${(data["birthDate"] as Timestamp).toDate().month}/"
-//                                       "${(data["birthDate"] as Timestamp).toDate().year}"
-//                                 : "-",
-//                           ),
-//                         ),
-//                         const SizedBox(height: 25),
-//                         Card(
-//                           elevation: 2,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(18),
-//                           ),
-//                           child: Padding(
-//                             padding: const EdgeInsets.all(18),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Text(
-//                                   t.shippingAddress,
-//                                   style: Theme.of(context).textTheme.titleMedium
-//                                       ?.copyWith(fontWeight: FontWeight.bold),
-//                                 ),
-//                                 const SizedBox(height: 20),
-
-//                                 ListTile(
-//                                   contentPadding: EdgeInsets.zero,
-//                                   leading: CircleAvatar(
-//                                     backgroundColor: AppColors.success
-//                                         .withValues(alpha: .15),
-//                                     child: Icon(
-//                                       Icons.public,
-//                                       color: AppColors.success,
-//                                     ),
-//                                   ),
-//                                   title: Text(t.country),
-//                                   subtitle: Text(data["country"] ?? "-"),
-//                                 ),
-
-//                                 const Divider(),
-
-//                                 ListTile(
-//                                   contentPadding: EdgeInsets.zero,
-//                                   leading: CircleAvatar(
-//                                     backgroundColor: AppColors.info.withValues(
-//                                       alpha: .15,
-//                                     ),
-//                                     child: Icon(
-//                                       Icons.location_city,
-//                                       color: AppColors.info,
-//                                     ),
-//                                   ),
-//                                   title: Text(t.city),
-//                                   subtitle: Text(data["city"] ?? "-"),
-//                                 ),
-
-//                                 const Divider(),
-
-//                                 ListTile(
-//                                   contentPadding: EdgeInsets.zero,
-//                                   leading: CircleAvatar(
-//                                     backgroundColor: AppColors.warning
-//                                         .withValues(alpha: .15),
-//                                     child: Icon(
-//                                       Icons.home,
-//                                       color: AppColors.warning,
-//                                     ),
-//                                   ),
-//                                   title: Text(t.streetAddress),
-//                                   subtitle: Text(data["address"] ?? "-"),
-//                                 ),
-
-//                                 const Divider(),
-
-//                                 ListTile(
-//                                   contentPadding: EdgeInsets.zero,
-//                                   leading: CircleAvatar(
-//                                     backgroundColor: AppColors.secondary
-//                                         .withValues(alpha: .15),
-//                                     child: Icon(
-//                                       Icons.markunread_mailbox,
-//                                       color: AppColors.secondary,
-//                                     ),
-//                                   ),
-//                                   title: Text(t.zipCode),
-//                                   subtitle: Text(data["zipCode"] ?? "-"),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         const SizedBox(height: 25),
-
-//                         FutureBuilder<QuerySnapshot>(
-//                           future: FirebaseFirestore.instance
-//                               .collection("orders")
-//                               .where("userId", isEqualTo: userId)
-//                               .get(),
-//                           builder: (context, orderSnapshot) {
-//                             if (!orderSnapshot.hasData) {
-//                               return Center(
-//                                 child: CircularProgressIndicator(
-//                                   color: Theme.of(context).colorScheme.primary,
-//                                 ),
-//                               );
-//                             }
-
-//                             final orders = orderSnapshot.data!.docs;
-
-//                             double totalSpent = 0;
-
-//                             for (var order in orders) {
-//                               final data = order.data() as Map<String, dynamic>;
-
-//                               totalSpent += (data["totalPrice"] ?? 0)
-//                                   .toDouble();
-//                             }
-
-//                             return Card(
-//                               elevation: 2,
-//                               shape: RoundedRectangleBorder(
-//                                 borderRadius: BorderRadius.circular(18),
-//                               ),
-//                               child: Padding(
-//                                 padding: const EdgeInsets.all(18),
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Text(
-//                                       t.customerStatistics,
-//                                       style: Theme.of(context)
-//                                           .textTheme
-//                                           .titleMedium
-//                                           ?.copyWith(
-//                                             fontWeight: FontWeight.bold,
-//                                           ),
-//                                     ),
-
-//                                     const SizedBox(height: 20),
-
-//                                     ListTile(
-//                                       contentPadding: EdgeInsets.zero,
-//                                       leading: CircleAvatar(
-//                                         backgroundColor: AppColors.info
-//                                             .withValues(alpha: .15),
-//                                         child: Icon(
-//                                           Icons.shopping_bag,
-//                                           color: AppColors.info,
-//                                         ),
-//                                       ),
-//                                       title: Text(t.totalOrders),
-//                                       trailing: Text(
-//                                         orders.length.toString(),
-//                                         style: Theme.of(context)
-//                                             .textTheme
-//                                             .titleMedium
-//                                             ?.copyWith(
-//                                               fontWeight: FontWeight.bold,
-//                                               color: AppColors.info,
-//                                             ),
-//                                       ),
-//                                     ),
-//                                     const Divider(),
-
-//                                     ListTile(
-//                                       contentPadding: EdgeInsets.zero,
-//                                       leading: CircleAvatar(
-//                                         backgroundColor: AppColors.success
-//                                             .withValues(alpha: .15),
-//                                         child: Icon(
-//                                           Icons.payments,
-//                                           color: AppColors.success,
-//                                         ),
-//                                       ),
-//                                       title: Text(t.totalSpent),
-//                                       trailing: Text(
-//                                         "\$${totalSpent.toStringAsFixed(2)}",
-//                                         style: Theme.of(context)
-//                                             .textTheme
-//                                             .titleMedium
-//                                             ?.copyWith(
-//                                               fontWeight: FontWeight.bold,
-//                                               color: AppColors.success,
-//                                             ),
-//                                       ),
-//                                     ),
-
-//                                     const Divider(),
-
-//                                     ListTile(
-//                                       contentPadding: EdgeInsets.zero,
-//                                       leading: CircleAvatar(
-//                                         backgroundColor: AppColors.warning
-//                                             .withValues(alpha: .15),
-//                                         child: Icon(
-//                                           Icons.calendar_today,
-//                                           color: AppColors.warning,
-//                                         ),
-//                                       ),
-//                                       title: Text(t.memberSince),
-//                                       subtitle: Text(
-//                                         data["createdAt"] != null
-//                                             ? (data["createdAt"] as Timestamp)
-//                                                   .toDate()
-//                                                   .toString()
-//                                                   .split(" ")
-//                                                   .first
-//                                             : "-",
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             );
-//                           },
-//                         ),
-//                         const SizedBox(height: 25),
-//                         Card(
-//                           elevation: 2,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(18),
-//                           ),
-//                           child: Padding(
-//                             padding: const EdgeInsets.all(18),
-//                             child: Column(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-//                               children: [
-//                                 Text(
-//                                   t.quickActions,
-//                                   style: Theme.of(context).textTheme.titleMedium
-//                                       ?.copyWith(fontWeight: FontWeight.bold),
-//                                 ),
-//                                 const SizedBox(height: 20),
-
-//                                 SizedBox(
-//                                   width: double.infinity,
-//                                   child: ElevatedButton.icon(
-//                                     style: ElevatedButton.styleFrom(
-//                                       backgroundColor: AppColors.primary,
-//                                       foregroundColor: AppColors.white,
-//                                       padding: const EdgeInsets.symmetric(
-//                                         vertical: 14,
-//                                       ),
-//                                       shape: RoundedRectangleBorder(
-//                                         borderRadius: BorderRadius.circular(14),
-//                                       ),
-//                                     ),
-//                                     onPressed: () {
-//                                       Navigator.push(
-//                                         context,
-//                                         MaterialPageRoute(
-//                                           builder: (_) =>
-//                                               UserOrdersPage(userId: userId),
-//                                         ),
-//                                       );
-//                                     },
-//                                     icon: const Icon(
-//                                       Icons.shopping_bag_outlined,
-//                                     ),
-//                                     label: Text(t.viewOrders),
-//                                   ),
-//                                 ),
-//                                 const SizedBox(height: 12),
-
-//                                 SizedBox(
-//                                   width: double.infinity,
-//                                   child: ElevatedButton.icon(
-//                                     style: ElevatedButton.styleFrom(
-//                                       backgroundColor: AppColors.info,
-//                                       foregroundColor: AppColors.white,
-//                                       padding: const EdgeInsets.symmetric(
-//                                         vertical: 14,
-//                                       ),
-//                                       shape: RoundedRectangleBorder(
-//                                         borderRadius: BorderRadius.circular(14),
-//                                       ),
-//                                     ),
-//                                     onPressed: () async {
-//                                       await Navigator.push(
-//                                         context,
-//                                         MaterialPageRoute(
-//                                           builder: (_) => EditUserPage(
-//                                             userId: userId,
-//                                             initialData: data,
-//                                           ),
-//                                         ),
-//                                       );
-//                                     },
-//                                     icon: const Icon(Icons.edit),
-//                                     label: Text(t.editUser),
-//                                   ),
-//                                 ),
-//                                 const SizedBox(height: 12),
-
-//                                 SizedBox(
-//                                   width: double.infinity,
-//                                   child: ElevatedButton.icon(
-//                                     style: ElevatedButton.styleFrom(
-//                                       backgroundColor: AppColors.error,
-//                                       foregroundColor: AppColors.white,
-//                                       padding: const EdgeInsets.symmetric(
-//                                         vertical: 14,
-//                                       ),
-//                                       shape: RoundedRectangleBorder(
-//                                         borderRadius: BorderRadius.circular(14),
-//                                       ),
-//                                     ),
-//                                     onPressed: () async {
-//                                       final confirm = await showDialog<bool>(
-//                                         context: context,
-//                                         builder: (_) => AlertDialog(
-//                                           title: Text(t.deleteUser),
-//                                           content: Text(t.areYouSureDeleteUser),
-//                                           actions: [
-//                                             TextButton(
-//                                               onPressed: () =>
-//                                                   Navigator.pop(context, false),
-//                                               child: Text(t.cancel),
-//                                             ),
-//                                             ElevatedButton(
-//                                               style: ElevatedButton.styleFrom(
-//                                                 backgroundColor:
-//                                                     AppColors.error,
-//                                               ),
-//                                               onPressed: () =>
-//                                                   Navigator.pop(context, true),
-//                                               child: Text(
-//                                                 t.delete,
-//                                                 style: TextStyle(
-//                                                   color: AppColors.white,
-//                                                 ),
-//                                               ),
-//                                             ),
-//                                           ],
-//                                         ),
-//                                       );
-
-//                                       if (confirm == true) {
-//                                         await FirebaseFirestore.instance
-//                                             .collection("users")
-//                                             .doc(userId)
-//                                             .delete();
-
-//                                         if (context.mounted) {
-//                                           Navigator.pop(context);
-
-//                                           ScaffoldMessenger.of(
-//                                             context,
-//                                           ).showSnackBar(
-//                                             SnackBar(
-//                                               content: Text(
-//                                                 t.userDeletedSuccessfully,
-//                                               ),
-//                                             ),
-//                                           );
-//                                         }
-//                                       }
-//                                     },
-//                                     icon: const Icon(Icons.delete),
-//                                     label: Text(t.deleteUser),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

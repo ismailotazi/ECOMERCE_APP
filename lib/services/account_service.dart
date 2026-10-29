@@ -20,10 +20,24 @@ class AccountService {
 
   // ================= DELETE ADMIN ACCOUNT =================
 
-  static Future<void> deleteAdminAccount() async {
+  static Future<void> deleteAdminAccount({required String password}) async {
     final user = _auth.currentUser;
 
     if (user == null) return;
+
+    final email = user.email;
+
+    if (email == null || email.isEmpty) {
+      throw FirebaseAuthException(code: 'missing-email');
+    }
+
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+
+    // Re-authenticate BEFORE deleting any Firestore data.
+    await user.reauthenticateWithCredential(credential);
 
     await _deletePersonalData(user.uid);
 
@@ -53,16 +67,6 @@ class AccountService {
     final ordersSnapshot = await userRef.collection('orders').get();
 
     for (final doc in ordersSnapshot.docs) {
-      await doc.reference.delete();
-    }
-
-    // Notifications
-    final notificationsSnapshot = await _firestore
-        .collection('notifications')
-        .where('userId', isEqualTo: uid)
-        .get();
-
-    for (final doc in notificationsSnapshot.docs) {
       await doc.reference.delete();
     }
 

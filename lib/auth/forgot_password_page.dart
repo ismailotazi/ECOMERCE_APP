@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
+  final String storeId;
+
+  const ForgotPasswordPage({super.key, required this.storeId});
 
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
@@ -18,6 +20,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   Future<void> resetPassword() async {
     final t = AppLocalizations.of(context)!;
+
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => isLoading = true);
@@ -26,13 +29,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: emailController.text.trim(),
       );
-
+      if (!mounted) return;
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("✅ ${t.passwordResetEmailSent}")));
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const LoginPage()),
+        MaterialPageRoute(builder: (_) => LoginPage(storeId: widget.storeId)),
       );
     } on FirebaseAuthException catch (e) {
       String message = t.anErrorOccurred;
@@ -167,7 +171,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => const LoginPage()),
+                          MaterialPageRoute(
+                            builder: (_) => LoginPage(storeId: widget.storeId),
+                          ),
                         );
                       },
                       style: TextButton.styleFrom(

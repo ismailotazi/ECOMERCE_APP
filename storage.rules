@@ -1,0 +1,89 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function currentUser() {
+      return firestore.get(
+        /databases/(default)/documents/users/$(request.auth.uid)
+      ).data;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn()
+          && currentUser().role == "superAdmin";
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+          && currentUser().role == "admin";
+    }
+
+    function isStoreAdmin(storeId) {
+      return isAdmin()
+          && currentUser().storeId == storeId;
+    }
+
+    // =========================
+    // STORE LOGO
+    // =========================
+
+    match /stores/{storeId}/logo.jpg {
+      allow read: if true;
+      allow write: if isSuperAdmin();
+    }
+
+    // =========================
+    // PRODUCTS IMAGES
+    // =========================
+
+    match /products/{storeId}/{fileName} {
+      allow read: if true;
+
+      allow write: if isStoreAdmin(storeId);
+    }
+
+
+    // =========================
+    // PAYMENT PROOFS
+    // =========================
+
+ match /payment_proofs/{userId}/{fileName} {
+  allow read: if isSignedIn()
+      && request.auth.uid == userId;
+
+  allow write: if isSignedIn()
+      && request.auth.uid == userId
+      && request.resource != null
+      && request.resource.size < 10 * 1024 * 1024
+      && request.resource.contentType.matches('image/.*');
+}
+    // =========================
+    // SUBSCRIPTION PAYMENT PROOFS
+    // =========================
+
+    match /subscription_payment_proofs/{storeId}/{fileName} {
+      allow read: if isSuperAdmin()
+          || isStoreAdmin(storeId);
+
+      allow write: if isStoreAdmin(storeId)
+          && request.resource != null
+          && request.resource.size < 10 * 1024 * 1024
+          && (
+            request.resource.contentType.matches('image/.*')
+            || request.resource.contentType == 'application/pdf'
+          );
+    }
+    // =========================
+    // DENY EVERYTHING ELSE
+    // =========================
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

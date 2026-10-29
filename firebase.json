@@ -1,1 +1,48 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"crapp-da159","appId":"1:570300953679:android:69f7cfa37013c41bb7a63a","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"crapp-da159","configurations":{"android":"1:570300953679:android:69f7cfa37013c41bb7a63a","ios":"1:570300953679:ios:7b410f594caba67cb7a63a","macos":"1:570300953679:ios:7b410f594caba67cb7a63a","web":"1:570300953679:web:06ee5a7a0c0469adb7a63a","windows":"1:570300953679:web:06ee5a7a0c0469adb7a63a"}}}}}}
+﻿{
+    "flutter":  {
+                    "platforms":  {
+                                      "android":  {
+                                                      "default":  {
+                                                                      "projectId":  "ecomercefixapp",
+                                                                      "appId":  "1:717172571493:android:aad057121eaee580c6f58c",
+                                                                      "fileOutput":  "android/app/google-services.json"
+                                                                  }
+                                                  },
+                                      "dart":  {
+                                                   "lib/firebase_options.dart":  {
+                                                                                     "projectId":  "ecomercefixapp",
+                                                                                     "configurations":  {
+                                                                                                            "android":  "1:717172571493:android:aad057121eaee580c6f58c",
+                                                                                                            "ios":  "1:717172571493:ios:9d43694e7b14cff5c6f58c",
+                                                                                                            "macos":  "1:717172571493:ios:9d43694e7b14cff5c6f58c",
+                                                                                                            "web":  "1:717172571493:web:d4e5417d48048f59c6f58c",
+                                                                                                            "windows":  "1:717172571493:web:2ed581ce47e94d12c6f58c"
+                                                                                                        }
+                                                                                 }
+                                               }
+                                  }
+                },
+    "firestore":  {
+                      "database":  "(default)",
+                      "location":  "europe-west1",
+                      "rules":  "firestore.rules",
+                      "indexes":  "firestore.indexes.json"
+                  },
+    "storage":  {
+                    "rules":  "storage.rules"
+                },
+    "hosting":  {
+                    "public":  "build/web",
+                    "ignore":  [
+                                   "firebase.json",
+                                   "**/.*",
+                                   "**/node_modules/**"
+                               ],
+                    "rewrites":  [
+                                     {
+                                         "source":  "**",
+                                         "destination":  "/index.html"
+                                     }
+                                 ]
+                }
+}

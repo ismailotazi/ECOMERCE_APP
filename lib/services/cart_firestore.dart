@@ -30,8 +30,10 @@ class CartFirestore {
     });
   }
 
-  static Future<List<Map<String, dynamic>>> loadCart() async {
+  static Future<List<Map<String, dynamic>>> loadCart(String storeId) async {
     if (_user == null) return [];
+
+    if (storeId.isEmpty) return [];
 
     final snapshot = await _cartRef.get();
 
@@ -43,63 +45,121 @@ class CartFirestore {
       return [];
     }
 
-    return (data["items"] as List)
+    final items = (data["items"] as List)
         .map(
           (item) =>
               Map<String, dynamic>.from(Map<String, dynamic>.from(item as Map)),
         )
         .toList();
+
+    if (items.isEmpty) return [];
+
+    final validItems = <Map<String, dynamic>>[];
+
+    for (final item in items) {
+      final itemStoreId = item["storeId"]?.toString();
+
+      // Old cart item without storeId → ignore it.
+      if (itemStoreId == null || itemStoreId.isEmpty) {
+        continue;
+      }
+
+      // Cart item belongs to another store → ignore it.
+      if (itemStoreId != storeId) {
+        continue;
+      }
+
+      final productId = item["id"]?.toString();
+
+      if (productId == null || productId.isEmpty) {
+        continue;
+      }
+
+      final productDoc = await _firestore
+          .collection("products")
+          .doc(productId)
+          .get();
+
+      if (!productDoc.exists) {
+        continue;
+      }
+
+      final productData = productDoc.data();
+
+      if (productData == null) {
+        continue;
+      }
+
+      if (productData["storeId"]?.toString() != storeId) {
+        continue;
+      }
+
+      validItems.add(item);
+    }
+
+    return validItems;
   }
 
-  static Future<List<Map<String, dynamic>>> syncCart() async {
-    if (_user == null) {
-      return await CartStorage.loadCart();
-    }
-
-    final localCart = await CartStorage.loadCart();
-    final remoteCart = await loadCart();
-
-    // Local cart exists, Firebase cart doesn't exist yet.
-    if (remoteCart.isEmpty && localCart.isNotEmpty) {
-      await saveCart(localCart);
-      return localCart;
-    }
-
-    // Firebase cart exists, local cart is empty.
-    if (remoteCart.isNotEmpty && localCart.isEmpty) {
-      await CartStorage.saveCart(remoteCart);
-      return remoteCart;
-    }
-
-    // Both are empty.
-    if (remoteCart.isEmpty && localCart.isEmpty) {
+  static Future<List<Map<String, dynamic>>> syncCart(String storeId) async {
+    if (storeId.isEmpty) {
       return [];
     }
 
-    // Both have products.
-    // Firebase products are added first.
-    // Local products override the same product.
+    // =========================
+    // LOGGED USER
+    // =========================
+    final localCart = await CartStorage.loadCart();
+
+    // IMPORTANT:
+    // Never allow products from another store
+    // to enter the current store cart.
+    final filteredLocalCart = localCart
+        .where((item) {
+          return item["storeId"]?.toString() == storeId;
+        })
+        .map((item) {
+          return Map<String, dynamic>.from(item);
+        })
+        .toList();
+
+    // Load remote cart ONLY for current store
+    final remoteCart = await loadCart(storeId);
+
     final mergedCart = <String, Map<String, dynamic>>{};
 
+    // Remote cart
     for (final item in remoteCart) {
       final productId = item["id"]?.toString();
 
-      if (productId != null && productId.isNotEmpty) {
-        mergedCart[productId] = Map<String, dynamic>.from(item);
+      if (productId == null || productId.isEmpty) {
+        continue;
       }
+
+      if (item["storeId"]?.toString() != storeId) {
+        continue;
+      }
+
+      mergedCart[productId] = Map<String, dynamic>.from(item);
     }
 
-    for (final item in localCart) {
+    // Local cart
+    for (final item in filteredLocalCart) {
       final productId = item["id"]?.toString();
 
-      if (productId != null && productId.isNotEmpty) {
-        mergedCart[productId] = Map<String, dynamic>.from(item);
+      if (productId == null || productId.isEmpty) {
+        continue;
       }
+
+      if (item["storeId"]?.toString() != storeId) {
+        continue;
+      }
+
+      mergedCart[productId] = Map<String, dynamic>.from(item);
     }
 
     final result = mergedCart.values.toList();
 
-    // Save the merged cart on both sides.
+    // Save ONLY current store products
     await CartStorage.saveCart(result);
     await saveCart(result);
 
@@ -114,12 +174,12 @@ class CartFirestore {
     await CartStorage.clearCart();
   }
 
-  static Stream<List<Map<String, dynamic>>> cartStream() {
-    if (_user == null) {
+  static Stream<List<Map<String, dynamic>>> cartStream(String storeId) {
+    if (_user == null || storeId.isEmpty) {
       return const Stream.empty();
     }
 
-    return _cartRef.snapshots().map((snapshot) {
+    return _cartRef.snapshots().asyncMap((snapshot) async {
       if (!snapshot.exists) return [];
 
       final data = snapshot.data();
@@ -128,13 +188,48 @@ class CartFirestore {
         return [];
       }
 
-      return (data["items"] as List)
+      final items = (data["items"] as List)
           .map(
             (item) => Map<String, dynamic>.from(
               Map<String, dynamic>.from(item as Map),
             ),
           )
           .toList();
+
+      if (items.isEmpty) return [];
+
+      final validItems = <Map<String, dynamic>>[];
+
+      for (final item in items) {
+        final productId = item["id"]?.toString();
+
+        if (productId == null || productId.isEmpty) {
+          continue;
+        }
+
+        final productDoc = await _firestore
+            .collection("products")
+            .doc(productId)
+            .get();
+
+        if (!productDoc.exists) {
+          continue;
+        }
+
+        final productData = productDoc.data();
+
+        if (productData == null) {
+          continue;
+        }
+
+        if (productData["storeId"]?.toString() != storeId) {
+          continue;
+        }
+
+        validItems.add(item);
+      }
+
+      return validItems;
     });
   }
 }

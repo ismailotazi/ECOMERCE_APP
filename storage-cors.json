@@ -1,0 +1,14 @@
+[
+  {
+    "origin": [
+      "https://milomall.ma",
+      "https://www.milomall.ma",
+      "https://ecomercefixapp.web.app",
+      "https://ecomercefixapp.firebaseapp.com",
+      "http://localhost:*"
+    ],
+    "method": ["GET", "HEAD", "OPTIONS"],
+    "responseHeader": ["Content-Type"],
+    "maxAgeSeconds": 3600
+  }
+]

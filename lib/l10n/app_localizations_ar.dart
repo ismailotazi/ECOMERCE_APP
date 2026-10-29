@@ -15,7 +15,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterEmail => 'أدخل البريد الإلكتروني';
 
   @override
-  String get invalidEmail => 'البريد الإلكتروني غير صالح';
+  String get invalidEmail => 'يرجى إدخال بريد إلكتروني صالح.';
 
   @override
   String get password => 'كلمة المرور';
@@ -77,7 +77,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get register => 'إنشاء حساب';
 
   @override
-  String get passwordResetEmailSent => 'تم إرسال بريد إعادة تعيين كلمة المرور! تحقق من صندوق الوارد أو مجلد البريد العشوائي.';
+  String get passwordResetEmailSent => 'تم إرسال بريد إعادة تعيين كلمة المرور.';
 
   @override
   String get anErrorOccurred => 'حدث خطأ';
@@ -323,9 +323,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get validLastName => 'يرجى إدخال اسم عائلة صالح';
 
   @override
-  String get usernameOptional => 'اسم المستخدم (اختياري)';
-
-  @override
   String get phoneNumberRequired => 'رقم الهاتف (مطلوب)';
 
   @override
@@ -362,19 +359,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get streetAddressOptional => 'عنوان الشارع (اختياري)';
 
   @override
-  String get zipCodeOptional => 'الرمز البريدي (اختياري)';
-
-  @override
   String get additionalInformation => 'معلومات إضافية';
 
   @override
-  String get genderOptional => 'الجنس (اختياري)';
+  String get subscribedStores => 'المتاجر المشتركة';
 
   @override
-  String get dateOfBirthOptional => 'تاريخ الميلاد (اختياري)';
-
-  @override
-  String get selectYourBirthDate => 'اختر تاريخ ميلادك';
+  String get unsubscribedStores => 'المتاجر غير المشتركة';
 
   @override
   String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
@@ -748,6 +739,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get add => 'إضافة';
 
   @override
+  String get orderStatusCannotBeChanged => 'لا يمكن تغيير حالة هذا الطلب.';
+
+  @override
   String get users => 'المستخدمون';
 
   @override
@@ -806,7 +800,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get account => 'الحساب';
 
   @override
-  String get storeManagement => 'إدارة المتجر';
+  String get storeManagement => 'إدارة المتاجر';
 
   @override
   String get admin => 'مسؤول';
@@ -1043,25 +1037,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lastName => 'اسم العائلة';
 
   @override
-  String get username => 'اسم المستخدم';
-
-  @override
   String get phone => 'رقم الهاتف';
-
-  @override
-  String get gender => 'الجنس';
 
   @override
   String get male => 'ذكر';
 
   @override
   String get female => 'أنثى';
-
-  @override
-  String get dateOfBirth => 'تاريخ الميلاد';
-
-  @override
-  String get selectDateOfBirth => 'اختر تاريخ الميلاد';
 
   @override
   String get shippingAddress => 'عنوان الشحن';
@@ -1074,9 +1056,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get streetAddress => 'عنوان الشارع';
-
-  @override
-  String get zipCode => 'الرمز البريدي';
 
   @override
   String get firstNameRequired => 'الاسم الأول مطلوب';
@@ -1395,7 +1374,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tooManyAttempts => 'محاولات كثيرة جدًا. حاول مرة أخرى لاحقًا.';
 
   @override
-  String get pleaseSignInAgain => 'يرجى تسجيل الدخول مرة أخرى والمحاولة.';
+  String get pleaseSignInAgain => 'يرجى تسجيل الدخول مرة أخرى.';
 
   @override
   String get exportOrders => 'تصدير الطلبات';
@@ -1561,7 +1540,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String databaseRestoredSuccessfully(int count) {
-    return 'تمت استعادة قاعدة البيانات بنجاح ($count مستند)';
+    return 'اكتملت الاستعادة: تمت إضافة $count مستندات جديدة';
   }
 
   @override
@@ -1603,9 +1582,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get changeProfilePhoto => 'تغيير صورة الملف الشخصي';
-
-  @override
-  String get usernameIsRequired => 'اسم المستخدم مطلوب';
 
   @override
   String get enterAValidPhoneNumber => 'أدخل رقم هاتف صالحًا';
@@ -1689,5 +1665,861 @@ class AppLocalizationsAr extends AppLocalizations {
   String get enterStock => 'يرجى إدخال كمية المخزون.';
 
   @override
+  String get createNewStoreForPlatform => 'أنشئ متجرًا جديدًا لمنصتك.';
+
+  @override
+  String get exampleMiloMall => 'مثال: Milo Mall';
+
+  @override
+  String get exampleMiloMallId => 'مثال: milo_mall';
+
+  @override
+  String get pleaseEnterStoreName => 'يرجى إدخال اسم المتجر.';
+
+  @override
+  String get storeNameTooShort => 'اسم المتجر قصير جدًا.';
+
+  @override
+  String get storeId => 'معرّف المتجر';
+
+  @override
+  String get pleaseEnterStoreId => 'يرجى إدخال معرّف المتجر.';
+
+  @override
+  String get storeIdTooShort => 'معرّف المتجر قصير جدًا.';
+
+  @override
+  String get storeIdCharactersError => 'استخدم فقط الأحرف الصغيرة والأرقام والرمز _.';
+
+  @override
+  String get storeActive => 'المتجر نشط';
+
+  @override
+  String get usersCanAccessStore => 'يمكن للمستخدمين الوصول إلى هذا المتجر.';
+
+  @override
+  String get usersCannotAccessStore => 'لا يمكن للمستخدمين الوصول إلى هذا المتجر.';
+
+  @override
+  String get storeIdAlreadyExists => 'معرّف المتجر هذا موجود بالفعل.';
+
+  @override
+  String get storeCreatedSuccessfully => 'تم إنشاء المتجر بنجاح.';
+
+  @override
+  String get createAdministrator => 'إنشاء مسؤول';
+
+  @override
+  String get createAdminAssignStore => 'أنشئ مسؤولًا وقم بتعيينه إلى متجر.';
+
+  @override
+  String get pleaseEnterFirstName => 'يرجى إدخال الاسم الأول.';
+
+  @override
+  String get pleaseEnterLastName => 'يرجى إدخال اسم العائلة.';
+
+  @override
+  String get pleaseEnterEmail => 'يرجى إدخال البريد الإلكتروني.';
+
+  @override
+  String get pleaseEnterValidEmail => 'يرجى إدخال بريد إلكتروني صالح.';
+
+  @override
+  String get pleaseEnterPassword => 'يرجى إدخال كلمة المرور.';
+
+  @override
+  String get passwordMinCharacters => 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+
+  @override
+  String get assignStore => 'تعيين متجر';
+
+  @override
+  String get unableToLoadStores => 'تعذر تحميل المتاجر.';
+
+  @override
+  String get noActiveStoresAvailable => 'لا توجد متاجر نشطة متاحة.';
+
+  @override
+  String get adminCreatedSuccessfully => 'تم إنشاء المسؤول بنجاح';
+
+  @override
+  String get failedToCreateAdmin => 'فشل إنشاء المسؤول.';
+
+  @override
+  String get stores => 'المتاجر';
+
+  @override
+  String get createStore => 'إنشاء متجر';
+
+  @override
+  String get noStoresYet => 'لا توجد متاجر بعد';
+
+  @override
+  String get superAdmin => 'المسؤول العام';
+
+  @override
+  String get platformOverview => 'نظرة عامة على المنصة';
+
+  @override
+  String get manageAllStoresAndAdmins => 'إدارة جميع المتاجر والمسؤولين.';
+
+  @override
+  String get management => 'الإدارة';
+
+  @override
+  String get manageStores => 'إدارة المتاجر';
+
+  @override
+  String get createEditManageAllStores => 'إنشاء وتعديل وإدارة جميع المتاجر.';
+
+  @override
+  String get manageAdmins => 'إدارة المسؤولين';
+
+  @override
+  String get createAdminsAndAssignStores => 'إنشاء المسؤولين وتعيينهم للمتاجر.';
+
+  @override
+  String get ordersCompleted => 'الطلبات المكتملة';
+
+  @override
+  String get admins => 'المسؤولون';
+
+  @override
+  String get createAdmin => 'إنشاء مسؤول';
+
+  @override
+  String get noAdminsYet => 'لا يوجد مسؤولون بعد';
+
+  @override
+  String get noStoreAssigned => 'لم يتم تعيين متجر';
+
+  @override
+  String get storeInformation => 'معلومات المتجر';
+
+  @override
+  String get storeName => 'اسم المتجر';
+
+  @override
+  String get pleaseSelectStore => 'يرجى اختيار متجر.';
+
+  @override
+  String get security => 'الأمان';
+
+  @override
+  String get passwordResetDescription => 'إرسال رابط لإعادة تعيين كلمة المرور إلى بريدك الإلكتروني.';
+
+  @override
+  String get appearance => 'المظهر';
+
+  @override
+  String get adminManagement => 'إدارة المسؤولين';
+
+  @override
+  String get platform => 'المنصة';
+
+  @override
+  String get aboutMiloMall => 'حول Milo Mall';
+
+  @override
+  String get saasMarketplacePlatform => 'منصة Milo Mall للتجارة الإلكترونية SaaS';
+
+  @override
+  String get emailVerified => 'البريد الإلكتروني موثّق';
+
+  @override
+  String get emailNotVerified => 'البريد الإلكتروني غير موثّق';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get signOutConfirmation => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get editStore => 'تعديل المتجر';
+
+  @override
+  String get updateStoreInformation => 'قم بتحديث معلومات متجرك.';
+
+  @override
+  String get removeStoreLogo => 'إزالة شعار المتجر';
+
+  @override
+  String get storeUpdatedSuccessfully => 'تم تحديث المتجر بنجاح.';
+
+  @override
+  String get store => 'المتجر';
+
+  @override
+  String get editAdmin => 'تعديل المسؤول';
+
+  @override
+  String get since => 'منذ';
+
+  @override
+  String get adminInformation => 'معلومات المسؤول';
+
+  @override
+  String get updateAdminInformation => 'قم بتحديث معلومات المسؤول.';
+
+  @override
+  String get adminUpdatedSuccessfully => 'تم تحديث المسؤول بنجاح.';
+
+  @override
+  String get permissionDenied => 'ليس لديك صلاحية لتنفيذ هذا الإجراء.';
+
+  @override
+  String get adminOrStoreNotFound => 'لم يتم العثور على المسؤول أو المتجر.';
+
+  @override
+  String get emailAlreadyExists => 'يوجد حساب بهذا البريد الإلكتروني بالفعل.';
+
+  @override
+  String get storeInactive => 'المتجر المحدد غير نشط.';
+
+  @override
+  String get invalidAdminInformation => 'معلومات المسؤول غير صالحة.';
+
+  @override
+  String get adminUpdateSecurityInfo => 'تتم معالجة تغييرات المسؤول بشكل آمن عبر خدمة إدارة المنصة.';
+
+  @override
+  String get allStores => 'جميع المتاجر';
+
+  @override
+  String get allAdmins => 'جميع المسؤولين';
+
+  @override
+  String get totalStores => 'إجمالي المتاجر';
+
+  @override
+  String get activeStores => 'المتاجر النشطة';
+
+  @override
+  String get noStores => 'لم يتم العثور على متاجر';
+
+  @override
+  String get noAdmins => 'لم يتم العثور على مسؤولين';
+
+  @override
+  String get totalAdmins => 'إجمالي المسؤولين';
+
+  @override
+  String get computers => 'الحواسيب';
+
+  @override
+  String get fashion => 'الأزياء';
+
+  @override
+  String get lifestyle => 'نمط الحياة';
+
+  @override
+  String placedNewOrder(Object userName) {
+    return 'قام $userName بوضع طلب جديد';
+  }
+
+  @override
+  String get currencySymbol => 'د.م';
+
+  @override
+  String get whatsappNumber => 'رقم واتساب';
+
+  @override
+  String get enterWhatsappNumber => 'يرجى إدخال رقم واتساب';
+
+  @override
+  String get invalidWhatsappNumber => 'يرجى إدخال رقم واتساب صالح';
+
+  @override
+  String get accountInactive => 'حسابك غير نشط. يرجى التواصل مع مسؤول المتجر.';
+
+  @override
+  String get chooseYourStore => 'اختر متجرك';
+
+  @override
+  String get selectStoreToContinue => 'اختر متجرًا للمتابعة';
+
+  @override
+  String get noStoresAvailableAtMoment => 'لا توجد متاجر متاحة في الوقت الحالي.';
+
+  @override
+  String get oldPriceMustBeGreaterThanPrice => 'يجب أن يكون السعر القديم أكبر من السعر الحالي.';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get oldPriceMustBeHigher => 'يجب أن يكون السعر القديم أعلى من السعر الحالي';
+
+  @override
+  String get productRemovedByAdmin => 'هذا المنتج لم يعد متاحًا لأنه تم حذفه من طرف المسؤول.';
+
+  @override
+  String get subscriptionCenterTitle => 'مركز الاشتراكات';
+
+  @override
+  String get subscriptionCenterSubtitle => 'إدارة الاشتراكات الشهرية ومواعيد الأداء';
+
+  @override
+  String get subscriptionTotalStores => 'إجمالي المتاجر';
+
+  @override
+  String get subscriptionConfigured => 'تم إعدادها';
+
+  @override
+  String get subscriptionDueSoon => 'اقترب موعد الأداء';
+
+  @override
+  String get subscriptionOverdue => 'متأخر';
+
+  @override
+  String get subscriptionExpectedRevenue => 'الإيرادات الشهرية المتوقعة';
+
+  @override
+  String get subscriptionStoreSubscriptions => 'اشتراكات المتاجر';
+
+  @override
+  String get subscriptionFilterAll => 'الكل';
+
+  @override
+  String get subscriptionStatusActive => 'نشط';
+
+  @override
+  String get subscriptionStatusDueSoon => 'اقترب موعد الأداء';
+
+  @override
+  String get subscriptionStatusOverdue => 'متأخر';
+
+  @override
+  String get subscriptionStatusNotConfigured => 'غير مُعدّ';
+
+  @override
+  String get subscriptionNoStores => 'لا توجد متاجر تطابق هذا الفلتر.';
+
+  @override
+  String get subscriptionOverdueNote => 'الاشتراكات المتأخرة تعرض تنبيهاً فقط. تتم إدارة تفعيل المتاجر بشكل منفصل.';
+
+  @override
+  String get subscriptionManageTitle => 'إدارة الاشتراك';
+
+  @override
+  String get subscriptionMonthlyPrice => 'السعر الشهري (درهم)';
+
+  @override
+  String get subscriptionPriceHint => 'مثال: 150';
+
+  @override
+  String get subscriptionNextPayment => 'موعد الأداء القادم';
+
+  @override
+  String get subscriptionNotSet => 'غير محدد';
+
+  @override
+  String get subscriptionSaveNote => 'يتم حفظ معلومات الاشتراك فقط. لا يتم تسجيل أي أداء ولا يتم تعطيل المتجر.';
+
+  @override
+  String get subscriptionInvalidPrice => 'يرجى إدخال سعر شهري صالح.';
+
+  @override
+  String get subscriptionSelectPaymentDate => 'يرجى تحديد موعد الأداء القادم.';
+
+  @override
+  String get subscriptionSaving => 'جارٍ الحفظ...';
+
+  @override
+  String get subscriptionSave => 'حفظ الاشتراك';
+
+  @override
+  String get subscriptionStoreEnabled => 'المتجر مفعّل';
+
+  @override
+  String get subscriptionStoreDisabled => 'المتجر معطّل';
+
+  @override
+  String get subscriptionLoadError => 'تعذّر تحميل الاشتراكات.';
+
+  @override
+  String subscriptionUpdatedFor(String storeName) {
+    return 'تم تحديث اشتراك $storeName.';
+  }
+
+  @override
+  String subscriptionSaveError(String error) {
+    return 'تعذّر حفظ الاشتراك: $error';
+  }
+
+  @override
+  String get subscriptions => 'الاشتراكات';
+
+  @override
+  String get accessDeniedSuperAdminOnly => 'تم رفض الوصول. هذه الصفحة مخصصة للمشرف الأعلى فقط.';
+
+  @override
+  String get selectAtLeastOneCollection => 'اختر مجموعة واحدة على الأقل لإنشاء النسخة الاحتياطية.';
+
+  @override
+  String get existingDocumentsKeptUnchanged => 'ستبقى المستندات الموجودة دون تغيير.';
+
+  @override
+  String get onlyNewDocumentsAdded => 'ستتم إضافة المستندات الجديدة فقط.';
+
+  @override
+  String restoreFinished(int added, int skipped) {
+    return 'اكتملت الاستعادة: تمت إضافة $added مستندات وتجاوز $skipped مستندات.';
+  }
+
+  @override
+  String get storeSubscriptionSignInAgain => 'يرجى تسجيل الدخول مرة أخرى.';
+
+  @override
+  String get storeSubscriptionNoStore => 'لا يوجد متجر مرتبط بهذا الحساب.';
+
+  @override
+  String get storeSubscriptionStoreNotFound => 'لم يتم العثور على المتجر.';
+
+  @override
+  String get storeSubscriptionChooseFileType => 'اختر ملفًا بصيغة JPG أو PNG أو WEBP أو PDF.';
+
+  @override
+  String get storeSubscriptionFileTooLarge => 'يجب ألا يتجاوز حجم الملف 10 ميغابايت.';
+
+  @override
+  String get storeSubscriptionFileReadError => 'تعذرت قراءة الملف المحدد.';
+
+  @override
+  String storeSubscriptionFileSelectError(Object error) {
+    return 'تعذر اختيار الملف: $error';
+  }
+
+  @override
+  String get storeSubscriptionSelectDateAndProof => 'يرجى تحديد تاريخ التحويل وإرفاق إثبات الدفع أولًا.';
+
+  @override
+  String get storeSubscriptionFileUnavailable => 'الملف المحدد لم يعد متاحًا. يرجى اختياره مرة أخرى.';
+
+  @override
+  String get storeSubscriptionPriceNotConfigured => 'لم يتم إعداد سعر الاشتراك.';
+
+  @override
+  String get storeSubscriptionBankUnavailable => 'الحساب البنكي الخاص بالاشتراك غير متاح حاليًا.';
+
+  @override
+  String get storeSubscriptionPaymentSubmitted => 'تم إرسال إثبات الدفع. دفعتك في انتظار المراجعة.';
+
+  @override
+  String storeSubscriptionSubmitPaymentError(Object error) {
+    return 'تعذر إرسال الدفع: $error';
+  }
+
+  @override
+  String get storeSubscriptionTitle => 'الاشتراك والمدفوعات';
+
+  @override
+  String get storeSubscriptionYourSubscription => 'اشتراكك';
+
+  @override
+  String get storeSubscriptionPriceLabel => 'سعر الاشتراك';
+
+  @override
+  String get storeSubscriptionNextPaymentDate => 'تاريخ الدفع القادم';
+
+  @override
+  String get storeSubscriptionStatusLabel => 'حالة الاشتراك';
+
+  @override
+  String get storeSubscriptionBankTransfer => 'التحويل البنكي';
+
+  @override
+  String get storeSubscriptionBankUnavailableContact => 'التحويل البنكي غير متاح حاليًا. يرجى التواصل مع الدعم.';
+
+  @override
+  String get storeSubscriptionBankTransferDetails => 'بيانات التحويل البنكي';
+
+  @override
+  String get storeSubscriptionTransferInstructions => 'حوّل مبلغ الاشتراك إلى هذا الحساب.';
+
+  @override
+  String get storeSubscriptionBankName => 'اسم البنك';
+
+  @override
+  String get storeSubscriptionAccountHolder => 'صاحب الحساب';
+
+  @override
+  String get storeSubscriptionRib => 'رقم RIB';
+
+  @override
+  String get storeSubscriptionIban => 'رقم IBAN';
+
+  @override
+  String get storeSubscriptionSwiftBic => 'رمز SWIFT/BIC';
+
+  @override
+  String get storeSubscriptionSubmitProofTitle => 'إرسال إثبات الدفع';
+
+  @override
+  String get storeSubscriptionUploadReceiptSubtitle => 'ارفع إيصال التحويل البنكي للتحقق منه يدويًا.';
+
+  @override
+  String get storeSubscriptionTransferDate => 'تاريخ التحويل';
+
+  @override
+  String get storeSubscriptionTransactionReferenceOptional => 'مرجع المعاملة (اختياري)';
+
+  @override
+  String get storeSubscriptionTransactionReferenceHint => 'أدخل مرجع المعاملة البنكية';
+
+  @override
+  String get storeSubscriptionTransferReceiptRequired => 'إيصال التحويل *';
+
+  @override
+  String get storeSubscriptionChooseImageOrPdf => 'اختر صورة أو ملف PDF';
+
+  @override
+  String get storeSubscriptionAllowedFileTypes => 'JPG أو PNG أو WEBP أو PDF · الحد الأقصى 10 ميغابايت';
+
+  @override
+  String get storeSubscriptionBrowseFiles => 'استعراض الملفات';
+
+  @override
+  String get storeSubscriptionChangeFile => 'تغيير الملف';
+
+  @override
+  String get storeSubscriptionSubmitting => 'جارٍ الإرسال...';
+
+  @override
+  String get storeSubscriptionSubmitForVerification => 'إرسال للتحقق';
+
+  @override
+  String get storeSubscriptionManualVerificationNotice => 'إرسال إثبات الدفع لا يجدد اشتراكك تلقائيًا. يجب أن يتحقق مسؤول المنصة من عملية الدفع.';
+
+  @override
+  String get storeSubscriptionPaymentHistory => 'سجل المدفوعات';
+
+  @override
+  String get storeSubscriptionPaymentHistorySubtitle => 'تابع طلبات دفع اشتراكك.';
+
+  @override
+  String storeSubscriptionLoadHistoryError(Object error) {
+    return 'تعذر تحميل سجل المدفوعات: $error';
+  }
+
+  @override
+  String get storeSubscriptionNoPayments => 'لم يتم إرسال أي مدفوعات للاشتراك حتى الآن.';
+
+  @override
+  String get storeSubscriptionPaymentApproved => 'تمت الموافقة';
+
+  @override
+  String get storeSubscriptionPaymentRejected => 'مرفوض';
+
+  @override
+  String get storeSubscriptionPaymentPendingReview => 'في انتظار المراجعة';
+
+  @override
+  String get storeSubscriptionReference => 'المرجع';
+
+  @override
+  String get storeSubscriptionAdminNote => 'ملاحظة المسؤول';
+
+  @override
+  String storeSubscriptionLoadDetailsError(Object error) {
+    return 'تعذر تحميل تفاصيل الاشتراك: $error';
+  }
+
+  @override
+  String get storeSubscriptionLoadBankError => 'تعذر تحميل البيانات البنكية. يرجى التواصل مع الدعم.';
+
+  @override
+  String get storeSubscriptionManageTitle => 'إدارة اشتراكك';
+
+  @override
+  String get storeSubscriptionManageSubtitle => 'راجع باقتك، وحوّل المبلغ، وأرسل الإيصال للتحقق منه.';
+
+  @override
+  String get storeSubscriptionTryAgain => 'إعادة المحاولة';
+
+  @override
+  String get storeSubscriptionMonthlyPlan => 'شهري';
+
+  @override
+  String get reviewSubscriptionPayments => 'مراجعة مدفوعات الاشتراك';
+
+  @override
+  String get reviewSubscriptionPaymentsSubtitle => 'راجع التحويلات البنكية ووافق على المدفوعات أو ارفضها.';
+
+  @override
+  String get subscriptionPayments => 'مدفوعات الاشتراكات';
+
+  @override
+  String get subscriptionAndPayments => 'الاشتراك والمدفوعات';
+
+  @override
+  String get manageAllSubscriptions => 'إدارة جميع الاشتراكات';
+
+  @override
+  String get subscriptionPaymentPending => 'قيد الانتظار';
+
+  @override
+  String get subscriptionPaymentAll => 'الكل';
+
+  @override
+  String get subscriptionPaymentProof => 'إثبات الدفع';
+
+  @override
+  String get subscriptionPaymentNoProof => 'لم يتم تقديم إثبات الدفع.';
+
+  @override
+  String get subscriptionPaymentOpenUploadedFile => 'افتح الملف المرفوع باستخدام الرابط أدناه:';
+
+  @override
+  String subscriptionPaymentCouldNotOpenProof(Object error) {
+    return 'تعذر فتح إثبات الدفع: $error';
+  }
+
+  @override
+  String get subscriptionPaymentApproveTitle => 'الموافقة على الدفع';
+
+  @override
+  String get subscriptionPaymentRejectTitle => 'رفض الدفع';
+
+  @override
+  String get subscriptionPaymentRejectionReason => 'سبب الرفض *';
+
+  @override
+  String get subscriptionPaymentReviewNoteOptional => 'ملاحظة المراجعة (اختيارية)';
+
+  @override
+  String get subscriptionPaymentRequestMissing => 'طلب الدفع لم يعد موجودًا.';
+
+  @override
+  String get subscriptionPaymentMissingStoreId => 'طلب الدفع لا يحتوي على معرّف المتجر.';
+
+  @override
+  String get subscriptionPaymentStoreMissing => 'المتجر غير موجود.';
+
+  @override
+  String get subscriptionPaymentAlreadyReviewed => 'تمت مراجعة هذا الدفع بالفعل.';
+
+  @override
+  String get subscriptionPaymentApprovedUpdated => 'تمت الموافقة على الدفع وتحديث الاشتراك.';
+
+  @override
+  String get subscriptionPaymentRejectedMessage => 'تم رفض الدفع.';
+
+  @override
+  String subscriptionPaymentReviewError(Object error) {
+    return 'تعذرت مراجعة الدفع: $error';
+  }
+
+  @override
+  String get subscriptionPaymentBank => 'البنك';
+
+  @override
+  String get subscriptionPaymentTransferReference => 'مرجع التحويل';
+
+  @override
+  String get subscriptionPaymentTransferDate => 'تاريخ التحويل';
+
+  @override
+  String get subscriptionPaymentSubmitted => 'تاريخ الإرسال';
+
+  @override
+  String get subscriptionPaymentViewProof => 'عرض إثبات الدفع';
+
+  @override
+  String subscriptionPaymentLoadError(Object error) {
+    return 'تعذر تحميل طلبات الدفع:\n$error';
+  }
+
+  @override
+  String get subscriptionPaymentNoRequests => 'لم يتم العثور على طلبات دفع.';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get activeBankDetailsVisibleToStoreAdmins => 'المعلومات البنكية المفعّلة ظاهرة لمسؤولي المتاجر.';
+
+  @override
+  String get paymentInstructions => 'تعليمات الدفع';
+
+  @override
+  String get subscriptionBankAccount => 'الحساب البنكي للاشتراك';
+
+  @override
+  String get couldNotLoadBankDetails => 'تعذر تحميل المعلومات البنكية';
+
+  @override
+  String get bankDetailsSavedSuccessfully => 'تم حفظ المعلومات البنكية بنجاح';
+
+  @override
+  String get storeCategories => 'فئات المتجر';
+
+  @override
+  String get selectStoreCategories => 'اختر الفئات المتاحة في هذا المتجر';
+
+  @override
+  String get androidPhones => 'هواتف أندرويد';
+
+  @override
+  String get iphones => 'هواتف آيفون';
+
+  @override
+  String get phoneAccessories => 'إكسسوارات الهواتف';
+
+  @override
+  String get desktopComputers => 'أجهزة الكمبيوتر المكتبية';
+
+  @override
+  String get computerAccessories => 'إكسسوارات الكمبيوتر';
+
+  @override
+  String get monitors => 'الشاشات';
+
+  @override
+  String get printers => 'الطابعات';
+
+  @override
+  String get televisions => 'أجهزة التلفاز';
+
+  @override
+  String get cameras => 'الكاميرات';
+
+  @override
+  String get smartHome => 'المنزل الذكي';
+
+  @override
+  String get electronicAccessories => 'الإكسسوارات الإلكترونية';
+
+  @override
+  String get women => 'النساء';
+
+  @override
+  String get men => 'الرجال';
+
+  @override
+  String get kids => 'الأطفال';
+
+  @override
+  String get unisex => 'للجنسين';
+
+  @override
+  String get sunglasses => 'النظارات الشمسية';
+
+  @override
+  String get wallets => 'المحافظ';
+
+  @override
+  String get skincare => 'العناية بالبشرة';
+
+  @override
+  String get makeup => 'المكياج';
+
+  @override
+  String get bodyCare => 'العناية بالجسم';
+
+  @override
+  String get hairCare => 'العناية بالشعر';
+
+  @override
+  String get livingRoom => 'غرفة المعيشة';
+
+  @override
+  String get bedroom => 'غرفة النوم';
+
+  @override
+  String get office => 'المكتب';
+
+  @override
+  String get kitchen => 'المطبخ';
+
+  @override
+  String get outdoorFurniture => 'أثاث خارجي';
+
+  @override
+  String get fitness => 'اللياقة البدنية';
+
+  @override
+  String get training => 'التدريب';
+
+  @override
+  String get sportswear => 'الملابس الرياضية';
+
+  @override
+  String get sportsEquipment => 'المعدات الرياضية';
+
+  @override
+  String get consoles => 'أجهزة الألعاب';
+
+  @override
+  String get games => 'الألعاب';
+
+  @override
+  String get gamingAccessories => 'إكسسوارات الألعاب';
+
+  @override
+  String get otherProducts => 'منتجات أخرى';
+
+  @override
+  String get gold => 'الذهب';
+
+  @override
+  String get silver => 'الفضة';
+
+  @override
+  String get rings => 'الخواتم';
+
+  @override
+  String get necklaces => 'القلادات';
+
+  @override
+  String get bracelets => 'الأساور';
+
+  @override
+  String get anklets => 'الخلاخل';
+
+  @override
+  String get earrings => 'الأقراط';
+
+  @override
+  String get goldChains => 'سلاسل الذهب';
+
+  @override
+  String get silverChains => 'سلاسل الفضة';
+
+  @override
+  String get pendants => 'الحُلي المعلّقة';
+
+  @override
+  String get goldSets => 'أطقم الذهب';
+
+  @override
+  String get silverSets => 'أطقم الفضة';
+
+  @override
+  String get crownsAndTiaras => 'التيجان والدِّيَم';
+
+  @override
+  String get otherGoldJewelry => 'مجوهرات ذهب أخرى';
+
+  @override
+  String get otherSilverJewelry => 'مجوهرات فضة أخرى';
+
+  @override
   String get continueAsGuest => 'المتابعة كزائر';
+
+  @override
+  String get subcategory => 'الفئة الفرعية';
+
+  @override
+  String get pleaseSelectSubcategory => 'يرجى اختيار الفئة الفرعية';
+
+  @override
+  String get alreadyHaveAnAccount => 'هل لديك حساب بالفعل؟';
+
+  @override
+  String get signIn => 'تسجيل الدخول';
 }

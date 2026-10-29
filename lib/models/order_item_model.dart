@@ -4,6 +4,7 @@ class OrderItemModel {
   final String image;
   final double price;
   final int quantity;
+  final String storeId;
 
   OrderItemModel({
     required this.productId,
@@ -11,15 +12,17 @@ class OrderItemModel {
     required this.image,
     required this.price,
     required this.quantity,
+    required this.storeId,
   });
 
   factory OrderItemModel.fromMap(Map<String, dynamic> map) {
     return OrderItemModel(
-      productId: map['productId'] ?? '',
-      name: map['name'] ?? '',
-      image: map['image'] ?? '',
+      productId: map['productId']?.toString() ?? '',
+      name: map['name']?.toString() ?? '',
+      image: map['image']?.toString() ?? '',
       price: (map['price'] ?? 0).toDouble(),
-      quantity: map['quantity'] ?? 1,
+      quantity: (map['quantity'] ?? 1).toInt(),
+      storeId: map['storeId']?.toString() ?? '',
     );
   }
 
@@ -30,6 +33,7 @@ class OrderItemModel {
       'image': image,
       'price': price,
       'quantity': quantity,
+      'storeId': storeId,
     };
   }
 }

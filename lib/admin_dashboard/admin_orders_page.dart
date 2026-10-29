@@ -3,6 +3,7 @@ import 'package:ecomerce_app/admin_dashboard/admin_order_details.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:ecomerce_app/theme/app_colors.dart';
 import 'package:ecomerce_app/theme/custom_back_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AdminOrdersPage extends StatelessWidget {
@@ -29,13 +30,13 @@ class AdminOrdersPage extends StatelessWidget {
         title: Text(t.orders),
       ),
       body: SafeArea(
-        child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("orders")
-              .orderBy("createdAt", descending: true)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+        child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          future: FirebaseFirestore.instance
+              .collection("users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .get(),
+          builder: (context, userSnapshot) {
+            if (userSnapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
                   color: Theme.of(context).colorScheme.primary,
@@ -43,106 +44,138 @@ class AdminOrdersPage extends StatelessWidget {
               );
             }
 
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            if (!userSnapshot.hasData || !userSnapshot.data!.exists) {
               return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Text(
-                    t.noOrders,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
+                child: Text(t.somethingWentWrong, textAlign: TextAlign.center),
               );
             }
 
-            final orders = snapshot.data!.docs;
+            final userData = userSnapshot.data!.data();
+            final storeId = userData?["storeId"]?.toString();
 
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1200),
-                child: ListView.builder(
-                  padding: EdgeInsets.fromLTRB(
-                    horizontalPadding,
-                    20,
-                    horizontalPadding,
-                    100,
-                  ),
-                  itemCount: orders.length,
-                  itemBuilder: (context, index) {
-                    final order = orders[index];
+            if (storeId == null || storeId.isEmpty) {
+              return Center(
+                child: Text(t.somethingWentWrong, textAlign: TextAlign.center),
+              );
+            }
 
-                    final data = order.data() as Map<String, dynamic>;
+            return StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("orders")
+                  .where("storeId", isEqualTo: storeId)
+                  .orderBy("createdAt", descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  );
+                }
 
-                    final status = data["status"] ?? t.pending;
-                    final total = data["totalPrice"] ?? 0;
-                    final items = data["itemsCount"] ?? 0;
-                    final number =
-                        data["orderNumber"] ?? order.id.substring(0, 6);
-                    final userName = data["userName"] ?? t.unknownUser;
-                    final email = data["email"] ?? "";
-
-                    DateTime? createdAt;
-
-                    if (data["createdAt"] != null) {
-                      createdAt = (data["createdAt"] as Timestamp).toDate();
-                    }
-
-                    final statusColor = orderStatusColor(context, status);
-
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 14),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  AdminOrderDetailsPage(orderId: order.id),
-                            ),
-                          );
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(
-                            isDesktop
-                                ? 20
-                                : isTablet
-                                ? 18
-                                : 16,
-                          ),
-                          child: isDesktop
-                              ? _buildDesktopOrder(
-                                  context: context,
-                                  number: number,
-                                  userName: userName,
-                                  email: email,
-                                  status: status,
-                                  statusColor: statusColor,
-                                  items: items,
-                                  total: total,
-                                  createdAt: createdAt,
-                                  t: t,
-                                )
-                              : _buildMobileOrder(
-                                  context: context,
-                                  number: number,
-                                  userName: userName,
-                                  email: email,
-                                  status: status,
-                                  statusColor: statusColor,
-                                  items: items,
-                                  total: total,
-                                  createdAt: createdAt,
-                                  t: t,
-                                  isTablet: isTablet,
-                                ),
-                        ),
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Text(
+                        t.noOrders,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                    );
-                  },
-                ),
-              ),
+                    ),
+                  );
+                }
+
+                final orders = snapshot.data!.docs;
+
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1200),
+                    child: ListView.builder(
+                      padding: EdgeInsets.fromLTRB(
+                        horizontalPadding,
+                        20,
+                        horizontalPadding,
+                        100,
+                      ),
+                      itemCount: orders.length,
+                      itemBuilder: (context, index) {
+                        final order = orders[index];
+
+                        final data = order.data() as Map<String, dynamic>;
+
+                        final status = data["status"] ?? t.pending;
+                        final total = data["totalPrice"] ?? 0;
+                        final items = data["itemsCount"] ?? 0;
+                        final number =
+                            "#${1000 + order.id.hashCode.abs() % 9000}";
+                        final userName = data["userName"] ?? t.unknownUser;
+                        final email = data["email"] ?? "";
+
+                        DateTime? createdAt;
+
+                        if (data["createdAt"] != null) {
+                          createdAt = (data["createdAt"] as Timestamp).toDate();
+                        }
+
+                        final statusColor = orderStatusColor(context, status);
+
+                        return Card(
+                          margin: const EdgeInsets.only(bottom: 14),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      AdminOrderDetailsPage(orderId: order.id),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(
+                                isDesktop
+                                    ? 20
+                                    : isTablet
+                                    ? 18
+                                    : 16,
+                              ),
+                              child: isDesktop
+                                  ? _buildDesktopOrder(
+                                      context: context,
+                                      number: number,
+                                      userName: userName,
+                                      email: email,
+                                      status: status,
+                                      statusColor: statusColor,
+                                      items: items,
+                                      total: total,
+                                      createdAt: createdAt,
+                                      t: t,
+                                    )
+                                  : _buildMobileOrder(
+                                      context: context,
+                                      number: number,
+                                      userName: userName,
+                                      email: email,
+                                      status: status,
+                                      statusColor: statusColor,
+                                      items: items,
+                                      total: total,
+                                      createdAt: createdAt,
+                                      t: t,
+                                      isTablet: isTablet,
+                                    ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
             );
           },
         ),
@@ -259,7 +292,7 @@ class AdminOrdersPage extends StatelessWidget {
         const SizedBox(width: 20),
 
         Text(
-          "\$$total",
+          "$total ${t.currencySymbol}",
           style: theme.textTheme.titleLarge?.copyWith(
             color: AppColors.success,
             fontWeight: FontWeight.w800,
@@ -329,7 +362,7 @@ class AdminOrdersPage extends StatelessWidget {
                   const SizedBox(width: 8),
 
                   Text(
-                    "\$$total",
+                    "$total ${t.currencySymbol}",
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: AppColors.success,
                       fontWeight: FontWeight.w800,
@@ -459,202 +492,3 @@ class AdminOrdersPage extends StatelessWidget {
     }
   }
 }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:ecomerce_app/admin_dashboard/admin_order_details.dart';
-// import 'package:ecomerce_app/l10n/app_localizations.dart';
-// import 'package:ecomerce_app/theme/app_colors.dart';
-// import 'package:ecomerce_app/theme/custom_back_button.dart';
-// import 'package:flutter/material.dart';
-
-// class AdminOrdersPage extends StatelessWidget {
-//   const AdminOrdersPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context)!;
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         leading: const CustomBackButton(),
-//         title: Text(t.orders),
-//       ),
-//       body: SafeArea(
-//         child: StreamBuilder<QuerySnapshot>(
-//           stream: FirebaseFirestore.instance
-//               .collection("orders")
-//               .orderBy("createdAt", descending: true)
-//               .snapshots(),
-//           builder: (context, snapshot) {
-//             if (snapshot.connectionState == ConnectionState.waiting) {
-//               return Center(
-//                 child: CircularProgressIndicator(
-//                   color: Theme.of(context).colorScheme.primary,
-//                 ),
-//               );
-//             }
-
-//             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-//               return Center(
-//                 child: Text(
-//                   t.noOrders,
-//                   style: Theme.of(context).textTheme.bodyLarge,
-//                 ),
-//               );
-//             }
-
-//             final orders = snapshot.data!.docs;
-
-//             return ListView.builder(
-//               itemCount: orders.length,
-//               itemBuilder: (context, index) {
-//                 final order = orders[index];
-
-//                 final data = order.data() as Map<String, dynamic>;
-
-//                 final status = data["status"] ?? t.pending;
-//                 final total = data["totalPrice"] ?? 0;
-//                 final items = data["itemsCount"] ?? 0;
-//                 final number = data["orderNumber"] ?? order.id.substring(0, 6);
-//                 final userName = data["userName"] ?? t.unknownUser;
-//                 final email = data["email"] ?? "";
-//                 DateTime? createdAt;
-
-//                 if (data["createdAt"] != null) {
-//                   createdAt = (data["createdAt"] as Timestamp).toDate();
-//                 }
-
-//                 return Card(
-//                   margin: const EdgeInsets.symmetric(
-//                     horizontal: 16,
-//                     vertical: 8,
-//                   ),
-//                   child: ListTile(
-//                     leading: CircleAvatar(
-//                       backgroundColor: orderStatusColor(context, status),
-//                       child: const Icon(
-//                         Icons.shopping_bag,
-//                         color: AppColors.white,
-//                       ),
-//                     ),
-
-//                     title: Text(number),
-
-//                     subtitle: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           userName,
-//                           style: Theme.of(context).textTheme.bodyLarge
-//                               ?.copyWith(fontWeight: FontWeight.bold),
-//                         ),
-
-//                         Text(
-//                           email,
-//                           style: Theme.of(context).textTheme.bodySmall
-//                               ?.copyWith(
-//                                 color: Theme.of(
-//                                   context,
-//                                 ).colorScheme.onSurfaceVariant,
-//                                 fontSize: 12,
-//                               ),
-//                         ),
-
-//                         const SizedBox(height: 6),
-
-//                         Text(
-//                           localizedOrderStatus(context, status),
-//                           style: TextStyle(
-//                             color: orderStatusColor(context, status),
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-
-//                         Text("$items ${items == 1 ? t.product : t.products}"),
-
-//                         if (createdAt != null)
-//                           Text(
-//                             "${createdAt.day}/${createdAt.month}/${createdAt.year} • "
-//                             "${createdAt.hour.toString().padLeft(2, '0')}:"
-//                             "${createdAt.minute.toString().padLeft(2, '0')}",
-//                             style: TextStyle(
-//                               color: Theme.of(
-//                                 context,
-//                               ).colorScheme.onSurfaceVariant,
-//                             ),
-//                           ),
-//                       ],
-//                     ),
-
-//                     trailing: Text(
-//                       "\$$total",
-//                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-//                         color: AppColors.success,
-//                       ),
-//                     ),
-
-//                     onTap: () {
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (_) =>
-//                               AdminOrderDetailsPage(orderId: order.id),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 );
-//               },
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-
-//   String localizedOrderStatus(BuildContext context, String status) {
-//     final t = AppLocalizations.of(context)!;
-
-//     switch (status.toLowerCase()) {
-//       case "pending":
-//         return t.pending;
-
-//       case "processing":
-//         return t.processing;
-
-//       case "shipped":
-//         return t.shipped;
-
-//       case "delivered":
-//         return t.delivered;
-
-//       case "cancelled":
-//         return t.cancelled;
-
-//       default:
-//         return status.toUpperCase();
-//     }
-//   }
-
-//   Color orderStatusColor(BuildContext context, String status) {
-//     switch (status.toLowerCase()) {
-//       case "pending":
-//         return AppColors.warning;
-
-//       case "processing":
-//         return AppColors.info;
-
-//       case "shipped":
-//         return AppColors.primary;
-
-//       case "delivered":
-//         return AppColors.success;
-
-//       case "cancelled":
-//         return AppColors.error;
-
-//       default:
-//         return Theme.of(context).colorScheme.onSurfaceVariant;
-//     }
-//   }
-// }

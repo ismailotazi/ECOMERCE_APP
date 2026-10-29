@@ -1,0 +1,808 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================
+    // HELPERS
+    // =========================
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function currentUser() {
+      return get(
+        /databases/$(database)/documents/users/$(request.auth.uid)
+      ).data;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+          && currentUser().role == "admin";
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn()
+          && currentUser().role == "superAdmin";
+    }
+
+    // Admin still has one store.
+    function isStoreAdmin(storeId) {
+      return isAdmin()
+          && currentUser().storeId == storeId;
+    }
+
+   // Normal user can belong to multiple stores.
+function isCurrentStore(storeId) {
+  return isSignedIn()
+      && (
+        currentUser().storeId == storeId
+        ||
+        currentUser().stores.get(storeId, {"isActive": false}).isActive == true
+      );
+}
+
+    function isStoreMember(storeId) {
+      return isCurrentStore(storeId);
+    }
+
+    function canChangeOrderStatus(currentStatus, newStatus) {
+      return
+        (
+          currentStatus == "pending"
+          && (
+            newStatus == "processing"
+            || newStatus == "cancelled"
+          )
+        )
+        ||
+        (
+          currentStatus == "processing"
+          && (
+            newStatus == "shipped"
+            || newStatus == "cancelled"
+          )
+        )
+        ||
+        (
+          currentStatus == "shipped"
+          && newStatus == "delivered"
+        )
+        ||
+        (
+          currentStatus == "delivered"
+          && newStatus == "cancelled"
+        );
+    }
+
+    // =========================
+    // USERS
+    // =========================
+
+    match /users/{userId} {
+
+    allow read: if
+  isOwner(userId)
+  ||
+  isSuperAdmin()
+  ||
+  (
+    isAdmin()
+    && (
+      resource.data.storeId == currentUser().storeId
+      ||
+      resource.data.stores
+          .get(
+            currentUser().storeId,
+            {"isActive": false}
+          )
+          .isActive == true
+    )
+  );
+
+      // Normal user creates himself with one initial store.
+      // SuperAdmin creates admins.
+      allow create: if
+        (
+          isOwner(userId)
+          && request.resource.data.role == "user"
+          && request.resource.data.storeId != null
+          && request.resource.data.storeId != ""
+          && request.resource.data.stores != null
+          && request.resource.data.stores[
+            request.resource.data.storeId
+          ] != null
+          && request.resource.data.stores[
+            request.resource.data.storeId
+          ].role == "user"
+          && request.resource.data.stores[
+            request.resource.data.storeId
+          ].isActive == true
+        )
+        ||
+       (
+  isSuperAdmin()
+  && request.resource.data.role == "admin"
+  && request.resource.data.storeId != null
+  && request.resource.data.storeId != ""
+  && exists(
+    /databases/$(database)/documents/stores/$(request.resource.data.storeId)
+  )
+  && get(
+    /databases/$(database)/documents/stores/$(request.resource.data.storeId)
+  ).data.isActive == true
+)
+
+   allow update: if
+(
+  // SuperAdmin can manage admin information.
+  isSuperAdmin()
+  && resource.data.role == "admin"
+  && request.resource.data.role == "admin"
+  && request.resource.data.storeId != null
+  && request.resource.data.storeId != ""
+  && get(
+    /databases/$(database)/documents/stores/$(request.resource.data.storeId)
+  ).data.isActive == true
+  && request.resource.data.diff(resource.data)
+      .affectedKeys()
+      .hasOnly([
+        'firstName',
+        'lastName',
+        'email',
+        'storeId',
+        'isActive',
+      ])
+)
+||
+(
+  // SuperAdmin can update his own personal profile.
+  isSuperAdmin()
+  && isOwner(userId)
+  && request.resource.data.role == "superAdmin"
+  && request.resource.data.diff(resource.data)
+      .affectedKeys()
+      .hasOnly([
+        'firstName',
+        'lastName',
+        'email',
+        'photoUrl',
+        'language',
+        'theme',
+        'emailVerified',
+      ])
+)
+||
+(
+ // Admin can update his own profile.
+isAdmin()
+&& isOwner(userId)
+&& request.resource.data.role == "admin"
+&& request.resource.data.storeId == resource.data.storeId
+&& request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+  'firstName',
+  'lastName',
+  'email',
+  'phone',
+  'photoUrl',
+  'updatedAt',
+  'isProfileCompleted',
+  'language',
+  'theme',
+  'emailVerified',
+])
+)
+||
+
+(
+  // User can update his own profile,
+  // keep role unchanged,
+  // and switch between stores he belongs to.
+  isOwner(userId)
+  && request.resource.data.role == resource.data.role
+  && request.resource.data.storeId != null
+  && request.resource.data.storeId != ""
+  && request.resource.data.stores != null
+  && request.resource.data.stores[
+    request.resource.data.storeId
+  ] != null
+  && request.resource.data.stores[
+    request.resource.data.storeId
+  ].role == "user"
+  && request.resource.data.stores[
+    request.resource.data.storeId
+  ].isActive == true
+);
+      allow delete: if
+  isOwner(userId)
+  ||
+  (
+    isAdmin()
+    && resource.data.role == "user"
+    && (
+      resource.data.storeId == currentUser().storeId
+      ||
+      resource.data.stores
+          .get(
+            currentUser().storeId,
+            {"isActive": false}
+          )
+          .isActive == true
+    )
+  );
+
+      // =========================
+      // CART
+      // =========================
+
+      match /cart/{cartId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // =========================
+      // FAVORITES
+      // =========================
+
+      match /favorites/{favoriteId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // =========================
+      // USER ORDERS
+      // =========================
+
+      match /orders/{orderId} {
+
+        allow read: if
+          isOwner(userId)
+          ||
+          (
+            isAdmin()
+            && resource.data.storeId == currentUser().storeId
+          );
+
+        // User can create an order only in a store
+        // where he is an active member.
+        allow create: if
+          isOwner(request.resource.data.userId)
+          && request.resource.data.userId == request.auth.uid
+          && isStoreMember(request.resource.data.storeId);
+
+        allow update: if
+          (
+            isOwner(resource.data.userId)
+            && resource.data.userId == request.auth.uid
+            && request.resource.data.userId == resource.data.userId
+            && request.resource.data.storeId == resource.data.storeId
+          )
+          ||
+          (
+            isStoreAdmin(resource.data.storeId)
+            && request.resource.data.storeId == resource.data.storeId
+            && request.resource.data.diff(resource.data)
+                .affectedKeys()
+                .hasOnly(['status'])
+            && canChangeOrderStatus(
+              resource.data.status,
+              request.resource.data.status
+            )
+          );
+
+        allow delete: if isOwner(resource.data.userId);
+
+        // =========================
+        // USER ORDER ITEMS
+        // =========================
+
+        match /items/{itemId} {
+
+          allow read: if
+            isOwner(userId)
+            ||
+            (
+              isAdmin()
+              && get(
+                /databases/$(database)/documents/users/$(userId)/orders/$(orderId)
+              ).data.storeId == currentUser().storeId
+            );
+
+          allow create: if
+            isOwner(userId)
+            ||
+            (
+              isAdmin()
+              && get(
+                /databases/$(database)/documents/users/$(userId)/orders/$(orderId)
+              ).data.storeId == currentUser().storeId
+            );
+
+          allow update, delete: if false;
+        }
+      }
+    }
+
+    // =========================
+    // STORES
+    // =========================
+
+ match /stores/{storeId} {
+
+  // Store selection is public.
+  allow read: if true;
+
+  allow create: if isSuperAdmin();
+
+  // SuperAdmin can manage the store.
+  allow update, delete: if isSuperAdmin();
+
+  // Admin can update only the WhatsApp number of their own store.
+  allow update: if
+    isStoreAdmin(storeId)
+    && request.resource.data.diff(resource.data)
+        .affectedKeys()
+        .hasOnly(['whatsappNumber'])
+    && request.resource.data.whatsappNumber is string
+    && request.resource.data.whatsappNumber.matches('^[0-9]{10,15}$');
+}
+
+    // =========================
+    // PRODUCTS
+    // =========================
+
+   match /products/{productId} {
+  allow read: if isSuperAdmin()
+      || isStoreMember(resource.data.storeId)
+      || isStoreAdmin(resource.data.storeId)
+      || get(
+          /databases/$(database)/documents/stores/$(resource.data.storeId)
+        ).data.isActive == true;
+
+      // Admin creates only in his store.
+
+allow create: if
+  isSuperAdmin()
+  || isStoreAdmin(request.resource.data.storeId);
+
+
+
+      // Admin edits only products from his store.
+      allow update: if
+        isStoreAdmin(resource.data.storeId)
+        && request.resource.data.storeId == resource.data.storeId;
+
+      // Admin deletes only products from his store.
+      allow delete: if isStoreAdmin(
+        resource.data.storeId
+      );
+
+      // Customer can only decrease stock.
+      allow update: if
+        isStoreMember(resource.data.storeId)
+        && request.resource.data.storeId == resource.data.storeId
+        && request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasOnly(['stock'])
+        && request.resource.data.stock >= 0
+        && request.resource.data.stock < resource.data.stock;
+
+      // Customer can only update review statistics.
+      allow update: if
+        isStoreMember(resource.data.storeId)
+        && request.resource.data.storeId == resource.data.storeId
+        && request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasOnly(['rating', 'reviewsCount'])
+        && request.resource.data.rating is number
+        && request.resource.data.reviewsCount is int
+        && request.resource.data.rating >= 0
+        && request.resource.data.rating <= 5
+        && request.resource.data.reviewsCount >= 0;
+
+     // =========================
+// REVIEWS
+// =========================
+
+match /reviews/{reviewId} {
+
+  // Anyone can read reviews of products
+  // belonging to an active store.
+  allow read: if
+    get(
+      /databases/$(database)/documents/stores/$(get(
+        /databases/$(database)/documents/products/$(productId)
+      ).data.storeId)
+    ).data.isActive == true;
+
+  // Only signed-in members of the store can create reviews.
+  allow create: if
+    isStoreMember(
+      get(
+        /databases/$(database)/documents/products/$(productId)
+      ).data.storeId
+    )
+    && request.resource.data.userId == request.auth.uid;
+
+  // Users can update or delete only their own reviews.
+  allow update, delete: if
+    isSignedIn()
+    && resource.data.userId == request.auth.uid;
+}
+   }
+
+    // =========================
+    // ROOT ORDERS
+    // =========================
+
+    match /orders/{orderId} {
+
+  allow read: if
+  isSuperAdmin()
+  ||
+  (
+    isSignedIn()
+    && (
+      resource.data.userId == request.auth.uid
+      ||
+      (
+        isAdmin()
+        && (
+          resource.data.storeId == currentUser().storeId
+          ||
+          currentUser().stores
+              .get(
+                resource.data.storeId,
+                {"isActive": false}
+              )
+              .isActive == true
+        )
+      )
+    )
+  );
+
+      // User can create only in an active store membership.
+   
+allow create: if
+  isSuperAdmin()
+  || (
+    isSignedIn()
+    && request.resource.data.userId == request.auth.uid
+    && isStoreMember(request.resource.data.storeId)
+  );
+
+
+
+      allow update: if
+        isSignedIn()
+        && (
+          (
+            resource.data.userId == request.auth.uid
+            && request.resource.data.userId == resource.data.userId
+            && request.resource.data.storeId == resource.data.storeId
+          )
+          ||
+          (
+            isAdmin()
+            && resource.data.storeId == currentUser().storeId
+            && request.resource.data.storeId == resource.data.storeId
+            && request.resource.data.diff(resource.data)
+                .affectedKeys()
+                .hasOnly(['status'])
+            && canChangeOrderStatus(
+              resource.data.status,
+              request.resource.data.status
+            )
+          )
+        );
+
+      allow delete: if
+        isSignedIn()
+        && (
+          resource.data.userId == request.auth.uid
+          ||
+          (
+            isAdmin()
+            && resource.data.storeId == currentUser().storeId
+          )
+        );
+
+      // =========================
+      // ROOT ORDER ITEMS
+      // =========================
+
+      match /items/{itemId} {
+
+        allow read: if
+          isSignedIn()
+          && (
+            get(
+              /databases/$(database)/documents/orders/$(orderId)
+            ).data.userId == request.auth.uid
+            ||
+            (
+              isAdmin()
+              && get(
+                /databases/$(database)/documents/orders/$(orderId)
+              ).data.storeId == currentUser().storeId
+            )
+          );
+
+        allow create: if
+          isSignedIn()
+          && (
+            (
+              getAfter(
+                /databases/$(database)/documents/orders/$(orderId)
+              ).data.userId == request.auth.uid
+              &&
+              isStoreMember(
+                getAfter(
+                  /databases/$(database)/documents/orders/$(orderId)
+                ).data.storeId
+              )
+            )
+            ||
+            (
+              isAdmin()
+              && getAfter(
+                /databases/$(database)/documents/orders/$(orderId)
+              ).data.storeId == currentUser().storeId
+            )
+          );
+
+        allow update, delete: if false;
+      }
+    }
+
+    // =========================
+    // BANKS
+    // =========================
+
+    match /banks/{bankId} {
+
+  // SuperAdmin can read banks across all stores for backup.
+  allow read: if
+    isSuperAdmin()
+    ||
+    (
+      isStoreMember(resource.data.storeId)
+      && resource.data.isActive == true
+    )
+    ||
+    isStoreAdmin(resource.data.storeId);
+
+   
+allow create: if
+  isSuperAdmin()
+  || isStoreAdmin(request.resource.data.storeId);
+
+
+
+      allow update, delete: if
+        isStoreAdmin(resource.data.storeId)
+        && request.resource.data.storeId == resource.data.storeId;
+    }
+
+    // =========================
+    // NOTIFICATIONS
+    // =========================
+
+   match /notifications/{notificationId} {
+
+  // SuperAdmin can read notifications across all stores for backup.
+  allow read: if
+    isSuperAdmin()
+    ||
+    (
+      isSignedIn()
+      && (
+        (
+          resource.data.recipient == "user"
+          && resource.data.userId == request.auth.uid
+          && isStoreMember(resource.data.storeId)
+        )
+        ||
+        (
+          resource.data.recipient == "admin"
+          && isAdmin()
+          && resource.data.storeId == currentUser().storeId
+        )
+      )
+    );
+
+allow create: if
+  isSuperAdmin()
+  || (
+    isSignedIn()
+    && (
+      // User creates their own notification.
+      (
+        request.resource.data.recipient == "user"
+        && request.resource.data.userId == request.auth.uid
+        && isStoreMember(request.resource.data.storeId)
+      )
+
+      // Store admin creates product notifications
+      // for users belonging to their own store.
+      ||
+      (
+        isStoreAdmin(request.resource.data.storeId)
+        && request.resource.data.recipient == "user"
+        && request.resource.data.type == "product"
+        && request.resource.data.userId is string
+        && request.resource.data.storeId == currentUser().storeId
+        && exists(
+          /databases/$(database)/documents/users/$(request.resource.data.userId)
+        )
+        && get(
+          /databases/$(database)/documents/users/$(request.resource.data.userId)
+        ).data.role == "user"
+        && get(
+          /databases/$(database)/documents/users/$(request.resource.data.userId)
+        ).data.storeId == currentUser().storeId
+      )
+
+      // Admin creates order-status notifications.
+      ||
+      (
+        isStoreAdmin(request.resource.data.storeId)
+        && request.resource.data.recipient == "user"
+        && request.resource.data.type == "order_status"
+        && request.resource.data.orderId is string
+      )
+
+      // Notifications addressed to the store admin.
+      ||
+      (
+        request.resource.data.recipient == "admin"
+        && isStoreMember(request.resource.data.storeId)
+      )
+    )
+  );
+    allow update: if
+  isSignedIn()
+  && (
+    (
+      resource.data.recipient == "user"
+      && resource.data.userId == request.auth.uid
+      && request.resource.data.userId == resource.data.userId
+      && request.resource.data.storeId == resource.data.storeId
+      && isStoreMember(resource.data.storeId)
+    )
+    ||
+    (
+      resource.data.recipient == "admin"
+      && isAdmin()
+      && resource.data.storeId == currentUser().storeId
+      && request.resource.data.storeId == resource.data.storeId
+    )
+    ||
+    (
+      isAdmin()
+      && resource.data.recipient == "user"
+      && resource.data.type == "order_status"
+      && resource.data.storeId == currentUser().storeId
+      && request.resource.data.storeId == resource.data.storeId
+      && request.resource.data.userId == resource.data.userId
+      && request.resource.data.orderId == resource.data.orderId
+      && request.resource.data.type == resource.data.type
+      && request.resource.data.diff(resource.data)
+          .affectedKeys()
+          .hasOnly(["status", "isRead", "createdAt"])
+      && request.resource.data.status is string
+      && request.resource.data.isRead == false
+    )
+  );
+
+      allow delete: if
+        isSignedIn()
+        && (
+          resource.data.userId == request.auth.uid
+          ||
+          (
+            isAdmin()
+            && resource.data.storeId == currentUser().storeId
+          )
+        );
+    }
+    // =========================
+    // SAAS SUBSCRIPTION PAYMENT SETTINGS
+    // =========================
+
+match /subscription_payment_settings/{settingId} {
+
+  // SuperAdmin can read all subscription settings.
+  allow read: if isSuperAdmin();
+
+  // Store admins can read the main bank account.
+  allow read: if isStoreAdmin(currentUser().storeId)
+      && settingId == "main"
+      && resource.data.isActive == true;
+
+  // Only SuperAdmin can manage subscription bank details.
+  allow create, update, delete: if isSuperAdmin();
+}
+  // =========================
+// SAAS SUBSCRIPTION PAYMENTS
+// =========================
+
+match /subscription_payments/{paymentId} {
+
+  // SuperAdmin can read all payments.
+  // Store Admin can read only their own store's payments.
+  allow read: if isSuperAdmin()
+      || (
+        isSignedIn()
+        && isStoreAdmin(resource.data.storeId)
+      );
+
+  // Store Admin can submit a payment request for their store.
+  allow create: if
+      isSignedIn()
+      && isStoreAdmin(request.resource.data.storeId)
+      && request.resource.data.userId == request.auth.uid
+      && request.resource.data.storeId is string
+      && request.resource.data.storeId != ""
+      && request.resource.data.status == "pending_review"
+      && request.resource.data.amount is number
+      && request.resource.data.amount > 0
+      && request.resource.data.currency == "MAD"
+      && request.resource.data.proofStoragePath is string
+      && request.resource.data.proofStoragePath.matches(
+        "subscription_payment_proofs/"
+        + request.resource.data.storeId
+        + "/.+"
+      )
+      && request.resource.data.createdAt == request.time
+      && request.resource.data.updatedAt == request.time;
+
+  // Only SuperAdmin can review pending payments.
+  allow update: if
+      isSuperAdmin()
+      && resource.data.status == "pending_review"
+      && request.resource.data.storeId == resource.data.storeId
+      && request.resource.data.userId == resource.data.userId
+      && request.resource.data.amount == resource.data.amount
+      && request.resource.data.currency == resource.data.currency
+      && request.resource.data.proofStoragePath
+          == resource.data.proofStoragePath
+      && request.resource.data.diff(resource.data)
+          .affectedKeys()
+          .hasOnly([
+            "status",
+            "reviewNote",
+            "reviewedAt",
+            "reviewedBy",
+            "updatedAt"
+          ])
+      && request.resource.data.status in [
+        "approved",
+        "rejected"
+      ]
+      && request.resource.data.reviewedBy == request.auth.uid
+      && request.resource.data.reviewedAt == request.time
+      && request.resource.data.updatedAt == request.time
+      && (
+        request.resource.data.status != "rejected"
+        || (
+          request.resource.data.reviewNote is string
+          && request.resource.data.reviewNote.size() > 0
+        )
+      );
+
+  // Keep payment history for auditing.
+  allow delete: if false;
+}
+    // =========================
+    // DENY EVERYTHING ELSE
+    // =========================
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

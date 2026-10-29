@@ -1,17 +1,16 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:ecomerce_app/theme/custom_back_button.dart';
 import 'package:image_picker/image_picker.dart';
 
 class BankTransferScreen extends StatefulWidget {
-  const BankTransferScreen({super.key});
+  final String storeId;
+
+  const BankTransferScreen({super.key, required this.storeId});
 
   @override
   State<BankTransferScreen> createState() => _BankTransferScreenState();
@@ -63,6 +62,7 @@ class _BankTransferScreenState extends State<BankTransferScreen> {
     try {
       final snapshot = await FirebaseFirestore.instance
           .collection("banks")
+          .where("storeId", isEqualTo: widget.storeId)
           .where("isActive", isEqualTo: true)
           .orderBy("createdAt", descending: true)
           .get();
@@ -489,11 +489,49 @@ class _BankTransferScreenState extends State<BankTransferScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(14),
-                            child: Image.file(
-                              File(_paymentProof!.path),
-                              height: 180,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
+                            child: FutureBuilder<Uint8List>(
+                              future: _paymentProof!.readAsBytes(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const SizedBox(
+                                    height: 180,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+
+                                if (snapshot.hasError || !snapshot.hasData) {
+                                  return const SizedBox(
+                                    height: 180,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.broken_image_outlined,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  );
+                                }
+
+                                return Image.memory(
+                                  snapshot.data!,
+                                  height: 180,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const SizedBox(
+                                      height: 180,
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.broken_image_outlined,
+                                          size: 40,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
                           ),
 
@@ -602,8 +640,6 @@ class _BankTransferScreenState extends State<BankTransferScreen> {
                             throw Exception(t.userNotLoggedIn);
                           }
 
-                          final file = File(_paymentProof!.path);
-
                           final ref = FirebaseStorage.instance
                               .ref()
                               .child("payment_proofs")
@@ -612,7 +648,13 @@ class _BankTransferScreenState extends State<BankTransferScreen> {
                                 "${DateTime.now().millisecondsSinceEpoch}.jpg",
                               );
 
-                          await ref.putFile(file);
+                          final Uint8List imageBytes = await _paymentProof!
+                              .readAsBytes();
+
+                          await ref.putData(
+                            imageBytes,
+                            SettableMetadata(contentType: 'image/jpeg'),
+                          );
 
                           final downloadUrl = await ref.getDownloadURL();
 

@@ -6,6 +6,7 @@ import 'package:ecomerce_app/admin_dashboard/dashboard_page.dart';
 import 'package:ecomerce_app/admin_dashboard/profile_admin_page.dart';
 import 'package:ecomerce_app/admin_dashboard/add_product.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -17,6 +18,8 @@ class MainNavAdmin extends StatefulWidget {
 }
 
 class _MainNavAdminState extends State<MainNavAdmin> {
+  String? storeName;
+  String? storeLogoUrl;
   int currentIndex = 0;
   DateTime? _lastBackPressTime;
 
@@ -44,6 +47,45 @@ class _MainNavAdminState extends State<MainNavAdmin> {
       context,
       MaterialPageRoute(builder: (_) => AdminNotificationsPage()),
     );
+  }
+
+  Future<void> _loadStoreInfo() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) return;
+
+    try {
+      final userDoc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .get();
+
+      final storeId = userDoc.data()?["storeId"]?.toString();
+
+      if (storeId == null || storeId.isEmpty) return;
+
+      final storeDoc = await FirebaseFirestore.instance
+          .collection("stores")
+          .doc(storeId)
+          .get();
+
+      if (!mounted || !storeDoc.exists) return;
+
+      final data = storeDoc.data();
+
+      setState(() {
+        storeName = data?["name"]?.toString();
+        storeLogoUrl = data?["logoUrl"]?.toString();
+      });
+    } catch (e) {
+      debugPrint("Error loading store info: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadStoreInfo();
   }
 
   @override
@@ -284,6 +326,92 @@ class _MainNavAdminState extends State<MainNavAdmin> {
     );
   }
 
+  Widget _buildStoreBranding(
+    BuildContext context,
+    ThemeData theme,
+    ColorScheme colorScheme,
+  ) {
+    final name = storeName?.trim().isNotEmpty == true
+        ? storeName!.trim()
+        : "Store";
+
+    final logo = storeLogoUrl?.trim() ?? "";
+
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Store logo badge
+        Container(
+          width: 46,
+          height: 46,
+          padding: const EdgeInsets.all(2.5),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: colorScheme.primary.withValues(
+                alpha: isDark ? 0.35 : 0.18,
+              ),
+              width: 1,
+            ),
+            boxShadow: isDark
+                ? []
+                : [
+                    BoxShadow(
+                      color: colorScheme.primary.withValues(alpha: 0.10),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: logo.isNotEmpty
+                ? Image.network(
+                    logo,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => Icon(
+                      Icons.storefront_rounded,
+                      color: colorScheme.primary,
+                      size: 23,
+                    ),
+                  )
+                : Icon(
+                    Icons.storefront_rounded,
+                    color: colorScheme.primary,
+                    size: 23,
+                  ),
+          ),
+        ),
+
+        const SizedBox(width: 11),
+
+        Flexible(
+          child: Text(
+            name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w800,
+              letterSpacing: -0.3,
+            ),
+          ),
+        ),
+
+        const SizedBox(width: 6),
+
+        // Verified badge
+        Icon(Icons.verified_rounded, size: 19, color: colorScheme.primary),
+      ],
+    );
+  }
+
   Widget _buildDrawerButton(BuildContext context, ColorScheme colorScheme) {
     final t = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
@@ -342,14 +470,16 @@ class _MainNavAdminState extends State<MainNavAdmin> {
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              titles[currentIndex],
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: currentIndex == 0
+                ? _buildStoreBranding(context, theme, colorScheme)
+                : Text(
+                    titles[currentIndex],
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
           ),
 
           _buildNotificationButton(context, colorScheme),
@@ -371,8 +501,10 @@ class _MainNavAdminState extends State<MainNavAdmin> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: Text(titles[currentIndex], style: theme.textTheme.titleLarge),
-        centerTitle: true,
+        title: currentIndex == 0
+            ? _buildStoreBranding(context, theme, colorScheme)
+            : Text(titles[currentIndex], style: theme.textTheme.titleLarge),
+        centerTitle: currentIndex != 0,
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
         elevation: 0,
@@ -428,235 +560,82 @@ class _MainNavAdminState extends State<MainNavAdmin> {
     BuildContext context,
     ColorScheme colorScheme,
   ) {
-    return StreamBuilder<QuerySnapshot>(
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return IconButton(
+        tooltip: 'Notifications',
+        onPressed: null,
+        icon: const Icon(Icons.notifications_outlined, size: 25),
+      );
+    }
+
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
-          .collection("notifications")
-          .where("recipient", isEqualTo: "admin")
-          .where("isRead", isEqualTo: false)
+          .collection("users")
+          .doc(user.uid)
           .snapshots(),
-      builder: (context, snapshot) {
-        final unread = snapshot.data?.docs.length ?? 0;
+      builder: (context, userSnapshot) {
+        final userData = userSnapshot.data?.data();
+        final storeId = userData?["storeId"]?.toString();
 
-        return IconButton(
-          tooltip: 'Notifications',
-          onPressed: _openNotifications,
-          icon: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              const Icon(Icons.notifications_outlined, size: 25),
+        if (storeId == null || storeId.isEmpty) {
+          return IconButton(
+            tooltip: 'Notifications',
+            onPressed: _openNotifications,
+            icon: const Icon(Icons.notifications_outlined, size: 25),
+          );
+        }
 
-              if (unread > 0)
-                Positioned(
-                  right: -6,
-                  top: -6,
-                  child: Container(
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: colorScheme.error,
-                      shape: BoxShape.circle,
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 18,
-                      minHeight: 18,
-                    ),
-                    child: Text(
-                      unread > 99 ? '99+' : unread.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: colorScheme.onError,
-                        fontSize: 9,
-                        fontWeight: FontWeight.bold,
+        return StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("notifications")
+              .where("recipient", isEqualTo: "admin")
+              .where("storeId", isEqualTo: storeId)
+              .where("isRead", isEqualTo: false)
+              .snapshots(),
+          builder: (context, snapshot) {
+            final unread = snapshot.data?.docs.length ?? 0;
+
+            return IconButton(
+              tooltip: 'Notifications',
+              onPressed: _openNotifications,
+              icon: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  const Icon(Icons.notifications_outlined, size: 25),
+
+                  if (unread > 0)
+                    Positioned(
+                      right: -6,
+                      top: -6,
+                      child: Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          color: colorScheme.error,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 18,
+                          minHeight: 18,
+                        ),
+                        child: Text(
+                          unread > 99 ? '99+' : unread.toString(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: colorScheme.onError,
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-            ],
-          ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
   }
 }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:ecomerce_app/admin_dashboard/admin_drawer.dart';
-// import 'package:ecomerce_app/admin_dashboard/admin_notifications_page.dart';
-// import 'package:ecomerce_app/admin_dashboard/analytics_page.dart';
-
-// import 'package:ecomerce_app/admin_dashboard/dashboard_page.dart';
-// import 'package:ecomerce_app/admin_dashboard/profile_admin_page.dart';
-
-// import 'package:ecomerce_app/admin_dashboard/add_product.dart';
-// import 'package:ecomerce_app/l10n/app_localizations.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-
-// class MainNavAdmin extends StatefulWidget {
-//   const MainNavAdmin({super.key});
-
-//   @override
-//   State<MainNavAdmin> createState() => _MainNavAdminState();
-// }
-
-// class _MainNavAdminState extends State<MainNavAdmin> {
-//   int currentIndex = 0;
-//   DateTime? _lastBackPressTime;
-//   bool get showDrawer => currentIndex == 0;
-//   final List<Widget> pages = const [
-//     DashboardPage(),
-
-//     AddProductPage(),
-//     AnalyticsPage(showAppBar: false),
-//     ProfileAdminPage(),
-//   ];
-
-//   List<String> get titles {
-//     final t = AppLocalizations.of(context)!;
-
-//     return [t.home, t.addProduct, t.analytics, t.profile];
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context)!;
-//     return PopScope(
-//       canPop: false,
-//       onPopInvokedWithResult: (didPop, result) {
-//         if (didPop) return;
-
-//         final now = DateTime.now();
-
-//         if (_lastBackPressTime == null ||
-//             now.difference(_lastBackPressTime!) > const Duration(seconds: 2)) {
-//           _lastBackPressTime = now;
-
-//           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(
-//               content: Text(t.tapAgainToExit),
-//               duration: const Duration(seconds: 2),
-//             ),
-//           );
-
-//           return;
-//         }
-
-//         SystemNavigator.pop();
-//       },
-//       child: Scaffold(
-//         backgroundColor: Theme.of(context).colorScheme.surface,
-//         appBar: AppBar(
-//           title: Text(
-//             titles[currentIndex],
-//             style: Theme.of(context).textTheme.titleLarge,
-//           ),
-//           centerTitle: true,
-//           backgroundColor: Theme.of(context).colorScheme.surface,
-//           foregroundColor: Theme.of(context).colorScheme.onSurface,
-//           elevation: 0,
-//           scrolledUnderElevation: 0,
-
-//           automaticallyImplyLeading: showDrawer,
-
-//           actions: showDrawer
-//               ? [
-//                   StreamBuilder<QuerySnapshot>(
-//                     stream: FirebaseFirestore.instance
-//                         .collection("notifications")
-//                         .where("recipient", isEqualTo: "admin")
-//                         .where("isRead", isEqualTo: false)
-//                         .snapshots(),
-//                     builder: (context, snapshot) {
-//                       final unread = snapshot.data?.docs.length ?? 0;
-
-//                       return IconButton(
-//                         onPressed: () {
-//                           Navigator.push(
-//                             context,
-//                             MaterialPageRoute(
-//                               builder: (_) => AdminNotificationsPage(),
-//                             ),
-//                           );
-//                         },
-//                         icon: Stack(
-//                           clipBehavior: Clip.none,
-//                           children: [
-//                             const Icon(Icons.notifications_outlined),
-
-//                             if (unread > 0)
-//                               Positioned(
-//                                 right: -6,
-//                                 top: -6,
-//                                 child: Container(
-//                                   padding: const EdgeInsets.all(3),
-//                                   decoration: BoxDecoration(
-//                                     color: Theme.of(context).colorScheme.error,
-//                                     shape: BoxShape.circle,
-//                                   ),
-//                                   constraints: const BoxConstraints(
-//                                     minWidth: 18,
-//                                     minHeight: 18,
-//                                   ),
-//                                   child: Text(
-//                                     unread.toString(),
-//                                     textAlign: TextAlign.center,
-//                                     style: TextStyle(
-//                                       color: Theme.of(
-//                                         context,
-//                                       ).colorScheme.onError,
-//                                       fontSize: 10,
-//                                       fontWeight: FontWeight.bold,
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                           ],
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 ]
-//               : [],
-//         ),
-//         drawer: showDrawer ? const AdminDrawer() : null,
-//         body: IndexedStack(index: currentIndex, children: pages),
-
-//         bottomNavigationBar: NavigationBar(
-//           backgroundColor: Theme.of(context).colorScheme.surface,
-
-//           selectedIndex: currentIndex,
-//           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-//           onDestinationSelected: (index) {
-//             setState(() {
-//               currentIndex = index;
-//             });
-//           },
-//           destinations: [
-//             NavigationDestination(
-//               icon: Icon(Icons.inventory_2_outlined),
-//               selectedIcon: Icon(Icons.inventory_2),
-//               label: t.home,
-//             ),
-//             NavigationDestination(
-//               icon: Icon(Icons.add_box_outlined),
-//               selectedIcon: Icon(Icons.add_box),
-//               label: t.addProduct,
-//             ),
-//             NavigationDestination(
-//               icon: Icon(Icons.analytics_outlined),
-
-//               selectedIcon: Icon(Icons.analytics_outlined),
-//               label: t.analytics,
-//             ),
-//             NavigationDestination(
-//               icon: Icon(Icons.admin_panel_settings_outlined),
-//               selectedIcon: Icon(Icons.admin_panel_settings),
-//               label: t.profile,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

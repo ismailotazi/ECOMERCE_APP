@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:ecomerce_app/theme/app_colors.dart';
 import 'package:ecomerce_app/theme/custom_back_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AdminOrderDetailsPage extends StatefulWidget {
@@ -14,7 +15,8 @@ class AdminOrderDetailsPage extends StatefulWidget {
 }
 
 class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
-  String selectedStatus = "pending";
+  String? selectedStatus;
+  String currentStatus = "pending";
 
   final List<Map<String, dynamic>> statuses = [
     {"value": "pending", "icon": Icons.hourglass_top, "color": Colors.orange},
@@ -23,6 +25,27 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
     {"value": "delivered", "icon": Icons.check_circle, "color": Colors.green},
     {"value": "cancelled", "icon": Icons.cancel, "color": Colors.red},
   ];
+  bool _canChangeStatus(String currentStatus, String newStatus) {
+    switch (currentStatus) {
+      case "pending":
+        return newStatus == "processing" || newStatus == "cancelled";
+
+      case "processing":
+        return newStatus == "shipped" || newStatus == "cancelled";
+
+      case "shipped":
+        return newStatus == "delivered";
+
+      case "delivered":
+        return newStatus == "cancelled";
+
+      case "cancelled":
+        return false;
+
+      default:
+        return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +102,16 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
             }
 
             final data = rawData as Map<String, dynamic>;
+            final orderStoreId = data["storeId"]?.toString();
 
-            if (selectedStatus == "pending") {
-              selectedStatus = data["status"] ?? "pending";
+            if (orderStoreId == null || orderStoreId.isEmpty) {
+              return Center(child: Text(t.somethingWentWrong));
             }
 
-            final orderNumber = data["orderNumber"] ?? "";
+            currentStatus = data["status"]?.toString() ?? "pending";
+
+            final orderNumber =
+                "#${1000 + widget.orderId.hashCode.abs() % 9000}";
             final userName = data["userName"] ?? "";
             final email = data["email"] ?? "";
             final total = data["totalPrice"] ?? 0;
@@ -271,6 +298,24 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                           ),
                         ),
                         onPressed: () async {
+                          final user = FirebaseAuth.instance.currentUser;
+
+                          if (user == null) return;
+
+                          final userSnapshot = await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(user.uid)
+                              .get();
+
+                          final currentStoreId = userSnapshot
+                              .data()?["storeId"]
+                              ?.toString();
+
+                          if (currentStoreId == null ||
+                              currentStoreId.isEmpty) {
+                            return;
+                          }
+
                           final orderRef = FirebaseFirestore.instance
                               .collection("orders")
                               .doc(widget.orderId);
@@ -279,8 +324,16 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
 
                           if (!orderSnapshot.exists) return;
 
+                          final orderData = orderSnapshot.data();
+
+                          if (orderData == null ||
+                              orderData["storeId"]?.toString() !=
+                                  currentStoreId) {
+                            return;
+                          }
+
                           final oldStatus =
-                              orderSnapshot.data()?["status"]?.toString() ?? "";
+                              orderData["status"]?.toString() ?? "";
 
                           if (oldStatus == selectedStatus) {
                             if (!context.mounted) return;
@@ -294,42 +347,56 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                             return;
                           }
 
-                          await orderRef.update({"status": selectedStatus});
+                          // Prevent invalid status transitions
+                          final newStatus = selectedStatus ?? currentStatus;
 
-                          final query = await FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(userId)
-                              .collection("orders")
-                              .where("orderNumber", isEqualTo: orderNumber)
-                              .limit(1)
-                              .get();
+                          if (!_canChangeStatus(oldStatus, newStatus)) {
+                            if (!context.mounted) return;
 
-                          if (query.docs.isNotEmpty) {
-                            await query.docs.first.reference.update({
-                              "status": selectedStatus,
-                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(t.orderStatusCannotBeChanged),
+                              ),
+                            );
+
+                            return;
                           }
 
-                          await FirebaseFirestore.instance
+                          // Update main order
+                          await orderRef.update({"status": newStatus});
+
+                          // Update user's copy of the same order
+                          final userOrderRef = FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(userId.toString())
+                              .collection("orders")
+                              .doc(widget.orderId);
+
+                          final userOrderSnapshot = await userOrderRef.get();
+
+                          if (userOrderSnapshot.exists) {
+                            await userOrderRef.update({"status": newStatus});
+                          }
+
+                          // Notify user: one status notification per order.
+                          final notificationRef = FirebaseFirestore.instance
                               .collection("notifications")
-                              .add({
-                                "title": "orderUpdatedNotification",
-                                "body": "orderUpdatedNotificationBody",
-                                "type": "order_status",
-                                "recipient": "user",
-                                "isRead": false,
-                                "createdAt": FieldValue.serverTimestamp(),
-                                "orderId": widget.orderId,
-                                "userId": userId,
-                                "orderNumber": orderNumber,
-                                "status": selectedStatus,
-                              });
+                              .doc("order_status_${widget.orderId}");
 
+                          await notificationRef.set({
+                            "title": "orderUpdatedNotification",
+                            "body": "orderUpdatedNotificationBody",
+                            "type": "order_status",
+                            "recipient": "user",
+                            "isRead": false,
+                            "createdAt": FieldValue.serverTimestamp(),
+                            "orderId": widget.orderId,
+                            "userId": userId,
+                            "orderNumber": orderNumber,
+                            "status": newStatus,
+                            "storeId": orderStoreId,
+                          });
                           if (!context.mounted) return;
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(t.orderUpdatedSuccessfully)),
-                          );
 
                           Navigator.pop(context);
                         },
@@ -571,9 +638,8 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                 ),
 
                 const SizedBox(width: 12),
-
                 Text(
-                  "\$${item["price"]}",
+                  "${item["price"]} ${t.currencySymbol}",
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.success,
@@ -605,7 +671,7 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
         leading: const Icon(Icons.payments_rounded, color: AppColors.success),
         title: Text(t.orderTotal),
         trailing: Text(
-          "\$$total",
+          "$total ${t.currencySymbol}",
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
             color: AppColors.success,
@@ -776,7 +842,7 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
   }) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    final effectiveSelectedStatus = selectedStatus ?? currentStatus;
     return Card(
       margin: EdgeInsets.zero,
       child: Padding(
@@ -786,7 +852,7 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField<String>(
-                      initialValue: selectedStatus,
+                      initialValue: effectiveSelectedStatus,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -803,32 +869,44 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                           ),
                         ),
                       ),
-                      items: statuses.map((status) {
-                        return DropdownMenuItem<String>(
-                          value: status["value"],
-                          child: Row(
-                            children: [
-                              Icon(
-                                status["icon"],
-                                color: status["color"],
-                                size: 20,
+                      items: statuses
+                          .where(
+                            (status) =>
+                                status["value"] == effectiveSelectedStatus ||
+                                _canChangeStatus(
+                                  currentStatus,
+                                  status["value"].toString(),
+                                ),
+                          )
+                          .map((status) {
+                            return DropdownMenuItem<String>(
+                              value: status["value"],
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    status["icon"],
+                                    color: status["color"],
+                                    size: 20,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(switch (status["value"]) {
+                                    "pending" => t.pending,
+                                    "processing" => t.processing,
+                                    "shipped" => t.shipped,
+                                    "delivered" => t.delivered,
+                                    "cancelled" => t.cancelled,
+                                    _ => status["value"].toString(),
+                                  }),
+                                ],
                               ),
-                              const SizedBox(width: 10),
-                              Text(switch (status["value"]) {
-                                "pending" => t.pending,
-                                "processing" => t.processing,
-                                "shipped" => t.shipped,
-                                "delivered" => t.delivered,
-                                "cancelled" => t.cancelled,
-                                _ => status["value"].toString(),
-                              }),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+                            );
+                          })
+                          .toList(),
                       onChanged: (value) {
+                        if (value == null) return;
+
                         setState(() {
-                          selectedStatus = value!;
+                          selectedStatus = value;
                         });
                       },
                     ),
@@ -836,7 +914,7 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                 ],
               )
             : DropdownButtonFormField<String>(
-                initialValue: selectedStatus,
+                initialValue: effectiveSelectedStatus,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -853,28 +931,44 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
                     ),
                   ),
                 ),
-                items: statuses.map((status) {
-                  return DropdownMenuItem<String>(
-                    value: status["value"],
-                    child: Row(
-                      children: [
-                        Icon(status["icon"], color: status["color"], size: 20),
-                        const SizedBox(width: 10),
-                        Text(switch (status["value"]) {
-                          "pending" => t.pending,
-                          "processing" => t.processing,
-                          "shipped" => t.shipped,
-                          "delivered" => t.delivered,
-                          "cancelled" => t.cancelled,
-                          _ => status["value"].toString(),
-                        }),
-                      ],
-                    ),
-                  );
-                }).toList(),
+                items: statuses
+                    .where(
+                      (status) =>
+                          status["value"] == currentStatus ||
+                          _canChangeStatus(
+                            currentStatus,
+                            status["value"].toString(),
+                          ),
+                    )
+                    .map((status) {
+                      return DropdownMenuItem<String>(
+                        value: status["value"],
+                        child: Row(
+                          children: [
+                            Icon(
+                              status["icon"],
+                              color: status["color"],
+                              size: 20,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(switch (status["value"]) {
+                              "pending" => t.pending,
+                              "processing" => t.processing,
+                              "shipped" => t.shipped,
+                              "delivered" => t.delivered,
+                              "cancelled" => t.cancelled,
+                              _ => status["value"].toString(),
+                            }),
+                          ],
+                        ),
+                      );
+                    })
+                    .toList(),
                 onChanged: (value) {
+                  if (value == null) return;
+
                   setState(() {
-                    selectedStatus = value!;
+                    selectedStatus = value;
                   });
                 },
               ),
@@ -882,567 +976,3 @@ class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
     );
   }
 }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:ecomerce_app/l10n/app_localizations.dart';
-// import 'package:ecomerce_app/theme/app_colors.dart';
-// import 'package:ecomerce_app/theme/custom_back_button.dart';
-// import 'package:flutter/material.dart';
-
-// class AdminOrderDetailsPage extends StatefulWidget {
-//   const AdminOrderDetailsPage({super.key, required this.orderId});
-
-//   final String orderId;
-
-//   @override
-//   State<AdminOrderDetailsPage> createState() => _AdminOrderDetailsPageState();
-// }
-
-// class _AdminOrderDetailsPageState extends State<AdminOrderDetailsPage> {
-//   String selectedStatus = "pending";
-//   final List<Map<String, dynamic>> statuses = [
-//     {"value": "pending", "icon": Icons.hourglass_top, "color": Colors.orange},
-//     {"value": "processing", "icon": Icons.sync, "color": Colors.blue},
-//     {"value": "shipped", "icon": Icons.local_shipping, "color": Colors.purple},
-//     {"value": "delivered", "icon": Icons.check_circle, "color": Colors.green},
-//     {"value": "cancelled", "icon": Icons.cancel, "color": Colors.red},
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context)!;
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         title: Text(t.orderDetails),
-//         leading: const CustomBackButton(),
-//       ),
-
-//       body: SafeArea(
-//         child: FutureBuilder<DocumentSnapshot>(
-//           future: FirebaseFirestore.instance
-//               .collection("orders")
-//               .doc(widget.orderId)
-//               .get(),
-
-//           builder: (context, snapshot) {
-//             if (!snapshot.hasData) {
-//               return Center(
-//                 child: CircularProgressIndicator(
-//                   color: Theme.of(context).colorScheme.primary,
-//                 ),
-//               );
-//             }
-
-//             if (snapshot.connectionState == ConnectionState.waiting) {
-//               return Center(
-//                 child: CircularProgressIndicator(
-//                   color: Theme.of(context).colorScheme.primary,
-//                 ),
-//               );
-//             }
-
-//             if (!snapshot.hasData || !snapshot.data!.exists) {
-//               return Center(child: Text(t.somethingWentWrong));
-//             }
-
-//             final rawData = snapshot.data!.data();
-
-//             if (rawData == null) {
-//               return Center(child: Text(t.somethingWentWrong));
-//             }
-
-//             final data = rawData as Map<String, dynamic>;
-
-//             if (selectedStatus == "pending") {
-//               selectedStatus = data["status"] ?? "pending";
-//             }
-
-//             final orderNumber = data["orderNumber"] ?? "";
-//             final userName = data["userName"] ?? "";
-//             final email = data["email"] ?? "";
-//             final total = data["totalPrice"] ?? 0;
-//             final userId = data["userId"] ?? "";
-
-//             final paymentMethod = data["paymentMethod"] ?? "";
-//             final paymentProofUrl = data["paymentProofUrl"];
-
-//             final createdAt = (data["createdAt"] as Timestamp).toDate();
-//             return ListView(
-//               padding: const EdgeInsets.all(20),
-
-//               children: [
-//                 Text(
-//                   orderNumber,
-//                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 8),
-
-//                 Text(
-//                   "${createdAt.day}/${createdAt.month}/${createdAt.year} • "
-//                   "${createdAt.hour.toString().padLeft(2, '0')}:"
-//                   "${createdAt.minute.toString().padLeft(2, '0')}",
-//                   style: TextStyle(
-//                     color: Theme.of(context).colorScheme.onSurfaceVariant,
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 20),
-
-//                 Text(
-//                   t.customer,
-//                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 10),
-
-//                 ListTile(
-//                   leading: CircleAvatar(
-//                     backgroundColor: Theme.of(
-//                       context,
-//                     ).colorScheme.surfaceContainerHighest,
-//                     child: Icon(
-//                       Icons.person,
-//                       color: Theme.of(context).colorScheme.primary,
-//                     ),
-//                   ),
-
-//                   title: Text(userName),
-
-//                   subtitle: Text(
-//                     email,
-//                     style: TextStyle(
-//                       color: Theme.of(context).colorScheme.onSurfaceVariant,
-//                     ),
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 20),
-//                 Text(
-//                   t.products,
-//                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 10),
-
-//                 FutureBuilder<QuerySnapshot>(
-//                   future: FirebaseFirestore.instance
-//                       .collection("orders")
-//                       .doc(widget.orderId)
-//                       .collection("items")
-//                       .get(),
-
-//                   builder: (context, itemsSnapshot) {
-//                     if (!itemsSnapshot.hasData) {
-//                       return Center(
-//                         child: CircularProgressIndicator(
-//                           color: Theme.of(context).colorScheme.primary,
-//                         ),
-//                       );
-//                     }
-
-//                     final items = itemsSnapshot.data!.docs;
-
-//                     return ListView.builder(
-//                       shrinkWrap: true,
-//                       physics: const NeverScrollableScrollPhysics(),
-//                       itemCount: items.length,
-//                       itemBuilder: (context, index) {
-//                         final item =
-//                             items[index].data() as Map<String, dynamic>;
-
-//                         return Card(
-//                           margin: const EdgeInsets.only(bottom: 10),
-
-//                           child: ListTile(
-//                             leading: ClipRRect(
-//                               borderRadius: BorderRadius.circular(8),
-//                               child: Image.network(
-//                                 item["image"],
-//                                 width: 60,
-//                                 height: 60,
-//                                 fit: BoxFit.cover,
-//                                 errorBuilder: (_, _, _) {
-//                                   return Container(
-//                                     width: 60,
-//                                     height: 60,
-//                                     color: Theme.of(
-//                                       context,
-//                                     ).colorScheme.surfaceContainerHighest,
-//                                     child: Icon(
-//                                       Icons.image,
-//                                       color: Theme.of(
-//                                         context,
-//                                       ).colorScheme.onSurfaceVariant,
-//                                     ),
-//                                   );
-//                                 },
-//                               ),
-//                             ),
-
-//                             title: Text(item["name"]),
-
-//                             subtitle: Text(
-//                               "${t.qty}: ${item["quantity"]}",
-//                               style: TextStyle(
-//                                 color: Theme.of(
-//                                   context,
-//                                 ).colorScheme.onSurfaceVariant,
-//                               ),
-//                             ),
-
-//                             trailing: Text(
-//                               "\$${item["price"]}",
-//                               style: Theme.of(context).textTheme.titleMedium
-//                                   ?.copyWith(
-//                                     fontWeight: FontWeight.bold,
-//                                     color: AppColors.success,
-//                                   ),
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                     );
-//                   },
-//                 ),
-
-//                 const SizedBox(height: 5),
-
-//                 Card(
-//                   child: ListTile(
-//                     leading: const Icon(
-//                       Icons.payments,
-//                       color: AppColors.success,
-//                     ),
-
-//                     title: Text(t.orderTotal),
-
-//                     trailing: Text(
-//                       "\$$total",
-//                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-//                         fontWeight: FontWeight.bold,
-//                         color: AppColors.success,
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 if (paymentMethod == "Bank Transfer") ...[
-//                   const SizedBox(height: 20),
-
-//                   Text(
-//                     t.paymentInformation,
-//                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-
-//                   const SizedBox(height: 10),
-
-//                   Card(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(16),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Row(
-//                             children: [
-//                               CircleAvatar(
-//                                 backgroundColor: Theme.of(
-//                                   context,
-//                                 ).colorScheme.primaryContainer,
-//                                 child: Icon(
-//                                   Icons.account_balance_rounded,
-//                                   color: Theme.of(context).colorScheme.primary,
-//                                 ),
-//                               ),
-
-//                               const SizedBox(width: 12),
-
-//                               Expanded(
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Text(
-//                                       t.bankTransfer,
-//                                       style: TextStyle(
-//                                         fontWeight: FontWeight.bold,
-//                                         fontSize: 16,
-//                                       ),
-//                                     ),
-
-//                                     const SizedBox(height: 4),
-
-//                                     Text(
-//                                       paymentProofUrl != null &&
-//                                               paymentProofUrl
-//                                                   .toString()
-//                                                   .isNotEmpty
-//                                           ? t.paymentProofUploaded
-//                                           : t.paymentProofNotUploaded,
-//                                       style: TextStyle(
-//                                         color:
-//                                             paymentProofUrl != null &&
-//                                                 paymentProofUrl
-//                                                     .toString()
-//                                                     .isNotEmpty
-//                                             ? Colors.green
-//                                             : Theme.of(
-//                                                 context,
-//                                               ).colorScheme.error,
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-
-//                               Icon(
-//                                 paymentProofUrl != null &&
-//                                         paymentProofUrl.toString().isNotEmpty
-//                                     ? Icons.check_circle_rounded
-//                                     : Icons.warning_amber_rounded,
-//                                 color:
-//                                     paymentProofUrl != null &&
-//                                         paymentProofUrl.toString().isNotEmpty
-//                                     ? Colors.green
-//                                     : Colors.orange,
-//                               ),
-//                             ],
-//                           ),
-
-//                           if (paymentProofUrl != null &&
-//                               paymentProofUrl.toString().isNotEmpty) ...[
-//                             const SizedBox(height: 16),
-
-//                             ClipRRect(
-//                               borderRadius: BorderRadius.circular(14),
-//                               child: Image.network(
-//                                 paymentProofUrl.toString(),
-//                                 width: double.infinity,
-//                                 height: 220,
-//                                 fit: BoxFit.cover,
-//                                 loadingBuilder: (context, child, progress) {
-//                                   if (progress == null) return child;
-
-//                                   return SizedBox(
-//                                     height: 220,
-//                                     child: Center(
-//                                       child: CircularProgressIndicator(
-//                                         color: Theme.of(
-//                                           context,
-//                                         ).colorScheme.primary,
-//                                       ),
-//                                     ),
-//                                   );
-//                                 },
-//                                 errorBuilder: (_, _, _) {
-//                                   return Container(
-//                                     height: 220,
-//                                     width: double.infinity,
-//                                     decoration: BoxDecoration(
-//                                       color: Theme.of(
-//                                         context,
-//                                       ).colorScheme.surfaceContainerHighest,
-//                                       borderRadius: BorderRadius.circular(14),
-//                                     ),
-//                                     child: const Center(
-//                                       child: Icon(
-//                                         Icons.broken_image_outlined,
-//                                         size: 45,
-//                                       ),
-//                                     ),
-//                                   );
-//                                 },
-//                               ),
-//                             ),
-
-//                             const SizedBox(height: 12),
-
-//                             SizedBox(
-//                               width: double.infinity,
-//                               child: OutlinedButton.icon(
-//                                 onPressed: () {
-//                                   showDialog(
-//                                     context: context,
-//                                     builder: (_) {
-//                                       return Dialog(
-//                                         insetPadding: const EdgeInsets.all(16),
-//                                         child: InteractiveViewer(
-//                                           child: ClipRRect(
-//                                             borderRadius: BorderRadius.circular(
-//                                               16,
-//                                             ),
-//                                             child: Image.network(
-//                                               paymentProofUrl.toString(),
-//                                               fit: BoxFit.contain,
-//                                             ),
-//                                           ),
-//                                         ),
-//                                       );
-//                                     },
-//                                   );
-//                                 },
-//                                 icon: const Icon(Icons.zoom_in_rounded),
-//                                 label: Text(t.viewPaymentProof),
-//                               ),
-//                             ),
-//                           ],
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//                 const SizedBox(height: 20),
-//                 Text(
-//                   t.orderStatus,
-//                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-
-//                 const SizedBox(height: 10),
-
-//                 DropdownButtonFormField<String>(
-//                   initialValue: selectedStatus,
-//                   decoration: InputDecoration(
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     enabledBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: BorderSide(
-//                         color: Theme.of(context).colorScheme.outline,
-//                       ),
-//                     ),
-//                     focusedBorder: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(12),
-//                       borderSide: BorderSide(
-//                         color: Theme.of(context).colorScheme.primary,
-//                         width: 2,
-//                       ),
-//                     ),
-//                   ),
-
-//                   items: statuses.map((status) {
-//                     return DropdownMenuItem<String>(
-//                       value: status["value"],
-//                       child: Row(
-//                         children: [
-//                           Icon(
-//                             status["icon"],
-//                             color: status["color"],
-//                             size: 20,
-//                           ),
-//                           const SizedBox(width: 10),
-//                           Text(switch (status["value"]) {
-//                             "pending" => t.pending,
-//                             "processing" => t.processing,
-//                             "shipped" => t.shipped,
-//                             "delivered" => t.delivered,
-//                             "cancelled" => t.cancelled,
-//                             _ => status["value"].toString(),
-//                           }),
-//                         ],
-//                       ),
-//                     );
-//                   }).toList(),
-
-//                   onChanged: (value) {
-//                     setState(() {
-//                       selectedStatus = value!;
-//                     });
-//                   },
-//                 ),
-
-//                 const SizedBox(height: 20),
-//                 SizedBox(
-//                   width: double.infinity,
-
-//                   child: ElevatedButton.icon(
-//                     icon: const Icon(Icons.save),
-
-//                     label: Text(t.saveChanges),
-
-//                     style: ElevatedButton.styleFrom(
-//                       padding: const EdgeInsets.symmetric(vertical: 14),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(14),
-//                       ),
-//                     ),
-
-//                     onPressed: () async {
-//                       final orderRef = FirebaseFirestore.instance
-//                           .collection("orders")
-//                           .doc(widget.orderId);
-
-//                       final orderSnapshot = await orderRef.get();
-
-//                       if (!orderSnapshot.exists) return;
-
-//                       final oldStatus =
-//                           orderSnapshot.data()?["status"]?.toString() ?? "";
-
-//                       if (oldStatus == selectedStatus) {
-//                         if (!context.mounted) return;
-
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           SnackBar(content: Text(t.orderUpdatedSuccessfully)),
-//                         );
-
-//                         return;
-//                       }
-
-//                       await orderRef.update({"status": selectedStatus});
-
-//                       final query = await FirebaseFirestore.instance
-//                           .collection("users")
-//                           .doc(userId)
-//                           .collection("orders")
-//                           .where("orderNumber", isEqualTo: orderNumber)
-//                           .limit(1)
-//                           .get();
-
-//                       if (query.docs.isNotEmpty) {
-//                         await query.docs.first.reference.update({
-//                           "status": selectedStatus,
-//                         });
-//                       }
-
-//                       await FirebaseFirestore.instance
-//                           .collection("notifications")
-//                           .add({
-//                             "title": "orderUpdatedNotification",
-//                             "body": "orderUpdatedNotificationBody",
-//                             "type": "order_status",
-//                             "recipient": "user",
-//                             "isRead": false,
-//                             "createdAt": FieldValue.serverTimestamp(),
-//                             "orderId": widget.orderId,
-//                             "userId": userId,
-//                             "orderNumber": orderNumber,
-//                             "status": selectedStatus,
-//                           });
-//                       if (!context.mounted) return;
-
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         SnackBar(content: Text(t.orderUpdatedSuccessfully)),
-//                       );
-
-//                       Navigator.pop(context);
-//                     },
-//                   ),
-//                 ),
-//               ],
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

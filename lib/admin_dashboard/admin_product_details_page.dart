@@ -3,6 +3,7 @@ import 'package:ecomerce_app/admin_dashboard/edit_product_page.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:ecomerce_app/theme/app_colors.dart';
 import 'package:ecomerce_app/theme/custom_back_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -25,54 +26,26 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
     final t = AppLocalizations.of(context)!;
 
     switch (category) {
-      case "Electronics":
-        return t.electronics;
       case "Smartphones":
         return t.smartphones;
-      case "Laptops":
-        return t.laptops;
-      case "Tablets":
-        return t.tablets;
-      case "Smartwatches":
-        return t.smartwatches;
-      case "Accessories":
-        return t.accessories;
-      case "Audio":
-        return t.audio;
+      case "Computers":
+        return t.computers;
+      case "Electronics":
+        return t.electronics;
       case "Gaming":
         return t.gaming;
-      case "Home Appliances":
-        return t.homeAppliances;
-      case "Perfumes":
-        return t.perfumes;
+      case "Fashion":
+        return t.fashion;
       case "Beauty":
         return t.beauty;
-      case "Clothing":
-        return t.clothing;
-      case "Shoes":
-        return t.shoes;
-      case "Bags":
-        return t.bags;
-      case "Watches":
-        return t.watches;
-      case "Jewelry":
-        return t.jewelry;
-      case "Glasses":
-        return t.glasses;
-      case "Sports":
-        return t.sports;
-      case "Books":
-        return t.books;
-      case "Toys":
-        return t.toys;
+      case "Perfumes":
+        return t.perfumes;
       case "Furniture":
         return t.furniture;
-      case "Food":
-        return t.food;
-      case "Health":
-        return t.health;
-      case "Automotive":
-        return t.automotive;
+      case "Sports":
+        return t.sports;
+      case "Accessories":
+        return t.accessories;
       case "Other":
         return t.other;
       default:
@@ -80,17 +53,80 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
     }
   }
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getProduct() {
-    return FirebaseFirestore.instance
+  Future<DocumentSnapshot<Map<String, dynamic>>> getProduct() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      throw Exception("Unauthorized");
+    }
+
+    final userDoc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .get();
+
+    final userData = userDoc.data();
+    final storeId = userData?["storeId"]?.toString();
+
+    if (storeId == null || storeId.isEmpty) {
+      throw Exception("Store ID not found");
+    }
+
+    final doc = await FirebaseFirestore.instance
         .collection("products")
         .doc(widget.productId)
         .get();
+
+    if (!doc.exists) {
+      return doc;
+    }
+
+    final data = doc.data();
+
+    if (data == null || data["storeId"]?.toString() != storeId) {
+      throw Exception("Unauthorized product");
+    }
+
+    return doc;
   }
 
   Future<void> deleteProduct(Map<String, dynamic> product) async {
     final t = AppLocalizations.of(context)!;
+    final user = FirebaseAuth.instance.currentUser;
 
+    if (user == null) {
+      return;
+    }
+
+    final userDoc = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .get();
+
+    final userData = userDoc.data();
+    final storeId = userData?["storeId"]?.toString();
+
+    if (storeId == null || storeId.isEmpty) {
+      return;
+    }
     try {
+      final productRef = FirebaseFirestore.instance
+          .collection("products")
+          .doc(widget.productId);
+
+      final productDoc = await productRef.get();
+
+      if (!productDoc.exists) {
+        return;
+      }
+
+      final productData = productDoc.data();
+
+      if (productData == null ||
+          productData["storeId"]?.toString() != storeId) {
+        return;
+      }
+
       final List images = product["images"] ?? [];
 
       for (final image in images) {
@@ -99,10 +135,7 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
         } catch (_) {}
       }
 
-      await FirebaseFirestore.instance
-          .collection("products")
-          .doc(widget.productId)
-          .delete();
+      await productRef.delete();
 
       if (!mounted) return;
 
@@ -116,7 +149,7 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
 
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
+      ).showSnackBar(SnackBar(content: Text(t.somethingWentWrong)));
     }
   }
 
@@ -614,7 +647,7 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
           runSpacing: 8,
           children: [
             Text(
-              "\$${product["price"]}",
+              "${product["price"]} ${t.currencySymbol}",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.success,
@@ -625,7 +658,7 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 3),
                 child: Text(
-                  "\$$oldPrice",
+                  "$oldPrice ${t.currencySymbol}",
                   style: TextStyle(
                     decoration: TextDecoration.lineThrough,
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -952,777 +985,12 @@ class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
       child: InkWell(
         onTap: onPressed,
         customBorder: const CircleBorder(),
-        child: const SizedBox(
+        child: SizedBox(
           width: 40,
           height: 40,
-          child: Icon(
-            Icons.chevron_left_rounded,
-            color: Colors.white,
-            size: 24,
-          ),
+          child: Icon(icon, color: Colors.white, size: 24),
         ),
       ),
     );
   }
 }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:ecomerce_app/admin_dashboard/edit_product_page.dart';
-// import 'package:ecomerce_app/l10n/app_localizations.dart';
-// import 'package:ecomerce_app/theme/app_colors.dart';
-// import 'package:ecomerce_app/theme/custom_back_button.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:flutter/material.dart';
-
-// class AdminProductDetailsPage extends StatefulWidget {
-//   const AdminProductDetailsPage({super.key, required this.productId});
-
-//   final String productId;
-
-//   @override
-//   State<AdminProductDetailsPage> createState() =>
-//       _AdminProductDetailsPageState();
-// }
-
-// class _AdminProductDetailsPageState extends State<AdminProductDetailsPage> {
-//   final PageController pageController = PageController();
-//   late Future<DocumentSnapshot<Map<String, dynamic>>> productFuture;
-//   int currentImage = 0;
-//   String getLocalizedCategory(BuildContext context, String category) {
-//     final t = AppLocalizations.of(context)!;
-
-//     switch (category) {
-//       case "Electronics":
-//         return t.electronics;
-//       case "Smartphones":
-//         return t.smartphones;
-//       case "Laptops":
-//         return t.laptops;
-//       case "Tablets":
-//         return t.tablets;
-//       case "Smartwatches":
-//         return t.smartwatches;
-//       case "Accessories":
-//         return t.accessories;
-//       case "Audio":
-//         return t.audio;
-//       case "Gaming":
-//         return t.gaming;
-//       case "Home Appliances":
-//         return t.homeAppliances;
-//       case "Perfumes":
-//         return t.perfumes;
-//       case "Beauty":
-//         return t.beauty;
-//       case "Clothing":
-//         return t.clothing;
-//       case "Shoes":
-//         return t.shoes;
-//       case "Bags":
-//         return t.bags;
-//       case "Watches":
-//         return t.watches;
-//       case "Jewelry":
-//         return t.jewelry;
-//       case "Glasses":
-//         return t.glasses;
-//       case "Sports":
-//         return t.sports;
-//       case "Books":
-//         return t.books;
-//       case "Toys":
-//         return t.toys;
-//       case "Furniture":
-//         return t.furniture;
-//       case "Food":
-//         return t.food;
-//       case "Health":
-//         return t.health;
-//       case "Automotive":
-//         return t.automotive;
-//       case "Other":
-//         return t.other;
-//       default:
-//         return category;
-//     }
-//   }
-
-//   Future<DocumentSnapshot<Map<String, dynamic>>> getProduct() {
-//     return FirebaseFirestore.instance
-//         .collection("products")
-//         .doc(widget.productId)
-//         .get();
-//   }
-
-//   Future<void> deleteProduct(Map<String, dynamic> product) async {
-//     final t = AppLocalizations.of(context)!;
-//     try {
-//       final List images = product["images"] ?? [];
-
-//       for (final image in images) {
-//         try {
-//           await FirebaseStorage.instance.refFromURL(image).delete();
-//         } catch (_) {}
-//       }
-
-//       await FirebaseFirestore.instance
-//           .collection("products")
-//           .doc(widget.productId)
-//           .delete();
-
-//       if (!mounted) return;
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(SnackBar(content: Text(t.productDeletedSuccessfully)));
-
-//       Navigator.pop(context);
-//     } catch (e) {
-//       if (!mounted) return;
-
-//       ScaffoldMessenger.of(
-//         context,
-//       ).showSnackBar(SnackBar(content: Text(e.toString())));
-//     }
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     productFuture = getProduct();
-//   }
-
-//   @override
-//   void dispose() {
-//     pageController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context)!;
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(t.productDetails),
-//         leading: const CustomBackButton(),
-//       ),
-//       body: SafeArea(
-//         child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-//           future: productFuture,
-//           builder: (context, snapshot) {
-//             if (snapshot.connectionState == ConnectionState.waiting) {
-//               return Center(
-//                 child: CircularProgressIndicator(
-//                   color: Theme.of(context).colorScheme.primary,
-//                 ),
-//               );
-//             }
-
-//             if (!snapshot.hasData || !snapshot.data!.exists) {
-//               return Center(
-//                 child: Text(
-//                   t.productNotFound,
-//                   style: Theme.of(context).textTheme.bodyLarge,
-//                 ),
-//               );
-//             }
-
-//             final product = snapshot.data!.data()!;
-//             final List images = product["images"] ?? [];
-//             final price = (product["price"] as num?)?.toDouble() ?? 0;
-//             final oldPrice = (product["oldPrice"] as num?)?.toDouble() ?? 0;
-
-//             final discount = oldPrice > 0 && price < oldPrice
-//                 ? (((oldPrice - price) / oldPrice) * 100).round()
-//                 : 0;
-//             return SingleChildScrollView(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Padding(
-//                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-//                     child: Column(
-//                       children: [
-//                         ClipRRect(
-//                           borderRadius: BorderRadius.circular(24),
-//                           child: Container(
-//                             height: 280,
-//                             width: double.infinity,
-//                             decoration: BoxDecoration(
-//                               color: Theme.of(
-//                                 context,
-//                               ).colorScheme.surfaceContainerHighest,
-//                               borderRadius: BorderRadius.circular(24),
-//                             ),
-//                             child: Stack(
-//                               children: [
-//                                 PageView.builder(
-//                                   controller: pageController,
-//                                   itemCount: images.length,
-//                                   physics: const PageScrollPhysics(),
-//                                   onPageChanged: (index) {
-//                                     setState(() {
-//                                       currentImage = index;
-//                                     });
-//                                   },
-//                                   itemBuilder: (context, index) {
-//                                     final imageUrl = images[index].toString();
-
-//                                     return Padding(
-//                                       padding: const EdgeInsets.all(20),
-//                                       child: Image.network(
-//                                         imageUrl,
-//                                         key: ValueKey(imageUrl),
-//                                         width: double.infinity,
-//                                         fit: BoxFit.contain,
-//                                         gaplessPlayback: true,
-//                                         errorBuilder:
-//                                             (context, error, stackTrace) {
-//                                               return Center(
-//                                                 child: Icon(
-//                                                   Icons
-//                                                       .image_not_supported_rounded,
-//                                                   size: 50,
-//                                                   color: Theme.of(context)
-//                                                       .colorScheme
-//                                                       .onSurfaceVariant,
-//                                                 ),
-//                                               );
-//                                             },
-//                                       ),
-//                                     );
-//                                   },
-//                                 ),
-
-//                                 // Image counter
-//                                 if (images.length > 1)
-//                                   Positioned(
-//                                     top: 14,
-//                                     right: 14,
-//                                     child: Container(
-//                                       padding: const EdgeInsets.symmetric(
-//                                         horizontal: 10,
-//                                         vertical: 6,
-//                                       ),
-//                                       decoration: BoxDecoration(
-//                                         color: Colors.black.withValues(
-//                                           alpha: 0.55,
-//                                         ),
-//                                         borderRadius: BorderRadius.circular(20),
-//                                       ),
-//                                       child: Text(
-//                                         "${currentImage + 1}/${images.length}",
-//                                         style: const TextStyle(
-//                                           color: Colors.white,
-//                                           fontSize: 12,
-//                                           fontWeight: FontWeight.w600,
-//                                         ),
-//                                       ),
-//                                     ),
-//                                   ),
-
-//                                 // Previous button
-//                                 if (images.length > 1 && currentImage > 0)
-//                                   Positioned(
-//                                     left: 12,
-//                                     top: 0,
-//                                     bottom: 0,
-//                                     child: Center(
-//                                       child: _buildImageNavigationButton(
-//                                         icon: Icons.chevron_left_rounded,
-//                                         onPressed: () {
-//                                           pageController.previousPage(
-//                                             duration: const Duration(
-//                                               milliseconds: 250,
-//                                             ),
-//                                             curve: Curves.easeOut,
-//                                           );
-//                                         },
-//                                       ),
-//                                     ),
-//                                   ),
-
-//                                 // Next button
-//                                 if (images.length > 1 &&
-//                                     currentImage < images.length - 1)
-//                                   Positioned(
-//                                     right: 12,
-//                                     top: 0,
-//                                     bottom: 0,
-//                                     child: Center(
-//                                       child: _buildImageNavigationButton(
-//                                         icon: Icons.chevron_right_rounded,
-//                                         onPressed: () {
-//                                           pageController.nextPage(
-//                                             duration: const Duration(
-//                                               milliseconds: 250,
-//                                             ),
-//                                             curve: Curves.easeOut,
-//                                           );
-//                                         },
-//                                       ),
-//                                     ),
-//                                   ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-
-//                         const SizedBox(height: 14),
-
-//                         // Page indicators
-//                         if (images.length > 1)
-//                           Row(
-//                             mainAxisAlignment: MainAxisAlignment.center,
-//                             children: List.generate(
-//                               images.length,
-//                               (index) => AnimatedContainer(
-//                                 duration: const Duration(milliseconds: 250),
-//                                 curve: Curves.easeOut,
-//                                 margin: const EdgeInsets.symmetric(
-//                                   horizontal: 3,
-//                                 ),
-//                                 width: currentImage == index ? 24 : 7,
-//                                 height: 7,
-//                                 decoration: BoxDecoration(
-//                                   color: currentImage == index
-//                                       ? Theme.of(context).colorScheme.primary
-//                                       : Theme.of(
-//                                           context,
-//                                         ).colorScheme.outlineVariant,
-//                                   borderRadius: BorderRadius.circular(20),
-//                                 ),
-//                               ),
-//                             ),
-//                           ),
-//                       ],
-//                     ),
-//                   ),
-
-//                   const SizedBox(height: 24),
-//                   const SizedBox(height: 24),
-
-//                   Padding(
-//                     padding: const EdgeInsets.symmetric(horizontal: 16),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           product["name"] ?? "",
-//                           style: Theme.of(context).textTheme.headlineSmall
-//                               ?.copyWith(fontWeight: FontWeight.bold),
-//                         ),
-//                         const SizedBox(height: 12),
-//                         Row(
-//                           children: [
-//                             const Icon(
-//                               Icons.star,
-//                               color: Colors.amber,
-//                               size: 20,
-//                             ),
-
-//                             const SizedBox(width: 4),
-
-//                             Text(
-//                               "${product["rating"] ?? 0}",
-//                               style: Theme.of(context).textTheme.bodyLarge
-//                                   ?.copyWith(fontWeight: FontWeight.bold),
-//                             ),
-
-//                             const SizedBox(width: 8),
-
-//                             Text(
-//                               "(${product["reviewsCount"] ?? 0})",
-//                               style: TextStyle(
-//                                 color: Theme.of(
-//                                   context,
-//                                 ).colorScheme.onSurfaceVariant,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-
-//                         const SizedBox(height: 20),
-
-//                         Row(
-//                           crossAxisAlignment: CrossAxisAlignment.end,
-//                           children: [
-//                             Text(
-//                               "\$${product["price"]}",
-//                               style: Theme.of(context).textTheme.headlineSmall
-//                                   ?.copyWith(
-//                                     fontWeight: FontWeight.bold,
-//                                     color: AppColors.success,
-//                                   ),
-//                             ),
-
-//                             const SizedBox(width: 12),
-
-//                             if (oldPrice > 0)
-//                               Text(
-//                                 "\$$oldPrice",
-//                                 style: TextStyle(
-//                                   decoration: TextDecoration.lineThrough,
-//                                   color: Theme.of(
-//                                     context,
-//                                   ).colorScheme.onSurfaceVariant,
-//                                   fontSize: 18,
-//                                 ),
-//                               ),
-
-//                             const SizedBox(width: 10),
-
-//                             if (discount > 0)
-//                               Container(
-//                                 padding: const EdgeInsets.symmetric(
-//                                   horizontal: 10,
-//                                   vertical: 5,
-//                                 ),
-//                                 decoration: BoxDecoration(
-//                                   color: AppColors.error,
-//                                   borderRadius: BorderRadius.circular(20),
-//                                 ),
-//                                 child: Text(
-//                                   "-$discount%",
-//                                   style: const TextStyle(
-//                                     color: Colors.white,
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                                 ),
-//                               ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   const SizedBox(height: 24),
-
-//                   Card(
-//                     elevation: 2,
-//                     color: Theme.of(context).colorScheme.surface,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(16),
-//                     ),
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(16),
-//                       child: Column(
-//                         children: [
-//                           _buildInfoRow(
-//                             Icons.category_outlined,
-//                             t.category,
-//                             getLocalizedCategory(
-//                               context,
-//                               product["category"]?.toString() ?? "-",
-//                             ),
-//                           ),
-
-//                           const Divider(),
-
-//                           _buildInfoRow(
-//                             Icons.branding_watermark_outlined,
-//                             t.brand,
-//                             product["brand"] ?? "-",
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 24),
-
-//                   Card(
-//                     elevation: 2,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(16),
-//                     ),
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(16),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Row(
-//                             children: [
-//                               Icon(
-//                                 Icons.description_outlined,
-//                                 color: Theme.of(context).colorScheme.primary,
-//                               ),
-
-//                               const SizedBox(width: 8),
-
-//                               Text(
-//                                 t.description,
-//                                 style: Theme.of(context).textTheme.titleMedium
-//                                     ?.copyWith(fontWeight: FontWeight.bold),
-//                               ),
-//                             ],
-//                           ),
-
-//                           const SizedBox(height: 16),
-
-//                           Text(
-//                             product["description"] ?? t.noDescriptionAvailable,
-//                             style: Theme.of(
-//                               context,
-//                             ).textTheme.bodyMedium?.copyWith(height: 1.6),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 24),
-
-//                   Text(
-//                     t.statistics,
-//                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 16),
-
-//                   GridView.count(
-//                     crossAxisCount: 2,
-//                     shrinkWrap: true,
-//                     physics: const NeverScrollableScrollPhysics(),
-//                     crossAxisSpacing: 12,
-//                     mainAxisSpacing: 12,
-//                     childAspectRatio: 1.2,
-//                     children: [
-//                       _buildStatCard(
-//                         Icons.star_rounded,
-//                         t.rating,
-//                         "${product["rating"] ?? 0}",
-//                         Colors.amber,
-//                       ),
-//                       _buildStatCard(
-//                         Icons.rate_review_rounded,
-//                         t.reviews,
-//                         "${product["reviewsCount"] ?? 0}",
-//                         AppColors.info,
-//                       ),
-//                       _buildStatCard(
-//                         Icons.inventory_2_rounded,
-//                         t.stock,
-//                         "${product["stock"] ?? 0}",
-//                         AppColors.success,
-//                       ),
-//                       _buildStatCard(
-//                         Icons.local_offer_rounded,
-//                         t.discount,
-//                         "$discount%",
-//                         AppColors.error,
-//                       ),
-//                     ],
-//                   ),
-//                   const SizedBox(height: 30),
-
-//                   Center(
-//                     child: SizedBox(
-//                       width: 220,
-//                       height: 44,
-//                       child: ElevatedButton.icon(
-//                         icon: const Icon(Icons.edit_rounded, size: 18),
-//                         label: Text(
-//                           t.editProduct,
-//                           style: const TextStyle(
-//                             fontSize: 14,
-//                             fontWeight: FontWeight.w600,
-//                           ),
-//                         ),
-//                         style: ElevatedButton.styleFrom(
-//                           padding: EdgeInsets.zero,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                         ),
-//                         onPressed: () async {
-//                           await Navigator.push(
-//                             context,
-//                             MaterialPageRoute(
-//                               builder: (_) =>
-//                                   EditProductPage(productId: widget.productId),
-//                             ),
-//                           );
-
-//                           if (!mounted) return;
-
-//                           setState(() {
-//                             productFuture = getProduct();
-//                             currentImage = 0;
-//                           });
-//                         },
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 12),
-
-//                   Center(
-//                     child: SizedBox(
-//                       width: 220,
-//                       height: 44,
-//                       child: OutlinedButton.icon(
-//                         icon: Icon(
-//                           Icons.delete_rounded,
-//                           color: AppColors.error,
-//                           size: 18,
-//                         ),
-//                         label: Text(
-//                           t.deleteProduct,
-//                           style: TextStyle(
-//                             color: AppColors.error,
-//                             fontSize: 14,
-//                             fontWeight: FontWeight.w600,
-//                           ),
-//                         ),
-//                         style: OutlinedButton.styleFrom(
-//                           padding: EdgeInsets.zero,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(12),
-//                           ),
-//                           side: const BorderSide(color: AppColors.error),
-//                         ),
-//                         onPressed: () async {
-//                           final confirm = await showDialog<bool>(
-//                             context: context,
-//                             builder: (context) {
-//                               return AlertDialog(
-//                                 title: const Text("Delete Product"),
-//                                 content: Text(t.deleteProductConfirmation),
-//                                 actions: [
-//                                   TextButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(context, false);
-//                                     },
-//                                     child: Text(t.cancel),
-//                                   ),
-//                                   ElevatedButton(
-//                                     onPressed: () {
-//                                       Navigator.pop(context, true);
-//                                     },
-//                                     child: Text(t.delete),
-//                                   ),
-//                                 ],
-//                               );
-//                             },
-//                           );
-
-//                           if (confirm == true) {
-//                             await deleteProduct(product);
-//                           }
-//                         },
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(height: 30),
-//                 ],
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildInfoRow(IconData icon, String title, String value) {
-//     return Row(
-//       children: [
-//         Icon(icon, color: Theme.of(context).colorScheme.onSurfaceVariant),
-
-//         const SizedBox(width: 12),
-
-//         Expanded(
-//           child: Text(
-//             title,
-//             style: Theme.of(
-//               context,
-//             ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-//           ),
-//         ),
-
-//         Text(
-//           value,
-//           style: Theme.of(
-//             context,
-//           ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildStatCard(
-//     IconData icon,
-//     String title,
-//     String value,
-//     Color color,
-//   ) {
-//     return Card(
-//       elevation: 0,
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(18),
-//         side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.all(16),
-//         child: Row(
-//           children: [
-//             Container(
-//               width: 46,
-//               height: 46,
-//               decoration: BoxDecoration(
-//                 color: color.withValues(alpha: 0.12),
-//                 borderRadius: BorderRadius.circular(14),
-//               ),
-//               child: Icon(icon, color: color, size: 24),
-//             ),
-
-//             const SizedBox(width: 12),
-
-//             Expanded(
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     title,
-//                     maxLines: 1,
-//                     overflow: TextOverflow.ellipsis,
-//                     style: TextStyle(
-//                       color: Theme.of(context).colorScheme.onSurfaceVariant,
-//                       fontSize: 13,
-//                       fontWeight: FontWeight.w500,
-//                     ),
-//                   ),
-
-//                   const SizedBox(height: 4),
-
-//                   Text(
-//                     value,
-//                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildImageNavigationButton({
-//     required IconData icon,
-//     required VoidCallback onPressed,
-//   }) {
-//     return Material(
-//       color: Colors.black.withValues(alpha: 0.45),
-//       shape: const CircleBorder(),
-//       child: InkWell(
-//         onTap: onPressed,
-//         customBorder: const CircleBorder(),
-//         child: SizedBox(
-//           width: 38,
-//           height: 38,
-//           child: Icon(icon, color: Colors.white, size: 24),
-//         ),
-//       ),
-//     );
-//   }
-// }

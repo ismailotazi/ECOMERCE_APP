@@ -112,7 +112,7 @@ abstract class AppLocalizations {
   /// No description provided for @invalidEmail.
   ///
   /// In en, this message translates to:
-  /// **'Invalid email'**
+  /// **'Please enter a valid email address.'**
   String get invalidEmail;
 
   /// No description provided for @password.
@@ -232,7 +232,7 @@ abstract class AppLocalizations {
   /// No description provided for @passwordResetEmailSent.
   ///
   /// In en, this message translates to:
-  /// **'Password reset email sent! Check your inbox or spam folder.'**
+  /// **'Password reset email sent.'**
   String get passwordResetEmailSent;
 
   /// No description provided for @anErrorOccurred.
@@ -721,12 +721,6 @@ abstract class AppLocalizations {
   /// **'Please enter a valid last name'**
   String get validLastName;
 
-  /// No description provided for @usernameOptional.
-  ///
-  /// In en, this message translates to:
-  /// **'Username (Optional)'**
-  String get usernameOptional;
-
   /// No description provided for @phoneNumberRequired.
   ///
   /// In en, this message translates to:
@@ -799,35 +793,23 @@ abstract class AppLocalizations {
   /// **'Street Address (Optional)'**
   String get streetAddressOptional;
 
-  /// No description provided for @zipCodeOptional.
-  ///
-  /// In en, this message translates to:
-  /// **'ZIP Code (Optional)'**
-  String get zipCodeOptional;
-
   /// No description provided for @additionalInformation.
   ///
   /// In en, this message translates to:
   /// **'Additional Information'**
   String get additionalInformation;
 
-  /// No description provided for @genderOptional.
+  /// No description provided for @subscribedStores.
   ///
   /// In en, this message translates to:
-  /// **'Gender (Optional)'**
-  String get genderOptional;
+  /// **'Subscribed Stores'**
+  String get subscribedStores;
 
-  /// No description provided for @dateOfBirthOptional.
+  /// No description provided for @unsubscribedStores.
   ///
   /// In en, this message translates to:
-  /// **'Date of Birth (Optional)'**
-  String get dateOfBirthOptional;
-
-  /// No description provided for @selectYourBirthDate.
-  ///
-  /// In en, this message translates to:
-  /// **'Select your birth date'**
-  String get selectYourBirthDate;
+  /// **'Unsubscribed Stores'**
+  String get unsubscribedStores;
 
   /// No description provided for @profileUpdatedSuccessfully.
   ///
@@ -1567,6 +1549,12 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get add;
 
+  /// No description provided for @orderStatusCannotBeChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'This order status cannot be changed.'**
+  String get orderStatusCannotBeChanged;
+
   /// No description provided for @users.
   ///
   /// In en, this message translates to:
@@ -1684,7 +1672,7 @@ abstract class AppLocalizations {
   /// No description provided for @admin.
   ///
   /// In en, this message translates to:
-  /// **'Administrator'**
+  /// **'Admin'**
   String get admin;
 
   /// No description provided for @user.
@@ -2149,23 +2137,11 @@ abstract class AppLocalizations {
   /// **'Last Name'**
   String get lastName;
 
-  /// No description provided for @username.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get username;
-
   /// No description provided for @phone.
   ///
   /// In en, this message translates to:
   /// **'Phone'**
   String get phone;
-
-  /// No description provided for @gender.
-  ///
-  /// In en, this message translates to:
-  /// **'Gender'**
-  String get gender;
 
   /// No description provided for @male.
   ///
@@ -2178,18 +2154,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Female'**
   String get female;
-
-  /// No description provided for @dateOfBirth.
-  ///
-  /// In en, this message translates to:
-  /// **'Date of Birth'**
-  String get dateOfBirth;
-
-  /// No description provided for @selectDateOfBirth.
-  ///
-  /// In en, this message translates to:
-  /// **'Select date of birth'**
-  String get selectDateOfBirth;
 
   /// No description provided for @shippingAddress.
   ///
@@ -2214,12 +2178,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Street Address'**
   String get streetAddress;
-
-  /// No description provided for @zipCode.
-  ///
-  /// In en, this message translates to:
-  /// **'ZIP Code'**
-  String get zipCode;
 
   /// No description provided for @firstNameRequired.
   ///
@@ -2386,7 +2344,7 @@ abstract class AppLocalizations {
   /// No description provided for @system.
   ///
   /// In en, this message translates to:
-  /// **'SYSTEM'**
+  /// **'System'**
   String get system;
 
   /// No description provided for @settings.
@@ -2848,7 +2806,7 @@ abstract class AppLocalizations {
   /// No description provided for @pleaseSignInAgain.
   ///
   /// In en, this message translates to:
-  /// **'Please sign in again and retry.'**
+  /// **'Please sign in again.'**
   String get pleaseSignInAgain;
 
   /// No description provided for @exportOrders.
@@ -3154,7 +3112,7 @@ abstract class AppLocalizations {
   /// No description provided for @databaseRestoredSuccessfully.
   ///
   /// In en, this message translates to:
-  /// **'Database restored successfully ({count} documents)'**
+  /// **'Restore completed: {count} new documents added'**
   String databaseRestoredSuccessfully(int count);
 
   /// No description provided for @restoreFailed.
@@ -3228,12 +3186,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change Profile Photo'**
   String get changeProfilePhoto;
-
-  /// No description provided for @usernameIsRequired.
-  ///
-  /// In en, this message translates to:
-  /// **'Username is required'**
-  String get usernameIsRequired;
 
   /// No description provided for @enterAValidPhoneNumber.
   ///
@@ -3373,11 +3325,1679 @@ abstract class AppLocalizations {
   /// **'Please enter stock quantity.'**
   String get enterStock;
 
+  /// No description provided for @createNewStoreForPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new store for your platform.'**
+  String get createNewStoreForPlatform;
+
+  /// No description provided for @exampleMiloMall.
+  ///
+  /// In en, this message translates to:
+  /// **'Example: Milo Mall'**
+  String get exampleMiloMall;
+
+  /// No description provided for @exampleMiloMallId.
+  ///
+  /// In en, this message translates to:
+  /// **'Example: Milo_mall'**
+  String get exampleMiloMallId;
+
+  /// No description provided for @pleaseEnterStoreName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the store name.'**
+  String get pleaseEnterStoreName;
+
+  /// No description provided for @storeNameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Store name is too short.'**
+  String get storeNameTooShort;
+
+  /// No description provided for @storeId.
+  ///
+  /// In en, this message translates to:
+  /// **'Store ID'**
+  String get storeId;
+
+  /// No description provided for @pleaseEnterStoreId.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the store ID.'**
+  String get pleaseEnterStoreId;
+
+  /// No description provided for @storeIdTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Store ID is too short.'**
+  String get storeIdTooShort;
+
+  /// No description provided for @storeIdCharactersError.
+  ///
+  /// In en, this message translates to:
+  /// **'Use only lowercase letters, numbers and _.'**
+  String get storeIdCharactersError;
+
+  /// No description provided for @storeActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Active'**
+  String get storeActive;
+
+  /// No description provided for @usersCanAccessStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Users can access this store.'**
+  String get usersCanAccessStore;
+
+  /// No description provided for @usersCannotAccessStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Users cannot access this store.'**
+  String get usersCannotAccessStore;
+
+  /// No description provided for @storeIdAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This store ID already exists.'**
+  String get storeIdAlreadyExists;
+
+  /// No description provided for @storeCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Store created successfully.'**
+  String get storeCreatedSuccessfully;
+
+  /// No description provided for @createAdministrator.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Administrator'**
+  String get createAdministrator;
+
+  /// No description provided for @createAdminAssignStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an administrator and assign them to a store.'**
+  String get createAdminAssignStore;
+
+  /// No description provided for @pleaseEnterFirstName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the first name.'**
+  String get pleaseEnterFirstName;
+
+  /// No description provided for @pleaseEnterLastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the last name.'**
+  String get pleaseEnterLastName;
+
+  /// No description provided for @pleaseEnterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the email.'**
+  String get pleaseEnterEmail;
+
+  /// No description provided for @pleaseEnterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email.'**
+  String get pleaseEnterValidEmail;
+
+  /// No description provided for @pleaseEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password.'**
+  String get pleaseEnterPassword;
+
+  /// No description provided for @passwordMinCharacters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters.'**
+  String get passwordMinCharacters;
+
+  /// No description provided for @assignStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Store'**
+  String get assignStore;
+
+  /// No description provided for @unableToLoadStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to load stores.'**
+  String get unableToLoadStores;
+
+  /// No description provided for @noActiveStoresAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No active stores available.'**
+  String get noActiveStoresAvailable;
+
+  /// No description provided for @adminCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin created successfully'**
+  String get adminCreatedSuccessfully;
+
+  /// No description provided for @failedToCreateAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create admin.'**
+  String get failedToCreateAdmin;
+
+  /// No description provided for @stores.
+  ///
+  /// In en, this message translates to:
+  /// **'Stores'**
+  String get stores;
+
+  /// No description provided for @createStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Store'**
+  String get createStore;
+
+  /// No description provided for @noStoresYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No stores yet'**
+  String get noStoresYet;
+
+  /// No description provided for @superAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Super Admin'**
+  String get superAdmin;
+
+  /// No description provided for @platformOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Overview'**
+  String get platformOverview;
+
+  /// No description provided for @manageAllStoresAndAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage all stores and administrators.'**
+  String get manageAllStoresAndAdmins;
+
+  /// No description provided for @management.
+  ///
+  /// In en, this message translates to:
+  /// **'Management'**
+  String get management;
+
+  /// No description provided for @manageStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Stores'**
+  String get manageStores;
+
+  /// No description provided for @createEditManageAllStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Create, edit and manage all stores.'**
+  String get createEditManageAllStores;
+
+  /// No description provided for @manageAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Admins'**
+  String get manageAdmins;
+
+  /// No description provided for @createAdminsAndAssignStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Create administrators and assign them to stores.'**
+  String get createAdminsAndAssignStores;
+
+  /// No description provided for @ordersCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed Orders'**
+  String get ordersCompleted;
+
+  /// No description provided for @admins.
+  ///
+  /// In en, this message translates to:
+  /// **'Admins'**
+  String get admins;
+
+  /// No description provided for @createAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Admin'**
+  String get createAdmin;
+
+  /// No description provided for @noAdminsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No admins yet'**
+  String get noAdminsYet;
+
+  /// No description provided for @noStoreAssigned.
+  ///
+  /// In en, this message translates to:
+  /// **'No store assigned'**
+  String get noStoreAssigned;
+
+  /// No description provided for @storeInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Information'**
+  String get storeInformation;
+
+  /// No description provided for @storeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Name'**
+  String get storeName;
+
+  /// No description provided for @pleaseSelectStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a store.'**
+  String get pleaseSelectStore;
+
+  /// No description provided for @security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get security;
+
+  /// No description provided for @passwordResetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a password reset link to your email.'**
+  String get passwordResetDescription;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @adminManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Management'**
+  String get adminManagement;
+
+  /// No description provided for @platform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get platform;
+
+  /// No description provided for @aboutMiloMall.
+  ///
+  /// In en, this message translates to:
+  /// **'About Milo Mall'**
+  String get aboutMiloMall;
+
+  /// No description provided for @saasMarketplacePlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Milo Mall SaaS Marketplace Platform'**
+  String get saasMarketplacePlatform;
+
+  /// No description provided for @emailVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Verified'**
+  String get emailVerified;
+
+  /// No description provided for @emailNotVerified.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Not Verified'**
+  String get emailNotVerified;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Out'**
+  String get signOut;
+
+  /// No description provided for @signOutConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out?'**
+  String get signOutConfirmation;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @editStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Store'**
+  String get editStore;
+
+  /// No description provided for @updateStoreInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your store information.'**
+  String get updateStoreInformation;
+
+  /// No description provided for @removeStoreLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Store Logo'**
+  String get removeStoreLogo;
+
+  /// No description provided for @storeUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Store updated successfully.'**
+  String get storeUpdatedSuccessfully;
+
+  /// No description provided for @store.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get store;
+
+  /// No description provided for @editAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Admin'**
+  String get editAdmin;
+
+  /// No description provided for @since.
+  ///
+  /// In en, this message translates to:
+  /// **'Since'**
+  String get since;
+
+  /// No description provided for @adminInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Information'**
+  String get adminInformation;
+
+  /// No description provided for @updateAdminInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the administrator\'s information.'**
+  String get updateAdminInformation;
+
+  /// No description provided for @adminUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin updated successfully.'**
+  String get adminUpdatedSuccessfully;
+
+  /// No description provided for @permissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'You do not have permission to perform this action.'**
+  String get permissionDenied;
+
+  /// No description provided for @adminOrStoreNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin or store not found.'**
+  String get adminOrStoreNotFound;
+
+  /// No description provided for @emailAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists.'**
+  String get emailAlreadyExists;
+
+  /// No description provided for @storeInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected store is inactive.'**
+  String get storeInactive;
+
+  /// No description provided for @invalidAdminInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'The admin information is invalid.'**
+  String get invalidAdminInformation;
+
+  /// No description provided for @adminUpdateSecurityInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin changes are securely processed through the platform administration service.'**
+  String get adminUpdateSecurityInfo;
+
+  /// No description provided for @allStores.
+  ///
+  /// In en, this message translates to:
+  /// **'All Stores'**
+  String get allStores;
+
+  /// No description provided for @allAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'All Administrators'**
+  String get allAdmins;
+
+  /// No description provided for @totalStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Stores'**
+  String get totalStores;
+
+  /// No description provided for @activeStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Stores'**
+  String get activeStores;
+
+  /// No description provided for @noStores.
+  ///
+  /// In en, this message translates to:
+  /// **'No stores found'**
+  String get noStores;
+
+  /// No description provided for @noAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'No administrators found'**
+  String get noAdmins;
+
+  /// No description provided for @totalAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Administrators'**
+  String get totalAdmins;
+
+  /// No description provided for @computers.
+  ///
+  /// In en, this message translates to:
+  /// **'Computers'**
+  String get computers;
+
+  /// No description provided for @fashion.
+  ///
+  /// In en, this message translates to:
+  /// **'Fashion'**
+  String get fashion;
+
+  /// No description provided for @lifestyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifestyle'**
+  String get lifestyle;
+
+  /// No description provided for @placedNewOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'{userName} placed a new order'**
+  String placedNewOrder(Object userName);
+
+  /// No description provided for @currencySymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'MAD'**
+  String get currencySymbol;
+
+  /// No description provided for @whatsappNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp Number'**
+  String get whatsappNumber;
+
+  /// No description provided for @enterWhatsappNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter WhatsApp number'**
+  String get enterWhatsappNumber;
+
+  /// No description provided for @invalidWhatsappNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid WhatsApp number'**
+  String get invalidWhatsappNumber;
+
+  /// No description provided for @accountInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is inactive. Please contact the store administrator.'**
+  String get accountInactive;
+
+  /// No description provided for @chooseYourStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your store'**
+  String get chooseYourStore;
+
+  /// No description provided for @selectStoreToContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a store to continue'**
+  String get selectStoreToContinue;
+
+  /// No description provided for @noStoresAvailableAtMoment.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no stores available at the moment.'**
+  String get noStoresAvailableAtMoment;
+
+  /// No description provided for @oldPriceMustBeGreaterThanPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Old price must be greater than the current price.'**
+  String get oldPriceMustBeGreaterThanPrice;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @oldPriceMustBeHigher.
+  ///
+  /// In en, this message translates to:
+  /// **'Old price must be higher than the current price'**
+  String get oldPriceMustBeHigher;
+
+  /// No description provided for @productRemovedByAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'This product is no longer available because it was removed by the admin.'**
+  String get productRemovedByAdmin;
+
+  /// No description provided for @subscriptionCenterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Center'**
+  String get subscriptionCenterTitle;
+
+  /// No description provided for @subscriptionCenterSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage monthly plans and payment dates'**
+  String get subscriptionCenterSubtitle;
+
+  /// No description provided for @subscriptionTotalStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Total stores'**
+  String get subscriptionTotalStores;
+
+  /// No description provided for @subscriptionConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured'**
+  String get subscriptionConfigured;
+
+  /// No description provided for @subscriptionDueSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Due soon'**
+  String get subscriptionDueSoon;
+
+  /// No description provided for @subscriptionOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get subscriptionOverdue;
+
+  /// No description provided for @subscriptionExpectedRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected monthly revenue'**
+  String get subscriptionExpectedRevenue;
+
+  /// No description provided for @subscriptionStoreSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Store subscriptions'**
+  String get subscriptionStoreSubscriptions;
+
+  /// No description provided for @subscriptionFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get subscriptionFilterAll;
+
+  /// No description provided for @subscriptionStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get subscriptionStatusActive;
+
+  /// No description provided for @subscriptionStatusDueSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Due soon'**
+  String get subscriptionStatusDueSoon;
+
+  /// No description provided for @subscriptionStatusOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get subscriptionStatusOverdue;
+
+  /// No description provided for @subscriptionStatusNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Not configured'**
+  String get subscriptionStatusNotConfigured;
+
+  /// No description provided for @subscriptionNoStores.
+  ///
+  /// In en, this message translates to:
+  /// **'No stores found for this filter.'**
+  String get subscriptionNoStores;
+
+  /// No description provided for @subscriptionOverdueNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue subscriptions only show an alert here. Store activation is managed separately.'**
+  String get subscriptionOverdueNote;
+
+  /// No description provided for @subscriptionManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage subscription'**
+  String get subscriptionManageTitle;
+
+  /// No description provided for @subscriptionMonthlyPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly price (MAD)'**
+  String get subscriptionMonthlyPrice;
+
+  /// No description provided for @subscriptionPriceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 150'**
+  String get subscriptionPriceHint;
+
+  /// No description provided for @subscriptionNextPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Next payment date'**
+  String get subscriptionNextPayment;
+
+  /// No description provided for @subscriptionNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get subscriptionNotSet;
+
+  /// No description provided for @subscriptionSaveNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This only saves subscription details. It does not record a payment or deactivate the store.'**
+  String get subscriptionSaveNote;
+
+  /// No description provided for @subscriptionInvalidPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid monthly price.'**
+  String get subscriptionInvalidPrice;
+
+  /// No description provided for @subscriptionSelectPaymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select the next payment date.'**
+  String get subscriptionSelectPaymentDate;
+
+  /// No description provided for @subscriptionSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get subscriptionSaving;
+
+  /// No description provided for @subscriptionSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save subscription'**
+  String get subscriptionSave;
+
+  /// No description provided for @subscriptionStoreEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Store enabled'**
+  String get subscriptionStoreEnabled;
+
+  /// No description provided for @subscriptionStoreDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Store disabled'**
+  String get subscriptionStoreDisabled;
+
+  /// No description provided for @subscriptionLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load subscriptions.'**
+  String get subscriptionLoadError;
+
+  /// No description provided for @subscriptionUpdatedFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription updated for {storeName}.'**
+  String subscriptionUpdatedFor(String storeName);
+
+  /// No description provided for @subscriptionSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save subscription: {error}'**
+  String subscriptionSaveError(String error);
+
+  /// No description provided for @subscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get subscriptions;
+
+  /// No description provided for @accessDeniedSuperAdminOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Access denied. SuperAdmin only.'**
+  String get accessDeniedSuperAdminOnly;
+
+  /// No description provided for @selectAtLeastOneCollection.
+  ///
+  /// In en, this message translates to:
+  /// **'Select at least one collection to back up.'**
+  String get selectAtLeastOneCollection;
+
+  /// No description provided for @existingDocumentsKeptUnchanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Existing documents will be kept unchanged.'**
+  String get existingDocumentsKeptUnchanged;
+
+  /// No description provided for @onlyNewDocumentsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Only new documents will be added.'**
+  String get onlyNewDocumentsAdded;
+
+  /// No description provided for @restoreFinished.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore finished: {added} documents added, {skipped} documents skipped.'**
+  String restoreFinished(int added, int skipped);
+
+  /// No description provided for @storeSubscriptionSignInAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in again.'**
+  String get storeSubscriptionSignInAgain;
+
+  /// No description provided for @storeSubscriptionNoStore.
+  ///
+  /// In en, this message translates to:
+  /// **'No store is associated with this account.'**
+  String get storeSubscriptionNoStore;
+
+  /// No description provided for @storeSubscriptionStoreNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Store not found.'**
+  String get storeSubscriptionStoreNotFound;
+
+  /// No description provided for @storeSubscriptionChooseFileType.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a JPG, PNG, WEBP or PDF file.'**
+  String get storeSubscriptionChooseFileType;
+
+  /// No description provided for @storeSubscriptionFileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The file must be smaller than 10 MB.'**
+  String get storeSubscriptionFileTooLarge;
+
+  /// No description provided for @storeSubscriptionFileReadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not read the selected file.'**
+  String get storeSubscriptionFileReadError;
+
+  /// No description provided for @storeSubscriptionFileSelectError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not select file: {error}'**
+  String storeSubscriptionFileSelectError(Object error);
+
+  /// No description provided for @storeSubscriptionSelectDateAndProof.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the transfer date and proof file first.'**
+  String get storeSubscriptionSelectDateAndProof;
+
+  /// No description provided for @storeSubscriptionFileUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected file is no longer available. Select it again.'**
+  String get storeSubscriptionFileUnavailable;
+
+  /// No description provided for @storeSubscriptionPriceNotConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'The subscription price has not been configured.'**
+  String get storeSubscriptionPriceNotConfigured;
+
+  /// No description provided for @storeSubscriptionBankUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The subscription bank account is currently unavailable.'**
+  String get storeSubscriptionBankUnavailable;
+
+  /// No description provided for @storeSubscriptionPaymentSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment proof submitted. Your payment is waiting for review.'**
+  String get storeSubscriptionPaymentSubmitted;
+
+  /// No description provided for @storeSubscriptionSubmitPaymentError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not submit payment: {error}'**
+  String storeSubscriptionSubmitPaymentError(Object error);
+
+  /// No description provided for @storeSubscriptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription & Payments'**
+  String get storeSubscriptionTitle;
+
+  /// No description provided for @storeSubscriptionYourSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription'**
+  String get storeSubscriptionYourSubscription;
+
+  /// No description provided for @storeSubscriptionPriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription price'**
+  String get storeSubscriptionPriceLabel;
+
+  /// No description provided for @storeSubscriptionNextPaymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Next payment date'**
+  String get storeSubscriptionNextPaymentDate;
+
+  /// No description provided for @storeSubscriptionStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription status'**
+  String get storeSubscriptionStatusLabel;
+
+  /// No description provided for @storeSubscriptionBankTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get storeSubscriptionBankTransfer;
+
+  /// No description provided for @storeSubscriptionBankUnavailableContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer is currently unavailable. Please contact support.'**
+  String get storeSubscriptionBankUnavailableContact;
+
+  /// No description provided for @storeSubscriptionBankTransferDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer details'**
+  String get storeSubscriptionBankTransferDetails;
+
+  /// No description provided for @storeSubscriptionTransferInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer the subscription amount to this account.'**
+  String get storeSubscriptionTransferInstructions;
+
+  /// No description provided for @storeSubscriptionBankName.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank name'**
+  String get storeSubscriptionBankName;
+
+  /// No description provided for @storeSubscriptionAccountHolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Account holder'**
+  String get storeSubscriptionAccountHolder;
+
+  /// No description provided for @storeSubscriptionRib.
+  ///
+  /// In en, this message translates to:
+  /// **'RIB'**
+  String get storeSubscriptionRib;
+
+  /// No description provided for @storeSubscriptionIban.
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN'**
+  String get storeSubscriptionIban;
+
+  /// No description provided for @storeSubscriptionSwiftBic.
+  ///
+  /// In en, this message translates to:
+  /// **'SWIFT/BIC'**
+  String get storeSubscriptionSwiftBic;
+
+  /// No description provided for @storeSubscriptionSubmitProofTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit payment proof'**
+  String get storeSubscriptionSubmitProofTitle;
+
+  /// No description provided for @storeSubscriptionUploadReceiptSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your transfer receipt for manual verification.'**
+  String get storeSubscriptionUploadReceiptSubtitle;
+
+  /// No description provided for @storeSubscriptionTransferDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer date'**
+  String get storeSubscriptionTransferDate;
+
+  /// No description provided for @storeSubscriptionTransactionReferenceOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction reference (optional)'**
+  String get storeSubscriptionTransactionReferenceOptional;
+
+  /// No description provided for @storeSubscriptionTransactionReferenceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your bank transaction reference'**
+  String get storeSubscriptionTransactionReferenceHint;
+
+  /// No description provided for @storeSubscriptionTransferReceiptRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer receipt *'**
+  String get storeSubscriptionTransferReceiptRequired;
+
+  /// No description provided for @storeSubscriptionChooseImageOrPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose image or PDF'**
+  String get storeSubscriptionChooseImageOrPdf;
+
+  /// No description provided for @storeSubscriptionAllowedFileTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'JPG, PNG, WEBP or PDF · Max 10 MB'**
+  String get storeSubscriptionAllowedFileTypes;
+
+  /// No description provided for @storeSubscriptionBrowseFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse files'**
+  String get storeSubscriptionBrowseFiles;
+
+  /// No description provided for @storeSubscriptionChangeFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Change file'**
+  String get storeSubscriptionChangeFile;
+
+  /// No description provided for @storeSubscriptionSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting...'**
+  String get storeSubscriptionSubmitting;
+
+  /// No description provided for @storeSubscriptionSubmitForVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for verification'**
+  String get storeSubscriptionSubmitForVerification;
+
+  /// No description provided for @storeSubscriptionManualVerificationNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting proof does not renew your subscription automatically. Your payment must be verified by the platform administrator.'**
+  String get storeSubscriptionManualVerificationNotice;
+
+  /// No description provided for @storeSubscriptionPaymentHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment history'**
+  String get storeSubscriptionPaymentHistory;
+
+  /// No description provided for @storeSubscriptionPaymentHistorySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your subscription payment submissions.'**
+  String get storeSubscriptionPaymentHistorySubtitle;
+
+  /// No description provided for @storeSubscriptionLoadHistoryError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load payment history: {error}'**
+  String storeSubscriptionLoadHistoryError(Object error);
+
+  /// No description provided for @storeSubscriptionNoPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription payments submitted yet.'**
+  String get storeSubscriptionNoPayments;
+
+  /// No description provided for @storeSubscriptionPaymentApproved.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get storeSubscriptionPaymentApproved;
+
+  /// No description provided for @storeSubscriptionPaymentRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get storeSubscriptionPaymentRejected;
+
+  /// No description provided for @storeSubscriptionPaymentPendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending review'**
+  String get storeSubscriptionPaymentPendingReview;
+
+  /// No description provided for @storeSubscriptionReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get storeSubscriptionReference;
+
+  /// No description provided for @storeSubscriptionAdminNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin note'**
+  String get storeSubscriptionAdminNote;
+
+  /// No description provided for @storeSubscriptionLoadDetailsError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load subscription details: {error}'**
+  String storeSubscriptionLoadDetailsError(Object error);
+
+  /// No description provided for @storeSubscriptionLoadBankError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load bank details. Please contact support.'**
+  String get storeSubscriptionLoadBankError;
+
+  /// No description provided for @storeSubscriptionManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your subscription'**
+  String get storeSubscriptionManageTitle;
+
+  /// No description provided for @storeSubscriptionManageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your plan, transfer the payment, and submit your receipt for verification.'**
+  String get storeSubscriptionManageSubtitle;
+
+  /// No description provided for @storeSubscriptionTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get storeSubscriptionTryAgain;
+
+  /// No description provided for @storeSubscriptionMonthlyPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get storeSubscriptionMonthlyPlan;
+
+  /// No description provided for @reviewSubscriptionPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Subscription Payments'**
+  String get reviewSubscriptionPayments;
+
+  /// No description provided for @reviewSubscriptionPaymentsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review bank transfers and approve or reject payments.'**
+  String get reviewSubscriptionPaymentsSubtitle;
+
+  /// No description provided for @subscriptionPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Payments'**
+  String get subscriptionPayments;
+
+  /// No description provided for @subscriptionAndPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription & Payments'**
+  String get subscriptionAndPayments;
+
+  /// No description provided for @manageAllSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage all subscriptions'**
+  String get manageAllSubscriptions;
+
+  /// No description provided for @subscriptionPaymentPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get subscriptionPaymentPending;
+
+  /// No description provided for @subscriptionPaymentAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get subscriptionPaymentAll;
+
+  /// No description provided for @subscriptionPaymentProof.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment proof'**
+  String get subscriptionPaymentProof;
+
+  /// No description provided for @subscriptionPaymentNoProof.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment proof was provided.'**
+  String get subscriptionPaymentNoProof;
+
+  /// No description provided for @subscriptionPaymentOpenUploadedFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the uploaded file using the link below:'**
+  String get subscriptionPaymentOpenUploadedFile;
+
+  /// No description provided for @subscriptionPaymentCouldNotOpenProof.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open payment proof: {error}'**
+  String subscriptionPaymentCouldNotOpenProof(Object error);
+
+  /// No description provided for @subscriptionPaymentApproveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve payment'**
+  String get subscriptionPaymentApproveTitle;
+
+  /// No description provided for @subscriptionPaymentRejectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reject payment'**
+  String get subscriptionPaymentRejectTitle;
+
+  /// No description provided for @subscriptionPaymentRejectionReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for rejection *'**
+  String get subscriptionPaymentRejectionReason;
+
+  /// No description provided for @subscriptionPaymentReviewNoteOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Review note (optional)'**
+  String get subscriptionPaymentReviewNoteOptional;
+
+  /// No description provided for @subscriptionPaymentRequestMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment request no longer exists.'**
+  String get subscriptionPaymentRequestMissing;
+
+  /// No description provided for @subscriptionPaymentMissingStoreId.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment request has no store ID.'**
+  String get subscriptionPaymentMissingStoreId;
+
+  /// No description provided for @subscriptionPaymentStoreMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'Store does not exist.'**
+  String get subscriptionPaymentStoreMissing;
+
+  /// No description provided for @subscriptionPaymentAlreadyReviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'This payment has already been reviewed.'**
+  String get subscriptionPaymentAlreadyReviewed;
+
+  /// No description provided for @subscriptionPaymentApprovedUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment approved and subscription updated.'**
+  String get subscriptionPaymentApprovedUpdated;
+
+  /// No description provided for @subscriptionPaymentRejectedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment rejected.'**
+  String get subscriptionPaymentRejectedMessage;
+
+  /// No description provided for @subscriptionPaymentReviewError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not review payment: {error}'**
+  String subscriptionPaymentReviewError(Object error);
+
+  /// No description provided for @subscriptionPaymentBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get subscriptionPaymentBank;
+
+  /// No description provided for @subscriptionPaymentTransferReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer reference'**
+  String get subscriptionPaymentTransferReference;
+
+  /// No description provided for @subscriptionPaymentTransferDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer date'**
+  String get subscriptionPaymentTransferDate;
+
+  /// No description provided for @subscriptionPaymentSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted'**
+  String get subscriptionPaymentSubmitted;
+
+  /// No description provided for @subscriptionPaymentViewProof.
+  ///
+  /// In en, this message translates to:
+  /// **'View payment proof'**
+  String get subscriptionPaymentViewProof;
+
+  /// No description provided for @subscriptionPaymentLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load payment requests:\n{error}'**
+  String subscriptionPaymentLoadError(Object error);
+
+  /// No description provided for @subscriptionPaymentNoRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No payment requests found.'**
+  String get subscriptionPaymentNoRequests;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @activeBankDetailsVisibleToStoreAdmins.
+  ///
+  /// In en, this message translates to:
+  /// **'Active bank details are visible to store admins.'**
+  String get activeBankDetailsVisibleToStoreAdmins;
+
+  /// No description provided for @paymentInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment instructions'**
+  String get paymentInstructions;
+
+  /// No description provided for @subscriptionBankAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Bank Account'**
+  String get subscriptionBankAccount;
+
+  /// No description provided for @couldNotLoadBankDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load bank details'**
+  String get couldNotLoadBankDetails;
+
+  /// No description provided for @bankDetailsSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank details saved successfully'**
+  String get bankDetailsSavedSuccessfully;
+
+  /// No description provided for @storeCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Categories'**
+  String get storeCategories;
+
+  /// No description provided for @selectStoreCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the categories available in this store'**
+  String get selectStoreCategories;
+
+  /// No description provided for @androidPhones.
+  ///
+  /// In en, this message translates to:
+  /// **'Android Phones'**
+  String get androidPhones;
+
+  /// No description provided for @iphones.
+  ///
+  /// In en, this message translates to:
+  /// **'iPhones'**
+  String get iphones;
+
+  /// No description provided for @phoneAccessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Accessories'**
+  String get phoneAccessories;
+
+  /// No description provided for @desktopComputers.
+  ///
+  /// In en, this message translates to:
+  /// **'Desktop Computers'**
+  String get desktopComputers;
+
+  /// No description provided for @computerAccessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Computer Accessories'**
+  String get computerAccessories;
+
+  /// No description provided for @monitors.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitors'**
+  String get monitors;
+
+  /// No description provided for @printers.
+  ///
+  /// In en, this message translates to:
+  /// **'Printers'**
+  String get printers;
+
+  /// No description provided for @televisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Televisions'**
+  String get televisions;
+
+  /// No description provided for @cameras.
+  ///
+  /// In en, this message translates to:
+  /// **'Cameras'**
+  String get cameras;
+
+  /// No description provided for @smartHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Home'**
+  String get smartHome;
+
+  /// No description provided for @electronicAccessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Electronic Accessories'**
+  String get electronicAccessories;
+
+  /// No description provided for @women.
+  ///
+  /// In en, this message translates to:
+  /// **'Women'**
+  String get women;
+
+  /// No description provided for @men.
+  ///
+  /// In en, this message translates to:
+  /// **'Men'**
+  String get men;
+
+  /// No description provided for @kids.
+  ///
+  /// In en, this message translates to:
+  /// **'Kids'**
+  String get kids;
+
+  /// No description provided for @unisex.
+  ///
+  /// In en, this message translates to:
+  /// **'Unisex'**
+  String get unisex;
+
+  /// No description provided for @sunglasses.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunglasses'**
+  String get sunglasses;
+
+  /// No description provided for @wallets.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallets'**
+  String get wallets;
+
+  /// No description provided for @skincare.
+  ///
+  /// In en, this message translates to:
+  /// **'Skincare'**
+  String get skincare;
+
+  /// No description provided for @makeup.
+  ///
+  /// In en, this message translates to:
+  /// **'Makeup'**
+  String get makeup;
+
+  /// No description provided for @bodyCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Care'**
+  String get bodyCare;
+
+  /// No description provided for @hairCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Hair Care'**
+  String get hairCare;
+
+  /// No description provided for @livingRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Living Room'**
+  String get livingRoom;
+
+  /// No description provided for @bedroom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bedroom'**
+  String get bedroom;
+
+  /// No description provided for @office.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get office;
+
+  /// No description provided for @kitchen.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen'**
+  String get kitchen;
+
+  /// No description provided for @outdoorFurniture.
+  ///
+  /// In en, this message translates to:
+  /// **'Outdoor Furniture'**
+  String get outdoorFurniture;
+
+  /// No description provided for @fitness.
+  ///
+  /// In en, this message translates to:
+  /// **'Fitness'**
+  String get fitness;
+
+  /// No description provided for @training.
+  ///
+  /// In en, this message translates to:
+  /// **'Training'**
+  String get training;
+
+  /// No description provided for @sportswear.
+  ///
+  /// In en, this message translates to:
+  /// **'Sportswear'**
+  String get sportswear;
+
+  /// No description provided for @sportsEquipment.
+  ///
+  /// In en, this message translates to:
+  /// **'Sports Equipment'**
+  String get sportsEquipment;
+
+  /// No description provided for @consoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Consoles'**
+  String get consoles;
+
+  /// No description provided for @games.
+  ///
+  /// In en, this message translates to:
+  /// **'Games'**
+  String get games;
+
+  /// No description provided for @gamingAccessories.
+  ///
+  /// In en, this message translates to:
+  /// **'Gaming Accessories'**
+  String get gamingAccessories;
+
+  /// No description provided for @otherProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Products'**
+  String get otherProducts;
+
+  /// No description provided for @gold.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get gold;
+
+  /// No description provided for @silver.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver'**
+  String get silver;
+
+  /// No description provided for @rings.
+  ///
+  /// In en, this message translates to:
+  /// **'Rings'**
+  String get rings;
+
+  /// No description provided for @necklaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Necklaces'**
+  String get necklaces;
+
+  /// No description provided for @bracelets.
+  ///
+  /// In en, this message translates to:
+  /// **'Bracelets'**
+  String get bracelets;
+
+  /// No description provided for @anklets.
+  ///
+  /// In en, this message translates to:
+  /// **'Anklets'**
+  String get anklets;
+
+  /// No description provided for @earrings.
+  ///
+  /// In en, this message translates to:
+  /// **'Earrings'**
+  String get earrings;
+
+  /// No description provided for @goldChains.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Chains'**
+  String get goldChains;
+
+  /// No description provided for @silverChains.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver Chains'**
+  String get silverChains;
+
+  /// No description provided for @pendants.
+  ///
+  /// In en, this message translates to:
+  /// **'Pendants'**
+  String get pendants;
+
+  /// No description provided for @goldSets.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Sets'**
+  String get goldSets;
+
+  /// No description provided for @silverSets.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver Sets'**
+  String get silverSets;
+
+  /// No description provided for @crownsAndTiaras.
+  ///
+  /// In en, this message translates to:
+  /// **'Crowns & Tiaras'**
+  String get crownsAndTiaras;
+
+  /// No description provided for @otherGoldJewelry.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Gold Jewelry'**
+  String get otherGoldJewelry;
+
+  /// No description provided for @otherSilverJewelry.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Silver Jewelry'**
+  String get otherSilverJewelry;
+
   /// No description provided for @continueAsGuest.
   ///
   /// In en, this message translates to:
   /// **'Continue as Guest'**
   String get continueAsGuest;
+
+  /// No description provided for @subcategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Subcategory'**
+  String get subcategory;
+
+  /// No description provided for @pleaseSelectSubcategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a subcategory'**
+  String get pleaseSelectSubcategory;
+
+  /// No description provided for @alreadyHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAnAccount;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

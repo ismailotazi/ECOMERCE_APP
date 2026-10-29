@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecomerce_app/admin_dashboard/main_nav_admin.dart';
+import 'package:ecomerce_app/auth/store_selection_page.dart';
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:ecomerce_app/localization/language_provider.dart';
+import 'package:ecomerce_app/super_admin/main_nav_super_admin.dart';
 import 'package:ecomerce_app/theme/theme_provider.dart';
 import 'package:ecomerce_app/user_dashboard/main_nav_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +14,9 @@ import 'login_page.dart';
 import 'verify_email_page.dart';
 
 class AuthCheck extends StatefulWidget {
-  const AuthCheck({super.key});
+  final String? storeId;
+
+  const AuthCheck({super.key, required this.storeId});
 
   @override
   State<AuthCheck> createState() => _AuthCheckState();
@@ -51,12 +55,12 @@ class _AuthCheckState extends State<AuthCheck> {
 
         // User not logged in
         if (user == null) {
-          return const LoginPage();
+          return LoginPage(storeId: widget.storeId);
         }
 
         // Email not verified
         if (!user.emailVerified) {
-          return const VerifyEmailPage();
+          return VerifyEmailPage(storeId: widget.storeId);
         }
 
         return FutureBuilder<Map<String, dynamic>?>(
@@ -78,10 +82,18 @@ class _AuthCheckState extends State<AuthCheck> {
 
             final role = data['role'] as String?;
 
+            // ================= INACTIVE ADMIN =================
+            if (role == 'admin' && data['isActive'] != true) {
+              FirebaseAuth.instance.signOut();
+
+              return const StoreSelectionPage();
+            }
+
             return _LoadUserSettings(
               theme: data['theme'] as String?,
               language: data['language'] as String?,
               role: role,
+              storeId: widget.storeId,
             );
           },
         );
@@ -94,11 +106,12 @@ class _LoadUserSettings extends StatefulWidget {
   final String? theme;
   final String? language;
   final String? role;
-
+  final String? storeId;
   const _LoadUserSettings({
     required this.theme,
     required this.language,
     required this.role,
+    required this.storeId,
   });
 
   @override
@@ -135,14 +148,18 @@ class _LoadUserSettingsState extends State<_LoadUserSettings> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
+    if (widget.role == 'superAdmin') {
+      return const MainNavSuperAdmin();
+    }
+
     if (widget.role == 'admin') {
       return const MainNavAdmin();
     }
 
     if (widget.role == 'user') {
-      return const MainNavUser();
+      return MainNavUser(storeId: widget.storeId);
     }
 
-    return const LoginPage();
+    return const SizedBox.shrink();
   }
 }

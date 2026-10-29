@@ -51,38 +51,40 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAy-llBbORwn0SA5_Z7VQ5St_ZpuRTjy4U',
-    appId: '1:570300953679:android:69f7cfa37013c41bb7a63a',
-    messagingSenderId: '570300953679',
-    projectId: 'crapp-da159',
-    storageBucket: 'crapp-da159.firebasestorage.app',
+    apiKey: 'AIzaSyCGvDIOeHOwsPsmNTc9qdM6L_-DhIWLKc0',
+    appId: '1:717172571493:android:aad057121eaee580c6f58c',
+    messagingSenderId: '717172571493',
+    projectId: 'ecomercefixapp',
+    storageBucket: 'ecomercefixapp.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDp4hBjhGWnRygzyuzkT3053RgjffLjEL8',
-    appId: '1:570300953679:ios:7b410f594caba67cb7a63a',
-    messagingSenderId: '570300953679',
-    projectId: 'crapp-da159',
-    storageBucket: 'crapp-da159.firebasestorage.app',
+    apiKey: 'AIzaSyC0r2kiFrkk0hmCke2aP84lftyCyBiULDA',
+    appId: '1:717172571493:ios:9d43694e7b14cff5c6f58c',
+    messagingSenderId: '717172571493',
+    projectId: 'ecomercefixapp',
+    storageBucket: 'ecomercefixapp.firebasestorage.app',
+    androidClientId: '717172571493-304l8lev90g7hr88au2cvpvqgl43bugi.apps.googleusercontent.com',
+    iosClientId: '717172571493-pk86cvel7slvt1clpgt0se2julp8am0l.apps.googleusercontent.com',
     iosBundleId: 'com.example.fixCleanProject',
   );
-
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDp4hBjhGWnRygzyuzkT3053RgjffLjEL8',
-    appId: '1:570300953679:ios:7b410f594caba67cb7a63a',
-    messagingSenderId: '570300953679',
-    projectId: 'crapp-da159',
-    storageBucket: 'crapp-da159.firebasestorage.app',
+    apiKey: 'AIzaSyC0r2kiFrkk0hmCke2aP84lftyCyBiULDA',
+    appId: '1:717172571493:ios:9d43694e7b14cff5c6f58c',
+    messagingSenderId: '717172571493',
+    projectId: 'ecomercefixapp',
+    storageBucket: 'ecomercefixapp.firebasestorage.app',
+    androidClientId: '717172571493-304l8lev90g7hr88au2cvpvqgl43bugi.apps.googleusercontent.com',
+    iosClientId: '717172571493-pk86cvel7slvt1clpgt0se2julp8am0l.apps.googleusercontent.com',
     iosBundleId: 'com.example.fixCleanProject',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDICGmXUGWIWBo3KDD7XxAyYD-H-JPNF2I',
-    appId: '1:570300953679:web:06ee5a7a0c0469adb7a63a',
-    messagingSenderId: '570300953679',
-    projectId: 'crapp-da159',
-    authDomain: 'crapp-da159.firebaseapp.com',
-    storageBucket: 'crapp-da159.firebasestorage.app',
-    measurementId: 'G-J1GX8PJ4F8',
+    apiKey: 'AIzaSyAaklL3ML94uka2qBhAGQ4aHhEjizeNK5c',
+    appId: '1:717172571493:web:2ed581ce47e94d12c6f58c',
+    messagingSenderId: '717172571493',
+    projectId: 'ecomercefixapp',
+    authDomain: 'ecomercefixapp.firebaseapp.com',
+    storageBucket: 'ecomercefixapp.firebasestorage.app',
+    measurementId: 'G-08Z5WBSJ8V',
   );
 }

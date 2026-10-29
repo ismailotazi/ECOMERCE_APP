@@ -8,7 +8,8 @@
   "enterPassword": "أدخل كلمة المرور",
   "min6Chars": "6 أحرف على الأقل",
 
-
+"subscribedStores": "المتاجر المشتركة",
+"unsubscribedStores": "المتاجر غير المشتركة",
   "accountCreatedVerifyEmail": "تم إنشاء الحساب بنجاح. يرجى تأكيد بريدك الإلكتروني قبل تسجيل الدخول.",
   "emailAlreadyInUse": "هذا البريد الإلكتروني مستخدم بالفعل.",
   "weakPassword": "كلمة المرور ضعيفة جدًا.",
@@ -144,7 +145,7 @@
   "lastNameMaxLength": "يجب ألا يتجاوز اسم العائلة 30 حرفًا",
   "validLastName": "يرجى إدخال اسم عائلة صالح",
 
-  "usernameOptional": "اسم المستخدم (اختياري)",
+
 
   "phoneNumberRequired": "رقم الهاتف (مطلوب)",
   "pleaseEnterPhoneNumber": "يرجى إدخال رقم هاتفك",
@@ -164,15 +165,14 @@
   "validCityName": "يرجى إدخال اسم مدينة صالح",
 
   "streetAddressOptional": "عنوان الشارع (اختياري)",
-  "zipCodeOptional": "الرمز البريدي (اختياري)",
+
 
   "additionalInformation": "معلومات إضافية",
-  "genderOptional": "الجنس (اختياري)",
+
   "male": "ذكر",
 
 
-  "dateOfBirthOptional": "تاريخ الميلاد (اختياري)",
-  "selectYourBirthDate": "اختر تاريخ ميلادك",
+
 
 
   "profileUpdatedSuccessfully": "تم تحديث الملف الشخصي بنجاح",
@@ -424,18 +424,17 @@
   "personalInformation": "المعلومات الشخصية",
   "firstName": "الاسم الأول",
   "lastName": "اسم العائلة",
-  "username": "اسم المستخدم",
+  
   "phone": "رقم الهاتف",
-  "gender": "الجنس",
+
 
   "female": "أنثى",
-  "dateOfBirth": "تاريخ الميلاد",
-  "selectDateOfBirth": "اختر تاريخ الميلاد",
+
   "shippingAddress": "عنوان الشحن",
   "country": "الدولة",
   "city": "المدينة",
   "streetAddress": "عنوان الشارع",
-  "zipCode": "الرمز البريدي",
+
   "firstNameRequired": "الاسم الأول مطلوب",
   "lastNameRequired": "اسم العائلة مطلوب",
   "userUpdatedSuccessfully": "تم تحديث المستخدم بنجاح",
@@ -627,7 +626,17 @@
 "existingDocumentsWillBeOverwritten": "سيتم استبدال المستندات الموجودة التي تحمل نفس المعرّفات.",
 "doYouWantToContinue": "هل تريد المتابعة؟",
 "restore": "استعادة",
-"databaseRestoredSuccessfully": "تمت استعادة قاعدة البيانات بنجاح ({count} مستند)",
+
+"databaseRestoredSuccessfully": "اكتملت الاستعادة: تمت إضافة {count} مستندات جديدة",
+"@databaseRestoredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+
+
 "restoreFailed": "فشل استعادة قاعدة البيانات: {error}",
 "databaseBackup": "نسخة احتياطية من قاعدة البيانات",
 "createBackupDescription": "أنشئ نسخة احتياطية من بيانات Firestore واحفظها كملف JSON.",
@@ -688,7 +697,7 @@
 "personalInformation": "المعلومات الشخصية",
 "firstNameIsRequired": "الاسم الأول مطلوب",
 "lastNameIsRequired": "اسم العائلة مطلوب",
-"usernameIsRequired": "اسم المستخدم مطلوب",
+
 "phoneOptional": "رقم الهاتف (اختياري)",
 "enterAValidPhoneNumber": "أدخل رقم هاتف صالحًا",
 "saveChanges": "حفظ التغييرات",
@@ -727,7 +736,429 @@
   }
 },
 "enterStock": "يرجى إدخال كمية المخزون.",
-"continueAsGuest": "المتابعة كزائر"
+"ordersCompleted": "الطلبات المكتملة",
+"orderStatusCannotBeChanged": "لا يمكن تغيير حالة هذا الطلب.",
+  "createNewStoreForPlatform": "أنشئ متجرًا جديدًا لمنصتك.",
+  "exampleMiloMall": "مثال: Milo Mall",
+  "exampleMiloMallId": "مثال: milo_mall",
+  "pleaseEnterStoreName": "يرجى إدخال اسم المتجر.",
+  "storeNameTooShort": "اسم المتجر قصير جدًا.",
+  "storeId": "معرّف المتجر",
+  "pleaseEnterStoreId": "يرجى إدخال معرّف المتجر.",
+  "storeIdTooShort": "معرّف المتجر قصير جدًا.",
+  "storeIdCharactersError": "استخدم فقط الأحرف الصغيرة والأرقام والرمز _.",
+  "storeActive": "المتجر نشط",
+  "usersCanAccessStore": "يمكن للمستخدمين الوصول إلى هذا المتجر.",
+  "usersCannotAccessStore": "لا يمكن للمستخدمين الوصول إلى هذا المتجر.",
+  "storeIdAlreadyExists": "معرّف المتجر هذا موجود بالفعل.",
+  "storeCreatedSuccessfully": "تم إنشاء المتجر بنجاح.",
+  "createAdministrator": "إنشاء مسؤول",
+  "createAdminAssignStore": "أنشئ مسؤولًا وقم بتعيينه إلى متجر.",
+  "pleaseEnterFirstName": "يرجى إدخال الاسم الأول.",
+  "pleaseEnterLastName": "يرجى إدخال اسم العائلة.",
+  "pleaseEnterEmail": "يرجى إدخال البريد الإلكتروني.",
+  "pleaseEnterValidEmail": "يرجى إدخال بريد إلكتروني صالح.",
+  "pleaseEnterPassword": "يرجى إدخال كلمة المرور.",
+  "passwordMinCharacters": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
+  "assignStore": "تعيين متجر",
+  "unableToLoadStores": "تعذر تحميل المتاجر.",
+  "noActiveStoresAvailable": "لا توجد متاجر نشطة متاحة.",
+  "adminCreatedSuccessfully": "تم إنشاء المسؤول بنجاح",
+  "failedToCreateAdmin": "فشل إنشاء المسؤول.",
+  "stores": "المتاجر",
+  "createStore": "إنشاء متجر",
+  "somethingWentWrong": "حدث خطأ ما",
+  "noStoresYet": "لا توجد متاجر بعد",
+  "active": "نشط",
+  "inactive": "غير نشط",
+
+  "superAdmin": "المسؤول العام",
+  "platformOverview": "نظرة عامة على المنصة",
+  "manageAllStoresAndAdmins": "إدارة جميع المتاجر والمسؤولين.",
+  "management": "الإدارة",
+  "manageStores": "إدارة المتاجر",
+  "createEditManageAllStores": "إنشاء وتعديل وإدارة جميع المتاجر.",
+  "manageAdmins": "إدارة المسؤولين",
+  "createAdminsAndAssignStores": "إنشاء المسؤولين وتعيينهم للمتاجر.",
+  
+  "admins": "المسؤولون",
+  "createAdmin": "إنشاء مسؤول",
+  "somethingWentWrong": "حدث خطأ ما",
+  "noAdminsYet": "لا يوجد مسؤولون بعد",
+  "noStoreAssigned": "لم يتم تعيين متجر",
+  "admin": "مسؤول",
+  
+  "storeInformation": "معلومات المتجر",
+  "createNewStoreForPlatform": "أنشئ متجرًا جديدًا لمنصتك.",
+  "exampleAyaMall": "مثال: milo_mall Mall",
+  "exampleAyaMallId": "مثال: milo_mall",
+  "pleaseEnterStoreName": "يرجى إدخال اسم المتجر.",
+  "storeNameTooShort": "اسم المتجر قصير جدًا.",
+  "storeId": "معرّف المتجر",
+  "pleaseEnterStoreId": "يرجى إدخال معرّف المتجر.",
+  "storeIdTooShort": "معرّف المتجر قصير جدًا.",
+  "storeIdCharactersError": "استخدم فقط الأحرف الصغيرة والأرقام والرمز _.",
+  "storeActive": "المتجر نشط",
+  "usersCanAccessStore": "يمكن للمستخدمين الوصول إلى هذا المتجر.",
+  "usersCannotAccessStore": "لا يمكن للمستخدمين الوصول إلى هذا المتجر.",
+  "storeIdAlreadyExists": "معرّف المتجر هذا موجود بالفعل.",
+  "storeCreatedSuccessfully": "تم إنشاء المتجر بنجاح.",
+  
+  "createAdmin": "إنشاء مسؤول",
+  "createAdministrator": "إنشاء مسؤول",
+  "createAdminAssignStore": "أنشئ مسؤولًا وقم بتعيينه إلى متجر.",
+  "firstName": "الاسم الأول",
+  "pleaseEnterFirstName": "يرجى إدخال الاسم الأول.",
+  "lastName": "اسم العائلة",
+  "pleaseEnterLastName": "يرجى إدخال اسم العائلة.",
+  "email": "البريد الإلكتروني",
+  "pleaseEnterEmail": "يرجى إدخال البريد الإلكتروني.",
+  "pleaseEnterValidEmail": "يرجى إدخال بريد إلكتروني صالح.",
+  "password": "كلمة المرور",
+  "pleaseEnterPassword": "يرجى إدخال كلمة المرور.",
+  "passwordMinCharacters": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
+  "assignStore": "تعيين متجر",
+  "storeName": "اسم المتجر",
+  "pleaseSelectStore": "يرجى اختيار متجر.",
+  "unableToLoadStores": "تعذر تحميل المتاجر.",
+  "noActiveStoresAvailable": "لا توجد متاجر نشطة متاحة.",
+  "adminCreatedSuccessfully": "تم إنشاء المسؤول بنجاح",
+  "failedToCreateAdmin": "فشل إنشاء المسؤول.",
+  "somethingWentWrong": "حدث خطأ ما",
+  "account": "الحساب",
+  "security": "الأمان",
+  "changePassword": "تغيير كلمة المرور",
+  "passwordResetDescription": "إرسال رابط لإعادة تعيين كلمة المرور إلى بريدك الإلكتروني.",
+  "passwordResetEmailSent": "تم إرسال بريد إعادة تعيين كلمة المرور.",
+  "appearance": "المظهر",
+  "storeManagement": "إدارة المتاجر",
+  "adminManagement": "إدارة المسؤولين",
+  "platform": "المنصة",
+  "about": "حول التطبيق",
+  "aboutMiloMall": "حول Milo Mall",
+  "saasMarketplacePlatform": "منصة Milo Mall للتجارة الإلكترونية SaaS",
+  "emailVerified": "البريد الإلكتروني موثّق",
+  "emailNotVerified": "البريد الإلكتروني غير موثّق",
+  "language": "اللغة",
+  "theme": "المظهر",
+  "system": "النظام",
+  "english": "الإنجليزية",
+  "french": "الفرنسية",
+  "arabic": "العربية",
+  "light": "فاتح",
+  "dark": "داكن",
+  "signOut": "تسجيل الخروج",
+  "signOutConfirmation": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "cancel": "إلغاء",
+  "close": "إغلاق",
+  "editStore": "تعديل المتجر",
+"updateStoreInformation": "قم بتحديث معلومات متجرك.",
+"removeStoreLogo": "إزالة شعار المتجر",
+"storeUpdatedSuccessfully": "تم تحديث المتجر بنجاح.",
+"store": "المتجر",
+"since": "منذ",
+  "editAdmin": "تعديل المسؤول",
+  "adminInformation": "معلومات المسؤول",
+  "updateAdminInformation": "قم بتحديث معلومات المسؤول.",
+  "administrator": "مسؤول",
+  "pleaseEnterFirstName": "يرجى إدخال الاسم الأول.",
+  "pleaseEnterLastName": "يرجى إدخال اسم العائلة.",
+  "pleaseEnterEmail": "يرجى إدخال البريد الإلكتروني.",
+  "invalidEmail": "يرجى إدخال بريد إلكتروني صالح.",
+  "pleaseSelectStore": "يرجى اختيار متجر.",
+  "adminUpdatedSuccessfully": "تم تحديث المسؤول بنجاح.",
+  "permissionDenied": "ليس لديك صلاحية لتنفيذ هذا الإجراء.",
+  "adminOrStoreNotFound": "لم يتم العثور على المسؤول أو المتجر.",
+  "emailAlreadyExists": "يوجد حساب بهذا البريد الإلكتروني بالفعل.",
+  "storeInactive": "المتجر المحدد غير نشط.",
+  "invalidAdminInformation": "معلومات المسؤول غير صالحة.",
+  "pleaseSignInAgain": "يرجى تسجيل الدخول مرة أخرى.",
+  "adminUpdateSecurityInfo": "تتم معالجة تغييرات المسؤول بشكل آمن عبر خدمة إدارة المنصة.",
+  "allStores": "جميع المتاجر",
+"allAdmins": "جميع المسؤولين",
+"totalStores": "إجمالي المتاجر",
+"activeStores": "المتاجر النشطة",
+"noStores": "لم يتم العثور على متاجر",
+"noAdmins": "لم يتم العثور على مسؤولين",
+"totalAdmins": "إجمالي المسؤولين",
+"computers": "الحواسيب",
+"fashion": "الأزياء",
+"lifestyle": "نمط الحياة",
+"placedNewOrder": "قام {userName} بوضع طلب جديد",
+"@placedNewOrder": {
+  "placeholders": {
+    "userName": {}
+  }
+},
+"currencySymbol": "د.م",
+"whatsappNumber": "رقم واتساب",
+
+"enterWhatsappNumber": "يرجى إدخال رقم واتساب",
+"invalidWhatsappNumber": "يرجى إدخال رقم واتساب صالح",
+"accountInactive": "حسابك غير نشط. يرجى التواصل مع مسؤول المتجر.",
+"chooseYourStore": "اختر متجرك",
+"noStoresYet": "لا توجد متاجر بعد",
+"selectStoreToContinue": "اختر متجرًا للمتابعة",
+"noStoresAvailableAtMoment": "لا توجد متاجر متاحة في الوقت الحالي.",
+"oldPriceMustBeGreaterThanPrice": "يجب أن يكون السعر القديم أكبر من السعر الحالي.",
+"confirm": "تأكيد",
+"oldPriceMustBeHigher": "يجب أن يكون السعر القديم أعلى من السعر الحالي",
+"productRemovedByAdmin": "هذا المنتج لم يعد متاحًا لأنه تم حذفه من طرف المسؤول.",
+  "subscriptionCenterTitle": "مركز الاشتراكات",
+  "subscriptionCenterSubtitle": "إدارة الاشتراكات الشهرية ومواعيد الأداء",
+  "subscriptionTotalStores": "إجمالي المتاجر",
+  "subscriptionConfigured": "تم إعدادها",
+  "subscriptionDueSoon": "اقترب موعد الأداء",
+  "subscriptionOverdue": "متأخر",
+  "subscriptionExpectedRevenue": "الإيرادات الشهرية المتوقعة",
+  "subscriptionStoreSubscriptions": "اشتراكات المتاجر",
+  "subscriptionFilterAll": "الكل",
+  "subscriptionStatusActive": "نشط",
+  "subscriptionStatusDueSoon": "اقترب موعد الأداء",
+  "subscriptionStatusOverdue": "متأخر",
+  "subscriptionStatusNotConfigured": "غير مُعدّ",
+  "subscriptionNoStores": "لا توجد متاجر تطابق هذا الفلتر.",
+  "subscriptionOverdueNote": "الاشتراكات المتأخرة تعرض تنبيهاً فقط. تتم إدارة تفعيل المتاجر بشكل منفصل.",
+  "subscriptionManageTitle": "إدارة الاشتراك",
+  "subscriptionMonthlyPrice": "السعر الشهري (درهم)",
+  "subscriptionPriceHint": "مثال: 150",
+  "subscriptionNextPayment": "موعد الأداء القادم",
+  "subscriptionNotSet": "غير محدد",
+  "subscriptionSaveNote": "يتم حفظ معلومات الاشتراك فقط. لا يتم تسجيل أي أداء ولا يتم تعطيل المتجر.",
+  "subscriptionInvalidPrice": "يرجى إدخال سعر شهري صالح.",
+  "subscriptionSelectPaymentDate": "يرجى تحديد موعد الأداء القادم.",
+  "subscriptionSaving": "جارٍ الحفظ...",
+  "subscriptionSave": "حفظ الاشتراك",
+  "subscriptionStoreEnabled": "المتجر مفعّل",
+  "subscriptionStoreDisabled": "المتجر معطّل",
+  "subscriptionLoadError": "تعذّر تحميل الاشتراكات.",
+  "subscriptionUpdatedFor": "تم تحديث اشتراك {storeName}.",
+  "@subscriptionUpdatedFor": {
+    "placeholders": {
+      "storeName": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionSaveError": "تعذّر حفظ الاشتراك: {error}",
+  "@subscriptionSaveError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "إلغاء",
+  "subscriptions": "الاشتراكات",
+
+"accessDeniedSuperAdminOnly": "تم رفض الوصول. هذه الصفحة مخصصة للمشرف الأعلى فقط.",
+"selectAtLeastOneCollection": "اختر مجموعة واحدة على الأقل لإنشاء النسخة الاحتياطية.",
+"existingDocumentsKeptUnchanged": "ستبقى المستندات الموجودة دون تغيير.",
+"onlyNewDocumentsAdded": "ستتم إضافة المستندات الجديدة فقط.",
+"restoreFinished": "اكتملت الاستعادة: تمت إضافة {added} مستندات وتجاوز {skipped} مستندات.",
+"@restoreFinished": {
+  "placeholders": {
+    "added": {
+      "type": "int"
+    },
+    "skipped": {
+      "type": "int"
+    }
+  }
+},
+
+  "storeSubscriptionSignInAgain": "يرجى تسجيل الدخول مرة أخرى.",
+  "storeSubscriptionNoStore": "لا يوجد متجر مرتبط بهذا الحساب.",
+  "storeSubscriptionStoreNotFound": "لم يتم العثور على المتجر.",
+  "storeSubscriptionChooseFileType": "اختر ملفًا بصيغة JPG أو PNG أو WEBP أو PDF.",
+  "storeSubscriptionFileTooLarge": "يجب ألا يتجاوز حجم الملف 10 ميغابايت.",
+  "storeSubscriptionFileReadError": "تعذرت قراءة الملف المحدد.",
+  "storeSubscriptionFileSelectError": "تعذر اختيار الملف: {error}",
+  "@storeSubscriptionFileSelectError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionSelectDateAndProof": "يرجى تحديد تاريخ التحويل وإرفاق إثبات الدفع أولًا.",
+  "storeSubscriptionFileUnavailable": "الملف المحدد لم يعد متاحًا. يرجى اختياره مرة أخرى.",
+  "storeSubscriptionPriceNotConfigured": "لم يتم إعداد سعر الاشتراك.",
+  "storeSubscriptionBankUnavailable": "الحساب البنكي الخاص بالاشتراك غير متاح حاليًا.",
+  "storeSubscriptionPaymentSubmitted": "تم إرسال إثبات الدفع. دفعتك في انتظار المراجعة.",
+  "storeSubscriptionSubmitPaymentError": "تعذر إرسال الدفع: {error}",
+  "@storeSubscriptionSubmitPaymentError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionTitle": "الاشتراك والمدفوعات",
+  "storeSubscriptionYourSubscription": "اشتراكك",
+  "storeSubscriptionPriceLabel": "سعر الاشتراك",
+  "storeSubscriptionNextPaymentDate": "تاريخ الدفع القادم",
+  "storeSubscriptionStatusLabel": "حالة الاشتراك",
+  "storeSubscriptionBankTransfer": "التحويل البنكي",
+  "storeSubscriptionBankUnavailableContact": "التحويل البنكي غير متاح حاليًا. يرجى التواصل مع الدعم.",
+  "storeSubscriptionBankTransferDetails": "بيانات التحويل البنكي",
+  "storeSubscriptionTransferInstructions": "حوّل مبلغ الاشتراك إلى هذا الحساب.",
+  "storeSubscriptionBankName": "اسم البنك",
+  "storeSubscriptionAccountHolder": "صاحب الحساب",
+  "storeSubscriptionRib": "رقم RIB",
+  "storeSubscriptionIban": "رقم IBAN",
+  "storeSubscriptionSwiftBic": "رمز SWIFT/BIC",
+  "storeSubscriptionSubmitProofTitle": "إرسال إثبات الدفع",
+  "storeSubscriptionUploadReceiptSubtitle": "ارفع إيصال التحويل البنكي للتحقق منه يدويًا.",
+  "storeSubscriptionTransferDate": "تاريخ التحويل",
+  "storeSubscriptionTransactionReferenceOptional": "مرجع المعاملة (اختياري)",
+  "storeSubscriptionTransactionReferenceHint": "أدخل مرجع المعاملة البنكية",
+  "storeSubscriptionTransferReceiptRequired": "إيصال التحويل *",
+  "storeSubscriptionChooseImageOrPdf": "اختر صورة أو ملف PDF",
+  "storeSubscriptionAllowedFileTypes": "JPG أو PNG أو WEBP أو PDF · الحد الأقصى 10 ميغابايت",
+  "storeSubscriptionBrowseFiles": "استعراض الملفات",
+  "storeSubscriptionChangeFile": "تغيير الملف",
+  "storeSubscriptionSubmitting": "جارٍ الإرسال...",
+  "storeSubscriptionSubmitForVerification": "إرسال للتحقق",
+  "storeSubscriptionManualVerificationNotice": "إرسال إثبات الدفع لا يجدد اشتراكك تلقائيًا. يجب أن يتحقق مسؤول المنصة من عملية الدفع.",
+  "storeSubscriptionPaymentHistory": "سجل المدفوعات",
+  "storeSubscriptionPaymentHistorySubtitle": "تابع طلبات دفع اشتراكك.",
+  "storeSubscriptionLoadHistoryError": "تعذر تحميل سجل المدفوعات: {error}",
+  "@storeSubscriptionLoadHistoryError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionNoPayments": "لم يتم إرسال أي مدفوعات للاشتراك حتى الآن.",
+  "storeSubscriptionPaymentApproved": "تمت الموافقة",
+  "storeSubscriptionPaymentRejected": "مرفوض",
+  "storeSubscriptionPaymentPendingReview": "في انتظار المراجعة",
+  "storeSubscriptionReference": "المرجع",
+  "storeSubscriptionAdminNote": "ملاحظة المسؤول",
+  "storeSubscriptionLoadDetailsError": "تعذر تحميل تفاصيل الاشتراك: {error}",
+  "@storeSubscriptionLoadDetailsError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionLoadBankError": "تعذر تحميل البيانات البنكية. يرجى التواصل مع الدعم.",
+  "storeSubscriptionManageTitle": "إدارة اشتراكك",
+  "storeSubscriptionManageSubtitle": "راجع باقتك، وحوّل المبلغ، وأرسل الإيصال للتحقق منه.",
+  "storeSubscriptionTryAgain": "إعادة المحاولة",
+  "storeSubscriptionMonthlyPlan": "شهري",
+  "reviewSubscriptionPayments": "مراجعة مدفوعات الاشتراك",
+"reviewSubscriptionPaymentsSubtitle": "راجع التحويلات البنكية ووافق على المدفوعات أو ارفضها.",
+"subscriptionPayments": "مدفوعات الاشتراكات",
+"subscriptionAndPayments": "الاشتراك والمدفوعات",
+"manageAllSubscriptions": "إدارة جميع الاشتراكات",
+"subscriptionPaymentPending": "قيد الانتظار",
+"subscriptionPaymentAll": "الكل",
+"subscriptionPaymentProof": "إثبات الدفع",
+"subscriptionPaymentNoProof": "لم يتم تقديم إثبات الدفع.",
+"subscriptionPaymentOpenUploadedFile": "افتح الملف المرفوع باستخدام الرابط أدناه:",
+"subscriptionPaymentCouldNotOpenProof": "تعذر فتح إثبات الدفع: {error}",
+"@subscriptionPaymentCouldNotOpenProof": {
+  "placeholders": {
+    "error": {}
+  }
+},
+"subscriptionPaymentApproveTitle": "الموافقة على الدفع",
+"subscriptionPaymentRejectTitle": "رفض الدفع",
+"subscriptionPaymentRejectionReason": "سبب الرفض *",
+"subscriptionPaymentReviewNoteOptional": "ملاحظة المراجعة (اختيارية)",
+"subscriptionPaymentRequestMissing": "طلب الدفع لم يعد موجودًا.",
+"subscriptionPaymentMissingStoreId": "طلب الدفع لا يحتوي على معرّف المتجر.",
+"subscriptionPaymentStoreMissing": "المتجر غير موجود.",
+"subscriptionPaymentAlreadyReviewed": "تمت مراجعة هذا الدفع بالفعل.",
+"subscriptionPaymentApprovedUpdated": "تمت الموافقة على الدفع وتحديث الاشتراك.",
+"subscriptionPaymentRejectedMessage": "تم رفض الدفع.",
+"subscriptionPaymentReviewError": "تعذرت مراجعة الدفع: {error}",
+"@subscriptionPaymentReviewError": {
+  "placeholders": {
+    "error": {}
+  }
+},
+"subscriptionPaymentBank": "البنك",
+"subscriptionPaymentTransferReference": "مرجع التحويل",
+"subscriptionPaymentTransferDate": "تاريخ التحويل",
+"subscriptionPaymentSubmitted": "تاريخ الإرسال",
+"subscriptionPaymentViewProof": "عرض إثبات الدفع",
+"subscriptionPaymentLoadError": "تعذر تحميل طلبات الدفع:\n{error}",
+"@subscriptionPaymentLoadError": {
+  "placeholders": {
+    "error": {}
+  }
+},
+"subscriptionPaymentNoRequests": "لم يتم العثور على طلبات دفع.",
+"save": "حفظ",
+"activeBankDetailsVisibleToStoreAdmins": "المعلومات البنكية المفعّلة ظاهرة لمسؤولي المتاجر.",
+"paymentInstructions": "تعليمات الدفع",
+"subscriptionBankAccount": "الحساب البنكي للاشتراك",
+"couldNotLoadBankDetails": "تعذر تحميل المعلومات البنكية",
+"bankDetailsSavedSuccessfully": "تم حفظ المعلومات البنكية بنجاح",
+"storeCategories": "فئات المتجر",
+"selectStoreCategories": "اختر الفئات المتاحة في هذا المتجر",
+
+  "androidPhones": "هواتف أندرويد",
+  "iphones": "هواتف آيفون",
+  "phoneAccessories": "إكسسوارات الهواتف",
+  "desktopComputers": "أجهزة الكمبيوتر المكتبية",
+  "computerAccessories": "إكسسوارات الكمبيوتر",
+  "monitors": "الشاشات",
+  "printers": "الطابعات",
+  "televisions": "أجهزة التلفاز",
+  "cameras": "الكاميرات",
+  "smartHome": "المنزل الذكي",
+  "electronicAccessories": "الإكسسوارات الإلكترونية",
+  "women": "النساء",
+  "men": "الرجال",
+  "kids": "الأطفال",
+  "unisex": "للجنسين",
+  "sunglasses": "النظارات الشمسية",
+  "wallets": "المحافظ",
+  "skincare": "العناية بالبشرة",
+  "makeup": "المكياج",
+  "bodyCare": "العناية بالجسم",
+  "hairCare": "العناية بالشعر",
+  "livingRoom": "غرفة المعيشة",
+  "bedroom": "غرفة النوم",
+  "office": "المكتب",
+  "kitchen": "المطبخ",
+  "outdoorFurniture": "أثاث خارجي",
+  "fitness": "اللياقة البدنية",
+  "training": "التدريب",
+  "sportswear": "الملابس الرياضية",
+  "sportsEquipment": "المعدات الرياضية",
+  "consoles": "أجهزة الألعاب",
+  "games": "الألعاب",
+  "gamingAccessories": "إكسسوارات الألعاب",
+  "otherProducts": "منتجات أخرى",
+  "gold": "الذهب",
+"silver": "الفضة",
+"rings": "الخواتم",
+"necklaces": "القلادات",
+"bracelets": "الأساور",
+"anklets": "الخلاخل",
+"earrings": "الأقراط",
+"goldChains": "سلاسل الذهب",
+"silverChains": "سلاسل الفضة",
+"pendants": "الحُلي المعلّقة",
+"goldSets": "أطقم الذهب",
+"silverSets": "أطقم الفضة",
+"crownsAndTiaras": "التيجان والدِّيَم",
+"otherGoldJewelry": "مجوهرات ذهب أخرى",
+"otherSilverJewelry": "مجوهرات فضة أخرى",
+"continueAsGuest": "المتابعة كزائر",
+"subcategory": "الفئة الفرعية",
+"pleaseSelectSubcategory": "يرجى اختيار الفئة الفرعية",
+"alreadyHaveAnAccount": "هل لديك حساب بالفعل؟",
+"signIn": "تسجيل الدخول"
+
+
+
+
+
+
+
+
+
+
 
 
 

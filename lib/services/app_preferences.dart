@@ -94,6 +94,24 @@ class AppPreferences {
   }
 
   //==========================
+  // SELECTED STORE
+  //==========================
+
+  static const _keySelectedStoreId = 'selectedStoreId';
+
+  static Future<void> setSelectedStoreId(String storeId) async {
+    await _prefs.setString(_keySelectedStoreId, storeId);
+  }
+
+  static String? getSelectedStoreId() {
+    return _prefs.getString(_keySelectedStoreId);
+  }
+
+  static Future<void> clearSelectedStoreId() async {
+    await _prefs.remove(_keySelectedStoreId);
+  }
+
+  //==========================
   // CLEAR
   //==========================
 

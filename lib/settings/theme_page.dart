@@ -1,4 +1,5 @@
 import 'package:ecomerce_app/l10n/app_localizations.dart';
+import 'package:ecomerce_app/theme/custom_back_button.dart';
 import 'package:ecomerce_app/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -154,7 +155,11 @@ class _ThemePageState extends State<ThemePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
-      appBar: AppBar(title: Text(t.theme), centerTitle: true),
+      appBar: AppBar(
+        title: Text(t.theme),
+        centerTitle: true,
+        leading: const CustomBackButton(),
+      ),
 
       body: LayoutBuilder(
         builder: (context, constraints) {

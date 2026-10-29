@@ -144,7 +144,6 @@
   "lastNameMaxLength": "Last name must not exceed 30 characters",
   "validLastName": "Please enter a valid last name",
 
-  "usernameOptional": "Username (Optional)",
 
   "phoneNumberRequired": "Phone Number (Required)",
   "pleaseEnterPhoneNumber": "Please enter your phone number",
@@ -164,15 +163,16 @@
   "validCityName": "Please enter a valid city name",
 
   "streetAddressOptional": "Street Address (Optional)",
-  "zipCodeOptional": "ZIP Code (Optional)",
+
 
   "additionalInformation": "Additional Information",
-  "genderOptional": "Gender (Optional)",
 
 
 
-  "dateOfBirthOptional": "Date of Birth (Optional)",
-  "selectYourBirthDate": "Select your birth date",
+
+"subscribedStores": "Subscribed Stores",
+"unsubscribedStores": "Unsubscribed Stores",
+
 
 
   "profileUpdatedSuccessfully": "Profile updated successfully",
@@ -315,7 +315,7 @@
   "themeSavedSuccessfully": "Theme saved successfully",
   "failedToSaveTheme": "Failed to save theme",
  "add": "Add",
-
+"orderStatusCannotBeChanged": "This order status cannot be changed.",
   "users": "Users",
   "noUsersFound": "No users found",
   "noEmail": "No email",
@@ -422,18 +422,17 @@
   "personalInformation": "Personal Information",
   "firstName": "First Name",
   "lastName": "Last Name",
-  "username": "Username",
+
   "phone": "Phone",
-  "gender": "Gender",
+
   "male": "Male",
   "female": "Female",
-  "dateOfBirth": "Date of Birth",
-  "selectDateOfBirth": "Select date of birth",
+
   "shippingAddress": "Shipping Address",
   "country": "Country",
   "city": "City",
   "streetAddress": "Street Address",
-  "zipCode": "ZIP Code",
+
   "firstNameRequired": "First name is required",
   "lastNameRequired": "Last name is required",
   "userUpdatedSuccessfully": "User updated successfully",
@@ -624,7 +623,17 @@
 "existingDocumentsWillBeOverwritten": "Existing documents with the same IDs will be overwritten.",
 "doYouWantToContinue": "Do you want to continue?",
 "restore": "Restore",
-"databaseRestoredSuccessfully": "Database restored successfully ({count} documents)",
+
+"databaseRestoredSuccessfully": "Restore completed: {count} new documents added",
+"@databaseRestoredSuccessfully": {
+  "placeholders": {
+    "count": {
+      "type": "int"
+    }
+  }
+},
+
+
 "restoreFailed": "Restore failed: {error}",
 "databaseBackup": "Database Backup",
 "createBackupDescription": "Create a backup of your Firestore data and save it as a JSON file.",
@@ -685,7 +694,7 @@
 "personalInformation": "Personal Information",
 "firstNameIsRequired": "First name is required",
 "lastNameIsRequired": "Last name is required",
-"usernameIsRequired": "Username is required",
+
 "phoneOptional": "Phone (Optional)",
 "enterAValidPhoneNumber": "Enter a valid phone number",
 "saveChanges": "Save Changes",
@@ -724,7 +733,435 @@
   }
 },
 "enterStock": "Please enter stock quantity.",
-"continueAsGuest": "Continue as Guest"
+
+  "createNewStoreForPlatform": "Create a new store for your platform.",
+  "exampleMiloMall": "Example: Milo Mall",
+  "exampleMiloMallId": "Example: milo_mall",
+  "pleaseEnterStoreName": "Please enter the store name.",
+  "storeNameTooShort": "Store name is too short.",
+  "storeId": "Store ID",
+  "pleaseEnterStoreId": "Please enter the store ID.",
+  "storeIdTooShort": "Store ID is too short.",
+  "storeIdCharactersError": "Use only lowercase letters, numbers and _.",
+  "storeActive": "Store Active",
+  "usersCanAccessStore": "Users can access this store.",
+  "usersCannotAccessStore": "Users cannot access this store.",
+  "storeIdAlreadyExists": "This store ID already exists.",
+  "storeCreatedSuccessfully": "Store created successfully.",
+  "createAdministrator": "Create Administrator",
+  "createAdminAssignStore": "Create an administrator and assign them to a store.",
+  "pleaseEnterFirstName": "Please enter the first name.",
+  "pleaseEnterLastName": "Please enter the last name.",
+  "pleaseEnterEmail": "Please enter the email.",
+  "pleaseEnterValidEmail": "Please enter a valid email.",
+  "pleaseEnterPassword": "Please enter a password.",
+  "passwordMinCharacters": "Password must be at least 6 characters.",
+  "assignStore": "Assign Store",
+  "unableToLoadStores": "Unable to load stores.",
+  "noActiveStoresAvailable": "No active stores available.",
+  "adminCreatedSuccessfully": "Admin created successfully",
+  "failedToCreateAdmin": "Failed to create admin.",
+
+  "stores": "Stores",
+  "createStore": "Create Store",
+  "somethingWentWrong": "Something went wrong",
+  "noStoresYet": "No stores yet",
+  "active": "Active",
+  "inactive": "Inactive",
+
+  "superAdmin": "Super Admin",
+  "platformOverview": "Platform Overview",
+  "manageAllStoresAndAdmins": "Manage all stores and administrators.",
+  "management": "Management",
+  "manageStores": "Manage Stores",
+  "createEditManageAllStores": "Create, edit and manage all stores.",
+  "manageAdmins": "Manage Admins",
+  "createAdminsAndAssignStores": "Create administrators and assign them to stores.",
+  "ordersCompleted": "Completed Orders",
+ 
+  "admins": "Admins",
+  "createAdmin": "Create Admin",
+  "somethingWentWrong": "Something went wrong",
+  "noAdminsYet": "No admins yet",
+  "noStoreAssigned": "No store assigned",
+  "admin": "Admin",
+  
+  "storeInformation": "Store Information",
+  "createNewStoreForPlatform": "Create a new store for your platform.",
+  "exampleMiloMall": "Example: Milo Mall",
+  "exampleMiloMallId": "Example: Milo_mall",
+  "pleaseEnterStoreName": "Please enter the store name.",
+  "storeNameTooShort": "Store name is too short.",
+  "storeId": "Store ID",
+  "pleaseEnterStoreId": "Please enter the store ID.",
+  "storeIdTooShort": "Store ID is too short.",
+  "storeIdCharactersError": "Use only lowercase letters, numbers and _.",
+  "storeActive": "Store Active",
+  "usersCanAccessStore": "Users can access this store.",
+  "usersCannotAccessStore": "Users cannot access this store.",
+  "storeIdAlreadyExists": "This store ID already exists.",
+  "storeCreatedSuccessfully": "Store created successfully.",
+
+  "createAdmin": "Create Admin",
+  "createAdministrator": "Create Administrator",
+  "createAdminAssignStore": "Create an administrator and assign them to a store.",
+  "firstName": "First Name",
+  "pleaseEnterFirstName": "Please enter the first name.",
+  "lastName": "Last Name",
+  "pleaseEnterLastName": "Please enter the last name.",
+  "email": "Email",
+  "pleaseEnterEmail": "Please enter the email.",
+  "pleaseEnterValidEmail": "Please enter a valid email.",
+  "password": "Password",
+  "pleaseEnterPassword": "Please enter a password.",
+  "passwordMinCharacters": "Password must be at least 6 characters.",
+  "assignStore": "Assign Store",
+  "storeName": "Store Name",
+  "pleaseSelectStore": "Please select a store.",
+  "unableToLoadStores": "Unable to load stores.",
+  "noActiveStoresAvailable": "No active stores available.",
+  "adminCreatedSuccessfully": "Admin created successfully",
+  "failedToCreateAdmin": "Failed to create admin.",
+  "somethingWentWrong": "Something went wrong",
+  
+  "account": "Account",
+  "security": "Security",
+  "changePassword": "Change Password",
+  "passwordResetDescription": "Send a password reset link to your email.",
+  "passwordResetEmailSent": "Password reset email sent.",
+  "appearance": "Appearance",
+  "storeManagement": "Store Management",
+  "adminManagement": "Admin Management",
+  "platform": "Platform",
+  "about": "About",
+  "aboutMiloMall": "About Milo Mall",
+  "saasMarketplacePlatform": "Milo Mall SaaS Marketplace Platform",
+  "emailVerified": "Email Verified",
+  "emailNotVerified": "Email Not Verified",
+  "language": "Language",
+  "theme": "Theme",
+  "system": "System",
+  "english": "English",
+  "french": "Français",
+  "arabic": "العربية",
+  "light": "Light",
+  "dark": "Dark",
+  "signOut": "Sign Out",
+  "signOutConfirmation": "Are you sure you want to sign out?",
+  "cancel": "Cancel",
+  "close": "Close",
+  "editStore": "Edit Store",
+"updateStoreInformation": "Update your store information.",
+"removeStoreLogo": "Remove Store Logo",
+"storeUpdatedSuccessfully": "Store updated successfully.",
+"store": "Store",
+  "editAdmin": "Edit Admin",
+  "since": "Since",
+  "adminInformation": "Admin Information",
+  "updateAdminInformation": "Update the administrator's information.",
+  "administrator": "Administrator",
+  "pleaseEnterFirstName": "Please enter the first name.",
+  "pleaseEnterLastName": "Please enter the last name.",
+  "pleaseEnterEmail": "Please enter the email.",
+  "invalidEmail": "Please enter a valid email address.",
+  "pleaseSelectStore": "Please select a store.",
+  "adminUpdatedSuccessfully": "Admin updated successfully.",
+  "permissionDenied": "You do not have permission to perform this action.",
+  "adminOrStoreNotFound": "Admin or store not found.",
+  "emailAlreadyExists": "An account with this email already exists.",
+  "storeInactive": "The selected store is inactive.",
+  "invalidAdminInformation": "The admin information is invalid.",
+  "pleaseSignInAgain": "Please sign in again.",
+  "adminUpdateSecurityInfo": "Admin changes are securely processed through the platform administration service.",
+  "allStores": "All Stores",
+"allAdmins": "All Administrators",
+"totalStores": "Total Stores",
+"activeStores": "Active Stores",
+"noStores": "No stores found",
+"noAdmins": "No administrators found",
+"totalAdmins": "Total Administrators",
+"computers": "Computers",
+"fashion": "Fashion",
+"lifestyle": "Lifestyle",
+
+"placedNewOrder": "{userName} placed a new order",
+"@placedNewOrder": {
+  "placeholders": {
+    "userName": {}
+  }
+},
+"currencySymbol": "MAD",
+"whatsappNumber": "WhatsApp Number",
+
+"enterWhatsappNumber": "Please enter WhatsApp number",
+"invalidWhatsappNumber": "Please enter a valid WhatsApp number",
+"accountInactive": "Your account is inactive. Please contact the store administrator.",
+"chooseYourStore": "Choose your store",
+"noStoresYet": "No stores yet",
+"selectStoreToContinue": "Select a store to continue",
+"noStoresAvailableAtMoment": "There are no stores available at the moment.",
+"oldPriceMustBeGreaterThanPrice": "Old price must be greater than the current price.",
+"confirm": "Confirm",
+"oldPriceMustBeHigher": "Old price must be higher than the current price",
+"productRemovedByAdmin": "This product is no longer available because it was removed by the admin.",
+  "subscriptionCenterTitle": "Subscription Center",
+  "subscriptionCenterSubtitle": "Manage monthly plans and payment dates",
+  "subscriptionTotalStores": "Total stores",
+  "subscriptionConfigured": "Configured",
+  "subscriptionDueSoon": "Due soon",
+  "subscriptionOverdue": "Overdue",
+  "subscriptionExpectedRevenue": "Expected monthly revenue",
+  "subscriptionStoreSubscriptions": "Store subscriptions",
+  "subscriptionFilterAll": "All",
+  "subscriptionStatusActive": "Active",
+  "subscriptionStatusDueSoon": "Due soon",
+  "subscriptionStatusOverdue": "Overdue",
+  "subscriptionStatusNotConfigured": "Not configured",
+  "subscriptionNoStores": "No stores found for this filter.",
+  "subscriptionOverdueNote": "Overdue subscriptions only show an alert here. Store activation is managed separately.",
+  "subscriptionManageTitle": "Manage subscription",
+  "subscriptionMonthlyPrice": "Monthly price (MAD)",
+  "subscriptionPriceHint": "e.g. 150",
+  "subscriptionNextPayment": "Next payment date",
+  "subscriptionNotSet": "Not set",
+  "subscriptionSaveNote": "This only saves subscription details. It does not record a payment or deactivate the store.",
+  "subscriptionInvalidPrice": "Enter a valid monthly price.",
+  "subscriptionSelectPaymentDate": "Please select the next payment date.",
+  "subscriptionSaving": "Saving...",
+  "subscriptionSave": "Save subscription",
+  "subscriptionStoreEnabled": "Store enabled",
+  "subscriptionStoreDisabled": "Store disabled",
+  "subscriptionLoadError": "Could not load subscriptions.",
+  "subscriptionUpdatedFor": "Subscription updated for {storeName}.",
+  "@subscriptionUpdatedFor": {
+    "placeholders": {
+      "storeName": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionSaveError": "Could not save subscription: {error}",
+  "@subscriptionSaveError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "subscriptions": "Plans",
+
+"accessDeniedSuperAdminOnly": "Access denied. SuperAdmin only.",
+"selectAtLeastOneCollection": "Select at least one collection to back up.",
+"existingDocumentsKeptUnchanged": "Existing documents will be kept unchanged.",
+"onlyNewDocumentsAdded": "Only new documents will be added.",
+"restoreFinished": "Restore finished: {added} documents added, {skipped} documents skipped.",
+"@restoreFinished": {
+  "placeholders": {
+    "added": {
+      "type": "int"
+    },
+    "skipped": {
+      "type": "int"
+    }
+  }
+},
+
+  "storeSubscriptionSignInAgain": "Please sign in again.",
+  "storeSubscriptionNoStore": "No store is associated with this account.",
+  "storeSubscriptionStoreNotFound": "Store not found.",
+  "storeSubscriptionChooseFileType": "Choose a JPG, PNG, WEBP or PDF file.",
+  "storeSubscriptionFileTooLarge": "The file must be smaller than 10 MB.",
+  "storeSubscriptionFileReadError": "Could not read the selected file.",
+  "storeSubscriptionFileSelectError": "Could not select file: {error}",
+  "@storeSubscriptionFileSelectError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionSelectDateAndProof": "Select the transfer date and proof file first.",
+  "storeSubscriptionFileUnavailable": "The selected file is no longer available. Select it again.",
+  "storeSubscriptionPriceNotConfigured": "The subscription price has not been configured.",
+  "storeSubscriptionBankUnavailable": "The subscription bank account is currently unavailable.",
+  "storeSubscriptionPaymentSubmitted": "Payment proof submitted. Your payment is waiting for review.",
+  "storeSubscriptionSubmitPaymentError": "Could not submit payment: {error}",
+  "@storeSubscriptionSubmitPaymentError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionTitle": "Subscription & Payments",
+  "storeSubscriptionYourSubscription": "Your subscription",
+  "storeSubscriptionPriceLabel": "Subscription price",
+  "storeSubscriptionNextPaymentDate": "Next payment date",
+  "storeSubscriptionStatusLabel": "Subscription status",
+  "storeSubscriptionBankTransfer": "Bank transfer",
+  "storeSubscriptionBankUnavailableContact": "Bank transfer is currently unavailable. Please contact support.",
+  "storeSubscriptionBankTransferDetails": "Bank transfer details",
+  "storeSubscriptionTransferInstructions": "Transfer the subscription amount to this account.",
+  "storeSubscriptionBankName": "Bank name",
+  "storeSubscriptionAccountHolder": "Account holder",
+  "storeSubscriptionRib": "RIB",
+  "storeSubscriptionIban": "IBAN",
+  "storeSubscriptionSwiftBic": "SWIFT/BIC",
+  "storeSubscriptionSubmitProofTitle": "Submit payment proof",
+  "storeSubscriptionUploadReceiptSubtitle": "Upload your transfer receipt for manual verification.",
+  "storeSubscriptionTransferDate": "Transfer date",
+  "storeSubscriptionTransactionReferenceOptional": "Transaction reference (optional)",
+  "storeSubscriptionTransactionReferenceHint": "Enter your bank transaction reference",
+  "storeSubscriptionTransferReceiptRequired": "Transfer receipt *",
+  "storeSubscriptionChooseImageOrPdf": "Choose image or PDF",
+  "storeSubscriptionAllowedFileTypes": "JPG, PNG, WEBP or PDF · Max 10 MB",
+  "storeSubscriptionBrowseFiles": "Browse files",
+  "storeSubscriptionChangeFile": "Change file",
+  "storeSubscriptionSubmitting": "Submitting...",
+  "storeSubscriptionSubmitForVerification": "Submit for verification",
+  "storeSubscriptionManualVerificationNotice": "Submitting proof does not renew your subscription automatically. Your payment must be verified by the platform administrator.",
+  "storeSubscriptionPaymentHistory": "Payment history",
+  "storeSubscriptionPaymentHistorySubtitle": "Track your subscription payment submissions.",
+  "storeSubscriptionLoadHistoryError": "Could not load payment history: {error}",
+  "@storeSubscriptionLoadHistoryError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionNoPayments": "No subscription payments submitted yet.",
+  "storeSubscriptionPaymentApproved": "Approved",
+  "storeSubscriptionPaymentRejected": "Rejected",
+  "storeSubscriptionPaymentPendingReview": "Pending review",
+  "storeSubscriptionReference": "Reference",
+  "storeSubscriptionAdminNote": "Admin note",
+  "storeSubscriptionLoadDetailsError": "Could not load subscription details: {error}",
+  "@storeSubscriptionLoadDetailsError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "storeSubscriptionLoadBankError": "Could not load bank details. Please contact support.",
+  "storeSubscriptionManageTitle": "Manage your subscription",
+  "storeSubscriptionManageSubtitle": "Review your plan, transfer the payment, and submit your receipt for verification.",
+  "storeSubscriptionTryAgain": "Try again",
+  "storeSubscriptionMonthlyPlan": "Monthly",
+  "reviewSubscriptionPayments": "Review Subscription Payments",
+"reviewSubscriptionPaymentsSubtitle": "Review bank transfers and approve or reject payments.",
+"subscriptionPayments": "Subscription Payments",
+"subscriptionAndPayments": "Subscription & Payments",
+"manageAllSubscriptions": "Manage all subscriptions",
+"subscriptionPaymentPending": "Pending",
+"subscriptionPaymentAll": "All",
+"subscriptionPaymentProof": "Payment proof",
+"subscriptionPaymentNoProof": "No payment proof was provided.",
+"subscriptionPaymentOpenUploadedFile": "Open the uploaded file using the link below:",
+"subscriptionPaymentCouldNotOpenProof": "Could not open payment proof: {error}",
+"@subscriptionPaymentCouldNotOpenProof": {
+  "placeholders": {
+    "error": {}
+  }
+},
+"subscriptionPaymentApproveTitle": "Approve payment",
+"subscriptionPaymentRejectTitle": "Reject payment",
+"subscriptionPaymentRejectionReason": "Reason for rejection *",
+"subscriptionPaymentReviewNoteOptional": "Review note (optional)",
+"subscriptionPaymentRequestMissing": "Payment request no longer exists.",
+"subscriptionPaymentMissingStoreId": "Payment request has no store ID.",
+"subscriptionPaymentStoreMissing": "Store does not exist.",
+"subscriptionPaymentAlreadyReviewed": "This payment has already been reviewed.",
+"subscriptionPaymentApprovedUpdated": "Payment approved and subscription updated.",
+"subscriptionPaymentRejectedMessage": "Payment rejected.",
+"subscriptionPaymentReviewError": "Could not review payment: {error}",
+"@subscriptionPaymentReviewError": {
+  "placeholders": {
+    "error": {}
+  }
+},
+"subscriptionPaymentBank": "Bank",
+"subscriptionPaymentTransferReference": "Transfer reference",
+"subscriptionPaymentTransferDate": "Transfer date",
+"subscriptionPaymentSubmitted": "Submitted",
+"subscriptionPaymentViewProof": "View payment proof",
+"subscriptionPaymentLoadError": "Could not load payment requests:\n{error}",
+"@subscriptionPaymentLoadError": {
+  "placeholders": {
+    "error": {}
+  }
+},
+"subscriptionPaymentNoRequests": "No payment requests found.",
+"save": "Save",
+"activeBankDetailsVisibleToStoreAdmins": "Active bank details are visible to store admins.",
+"paymentInstructions": "Payment instructions",
+"subscriptionBankAccount": "Subscription Bank Account",
+"couldNotLoadBankDetails": "Could not load bank details",
+"bankDetailsSavedSuccessfully": "Bank details saved successfully",
+"storeCategories": "Store Categories",
+"selectStoreCategories": "Select the categories available in this store",
+
+  "androidPhones": "Android Phones",
+  "iphones": "iPhones",
+  "phoneAccessories": "Phone Accessories",
+  "desktopComputers": "Desktop Computers",
+  "computerAccessories": "Computer Accessories",
+  "monitors": "Monitors",
+  "printers": "Printers",
+  "televisions": "Televisions",
+  "cameras": "Cameras",
+  "smartHome": "Smart Home",
+  "electronicAccessories": "Electronic Accessories",
+  "women": "Women",
+  "men": "Men",
+  "kids": "Kids",
+  "unisex": "Unisex",
+  "sunglasses": "Sunglasses",
+  "wallets": "Wallets",
+  "skincare": "Skincare",
+  "makeup": "Makeup",
+  "bodyCare": "Body Care",
+  "hairCare": "Hair Care",
+  "livingRoom": "Living Room",
+  "bedroom": "Bedroom",
+  "office": "Office",
+  "kitchen": "Kitchen",
+  "outdoorFurniture": "Outdoor Furniture",
+  "fitness": "Fitness",
+  "training": "Training",
+  "sportswear": "Sportswear",
+  "sportsEquipment": "Sports Equipment",
+  "consoles": "Consoles",
+  "games": "Games",
+  "gamingAccessories": "Gaming Accessories",
+  "otherProducts": "Other Products",
+  "gold": "Gold",
+"silver": "Silver",
+"rings": "Rings",
+"necklaces": "Necklaces",
+"bracelets": "Bracelets",
+"anklets": "Anklets",
+"earrings": "Earrings",
+"goldChains": "Gold Chains",
+"silverChains": "Silver Chains",
+"pendants": "Pendants",
+"goldSets": "Gold Sets",
+"silverSets": "Silver Sets",
+"crownsAndTiaras": "Crowns & Tiaras",
+"otherGoldJewelry": "Other Gold Jewelry",
+"otherSilverJewelry": "Other Silver Jewelry",
+"continueAsGuest": "Continue as Guest",
+"subcategory": "Subcategory",
+"pleaseSelectSubcategory": "Please select a subcategory",
+"alreadyHaveAnAccount": "Already have an account?",
+"signIn": "Sign in"
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

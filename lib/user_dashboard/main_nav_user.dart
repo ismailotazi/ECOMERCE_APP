@@ -1,19 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecomerce_app/auth/login_page.dart';
+
 import 'package:ecomerce_app/l10n/app_localizations.dart';
 import 'package:ecomerce_app/services/cart_firestore.dart';
 import 'package:ecomerce_app/theme/app_colors.dart';
-import 'package:ecomerce_app/user_dashboard/User_notifications_page.dart';
+import 'package:ecomerce_app/user_dashboard/user_notifications_page.dart';
 import 'package:ecomerce_app/user_dashboard/cart_page.dart';
 import 'package:ecomerce_app/user_dashboard/favorite_page.dart';
 import 'package:ecomerce_app/user_dashboard/home_page.dart';
 import 'package:ecomerce_app/user_dashboard/user_profil_page.dart';
+import 'package:ecomerce_app/user_dashboard/user_settings_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MainNavUser extends StatefulWidget {
-  const MainNavUser({super.key});
+  final String? storeId;
+
+  const MainNavUser({super.key, this.storeId});
 
   @override
   State<MainNavUser> createState() => _MainNavUserState();
@@ -22,14 +26,75 @@ class MainNavUser extends StatefulWidget {
 class _MainNavUserState extends State<MainNavUser> {
   int currentIndex = 0;
   DateTime? _lastBackPressTime;
-
-  final List<Widget> pages = const [
-    HomePage(),
-    CartPage(showArrowBack: false),
-    FavoritePage(showArrowBack: false),
-    UserNotificationsPage(showArrowBack: false),
-    UserProfilPage(showArrowBack: false),
+  String? storeId;
+  String? storeName;
+  List<Widget> get pages => [
+    HomePage(storeId: storeId),
+    CartPage(showArrowBack: false, storeId: storeId),
+    FavoritePage(showArrowBack: false, storeId: storeId),
+    UserNotificationsPage(showArrowBack: false, storeId: storeId),
+    UserProfilPage(showArrowBack: false, storeId: storeId),
   ];
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.storeId != null && widget.storeId!.isNotEmpty) {
+      storeId = widget.storeId;
+      _loadStoreName();
+    } else {
+      _loadStoreId();
+    }
+  }
+
+  Future<void> _loadStoreName() async {
+    if (storeId == null || storeId!.isEmpty) return;
+
+    final storeDoc = await FirebaseFirestore.instance
+        .collection('stores')
+        .doc(storeId)
+        .get();
+
+    if (!mounted) return;
+
+    setState(() {
+      storeName = storeDoc.data()?['name']?.toString();
+    });
+  }
+
+  Future<void> _loadStoreId() async {
+    debugPrint('⚠️ _loadStoreId() CALLED');
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) return;
+
+    final userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (!userDoc.exists) return;
+
+    final userData = userDoc.data();
+
+    final userStoreId = userData?['storeId']?.toString();
+
+    if (userStoreId == null || userStoreId.isEmpty) return;
+
+    final storeDoc = await FirebaseFirestore.instance
+        .collection('stores')
+        .doc(userStoreId)
+        .get();
+
+    if (!mounted) return;
+
+    final storeData = storeDoc.data();
+
+    setState(() {
+      storeId = userStoreId;
+      storeName = storeData?['name']?.toString();
+    });
+  }
 
   List<String> get titles {
     final t = AppLocalizations.of(context)!;
@@ -85,8 +150,12 @@ class _MainNavUserState extends State<MainNavUser> {
   // ============================================================
 
   Widget _buildCartIcon(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return StreamBuilder<List<Map<String, dynamic>>>(
-      stream: CartFirestore.cartStream(),
+      stream: user == null || storeId == null || storeId!.isEmpty
+          ? const Stream.empty()
+          : CartFirestore.cartStream(storeId!),
       builder: (context, snapshot) {
         int count = 0;
 
@@ -106,8 +175,12 @@ class _MainNavUserState extends State<MainNavUser> {
   }
 
   Widget _buildSelectedCartIcon(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return StreamBuilder<List<Map<String, dynamic>>>(
-      stream: CartFirestore.cartStream(),
+      stream: user == null || storeId == null || storeId!.isEmpty
+          ? const Stream.empty()
+          : CartFirestore.cartStream(storeId!),
       builder: (context, snapshot) {
         int count = 0;
 
@@ -131,47 +204,67 @@ class _MainNavUserState extends State<MainNavUser> {
   // ============================================================
 
   Widget _buildFavoriteIcon(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
-    if (user == null) {
-      return const Icon(Icons.favorite_outline);
-    }
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .collection('favorites')
-          .snapshots(),
-      builder: (context, snapshot) {
-        final count = snapshot.data?.docs.length ?? 0;
-
-        return _buildBadgeIcon(
-          context,
-          icon: Icons.favorite_outline,
-          count: count,
-        );
-      },
-    );
+    return _buildFavoriteBadge(context, Icons.favorite_outline);
   }
 
   Widget _buildSelectedFavoriteIcon(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    return _buildFavoriteBadge(context, Icons.favorite);
+  }
 
-    if (user == null) {
-      return const Icon(Icons.favorite);
+  Widget _buildFavoriteBadge(BuildContext context, IconData icon) {
+    final user = FirebaseAuth.instance.currentUser;
+    final currentStoreId = storeId?.trim();
+
+    if (user == null || currentStoreId == null || currentStoreId.isEmpty) {
+      return Icon(icon);
     }
 
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .collection('favorites')
           .snapshots(),
-      builder: (context, snapshot) {
-        final count = snapshot.data?.docs.length ?? 0;
+      builder: (context, favoriteSnapshot) {
+        if (favoriteSnapshot.hasError) {
+          return _buildBadgeIcon(context, icon: icon, count: 0);
+        }
 
-        return _buildBadgeIcon(context, icon: Icons.favorite, count: count);
+        final favoriteDocs = favoriteSnapshot.data?.docs ?? [];
+
+        if (favoriteDocs.isEmpty) {
+          return _buildBadgeIcon(context, icon: icon, count: 0);
+        }
+
+        return FutureBuilder<List<String>>(
+          future: Future.wait(
+            favoriteDocs.map((favoriteDoc) async {
+              final productDoc = await FirebaseFirestore.instance
+                  .collection('products')
+                  .doc(favoriteDoc.id)
+                  .get();
+
+              if (!productDoc.exists) return '';
+
+              final productData = productDoc.data();
+
+              if (productData?['storeId']?.toString() == currentStoreId) {
+                return favoriteDoc.id;
+              }
+
+              return '';
+            }),
+          ),
+          builder: (context, productSnapshot) {
+            final count =
+                productSnapshot.data
+                    ?.where((productId) => productId.isNotEmpty)
+                    .length ??
+                0;
+
+            return _buildBadgeIcon(context, icon: icon, count: count);
+          },
+        );
       },
     );
   }
@@ -183,7 +276,7 @@ class _MainNavUserState extends State<MainNavUser> {
   Widget _buildNotificationIcon(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    if (user == null) {
+    if (user == null || storeId == null || storeId!.isEmpty) {
       return const Icon(Icons.notifications_none_rounded);
     }
 
@@ -192,6 +285,7 @@ class _MainNavUserState extends State<MainNavUser> {
           .collection('notifications')
           .where('userId', isEqualTo: user.uid)
           .where('recipient', isEqualTo: 'user')
+          .where('storeId', isEqualTo: storeId)
           .where('isRead', isEqualTo: false)
           .snapshots(),
       builder: (context, snapshot) {
@@ -209,7 +303,7 @@ class _MainNavUserState extends State<MainNavUser> {
   Widget _buildSelectedNotificationIcon(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    if (user == null) {
+    if (user == null || storeId == null || storeId!.isEmpty) {
       return const Icon(Icons.notifications_rounded);
     }
 
@@ -218,6 +312,7 @@ class _MainNavUserState extends State<MainNavUser> {
           .collection('notifications')
           .where('userId', isEqualTo: user.uid)
           .where('recipient', isEqualTo: 'user')
+          .where('storeId', isEqualTo: storeId)
           .where('isRead', isEqualTo: false)
           .snapshots(),
       builder: (context, snapshot) {
@@ -237,15 +332,11 @@ class _MainNavUserState extends State<MainNavUser> {
   // ============================================================
 
   void _changePage(int index) {
-    final user = FirebaseAuth.instance.currentUser;
-
-    // Guest cannot access notifications.
-    if (index == 3 && user == null) {
+    if (FirebaseAuth.instance.currentUser == null && index != 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const LoginPage()),
+        MaterialPageRoute(builder: (_) => LoginPage(storeId: storeId)),
       );
-
       return;
     }
 
@@ -253,6 +344,7 @@ class _MainNavUserState extends State<MainNavUser> {
       currentIndex = index;
     });
   }
+
   // ============================================================
   // BUILD
   // ============================================================
@@ -313,11 +405,10 @@ class _MainNavUserState extends State<MainNavUser> {
       body: Row(
         children: [
           _buildSideNavigation(context, t),
-
           Expanded(
             child: Column(
               children: [
-                _buildDesktopAppBar(context),
+                if (currentIndex != 0) _buildDesktopAppBar(context),
 
                 Expanded(
                   child: IndexedStack(index: currentIndex, children: pages),
@@ -393,7 +484,7 @@ class _MainNavUserState extends State<MainNavUser> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Milo Mall',
+                      storeName ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.titleLarge?.copyWith(
@@ -404,7 +495,6 @@ class _MainNavUserState extends State<MainNavUser> {
                 ],
               ),
             ),
-
             const SizedBox(height: 30),
 
             Expanded(
@@ -416,8 +506,23 @@ class _MainNavUserState extends State<MainNavUser> {
                       padding: const EdgeInsets.only(bottom: 6),
                       child: _buildSideNavItem(
                         context,
-                        icon: destinations[index].icon,
-                        selectedIcon: destinations[index].selectedIcon,
+
+                        icon: index == 1
+                            ? _buildCartIcon(context)
+                            : index == 2
+                            ? _buildFavoriteIcon(context)
+                            : index == 3
+                            ? _buildNotificationIcon(context)
+                            : Icon(destinations[index].icon),
+
+                        selectedIcon: index == 1
+                            ? _buildSelectedCartIcon(context)
+                            : index == 2
+                            ? _buildSelectedFavoriteIcon(context)
+                            : index == 3
+                            ? _buildSelectedNotificationIcon(context)
+                            : Icon(destinations[index].selectedIcon),
+
                         label: destinations[index].label,
                         selected: currentIndex == index,
                         onTap: () => _changePage(index),
@@ -434,8 +539,8 @@ class _MainNavUserState extends State<MainNavUser> {
 
   Widget _buildSideNavItem(
     BuildContext context, {
-    required IconData icon,
-    required IconData selectedIcon,
+    required Widget icon,
+    required Widget selectedIcon,
     required String label,
     required bool selected,
     required VoidCallback onTap,
@@ -460,12 +565,14 @@ class _MainNavUserState extends State<MainNavUser> {
           ),
           child: Row(
             children: [
-              Icon(
-                selected ? selectedIcon : icon,
-                color: selected
-                    ? colorScheme.primary
-                    : colorScheme.onSurfaceVariant,
-                size: 23,
+              IconTheme(
+                data: IconThemeData(
+                  color: selected
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                  size: 23,
+                ),
+                child: selected ? selectedIcon : icon,
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -495,6 +602,8 @@ class _MainNavUserState extends State<MainNavUser> {
   Widget _buildDesktopAppBar(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final user = FirebaseAuth.instance.currentUser;
+    final t = AppLocalizations.of(context)!;
 
     return Container(
       height: 72,
@@ -506,15 +615,149 @@ class _MainNavUserState extends State<MainNavUser> {
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              titles[currentIndex],
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: currentIndex == 0
+                ? Row(
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          Icons.shopping_bag_outlined,
+                          color: colorScheme.primary,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Text(
+                          storeName ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    titles[currentIndex],
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
           ),
+          // Profile: Notifications + Settings
+          if (currentIndex == 4 && user != null) ...[
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('notifications')
+                  .where('userId', isEqualTo: user.uid)
+                  .where('recipient', isEqualTo: 'user')
+                  .where('storeId', isEqualTo: storeId)
+                  .where('isRead', isEqualTo: false)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                final unreadCount = snapshot.data?.docs.length ?? 0;
+
+                return IconButton(
+                  tooltip: t.notifications,
+                  onPressed: () => _changePage(3),
+                  icon: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      const Icon(Icons.notifications_outlined),
+                      if (unreadCount > 0)
+                        Positioned(
+                          right: -6,
+                          top: -6,
+                          child: Container(
+                            padding: const EdgeInsets.all(3),
+                            constraints: const BoxConstraints(
+                              minWidth: 18,
+                              minHeight: 18,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.error,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              unreadCount > 99 ? '99+' : unreadCount.toString(),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: colorScheme.onError,
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              tooltip: t.settings,
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => UserSettingsPage(storeId: storeId),
+                  ),
+                );
+              },
+            ),
+          ],
+
+          // Notifications: Mark all as read
+          if (currentIndex == 3 && user != null)
+            IconButton(
+              icon: const Icon(Icons.done_all),
+              tooltip: t.markAllAsRead,
+              onPressed: () async {
+                if (storeId == null || storeId!.isEmpty) return;
+
+                try {
+                  final snapshot = await FirebaseFirestore.instance
+                      .collection('notifications')
+                      .where('userId', isEqualTo: user.uid)
+                      .where('recipient', isEqualTo: 'user')
+                      .where('storeId', isEqualTo: storeId)
+                      .where('isRead', isEqualTo: false)
+                      .get();
+
+                  final batch = FirebaseFirestore.instance.batch();
+
+                  for (final doc in snapshot.docs) {
+                    batch.update(doc.reference, {'isRead': true});
+                  }
+
+                  if (snapshot.docs.isNotEmpty) {
+                    await batch.commit();
+                  }
+
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(t.allNotificationsMarkedAsRead)),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(t.somethingWentWrong)),
+                    );
+                  }
+                }
+              },
+            ),
         ],
       ),
     );
@@ -602,93 +845,3 @@ class _MainNavUserState extends State<MainNavUser> {
     );
   }
 }
-// import 'package:ecomerce_app/l10n/app_localizations.dart';
-// import 'package:ecomerce_app/user_dashboard/cart_page.dart';
-// import 'package:ecomerce_app/user_dashboard/favorite_page.dart';
-// import 'package:ecomerce_app/user_dashboard/home_page.dart';
-// import 'package:ecomerce_app/user_dashboard/user_profil_page.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-
-// class MainNavUser extends StatefulWidget {
-//   const MainNavUser({super.key});
-
-//   @override
-//   State<MainNavUser> createState() => _MainNavUserState();
-// }
-
-// class _MainNavUserState extends State<MainNavUser> {
-//   int currentIndex = 0;
-//   DateTime? _lastBackPressTime;
-//   final List<Widget> pages = const [
-//     HomePage(),
-//     CartPage(showArrowBack: false),
-//     FavoritePage(showArrowBack: false),
-//     UserProfilPage(showArrowBack: false),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context)!;
-//     return PopScope(
-//       canPop: false,
-//       onPopInvokedWithResult: (didPop, result) {
-//         if (didPop) return;
-
-//         final now = DateTime.now();
-
-//         if (_lastBackPressTime == null ||
-//             now.difference(_lastBackPressTime!) > const Duration(seconds: 2)) {
-//           _lastBackPressTime = now;
-
-//           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-//           ScaffoldMessenger.of(context).showSnackBar(
-//             SnackBar(
-//               content: Text(t.tapAgainToExit),
-//               duration: const Duration(seconds: 2),
-//             ),
-//           );
-
-//           return;
-//         }
-
-//         SystemNavigator.pop();
-//       },
-//       child: Scaffold(
-//         body: pages[currentIndex],
-
-//         bottomNavigationBar: NavigationBar(
-//           selectedIndex: currentIndex,
-//           onDestinationSelected: (index) {
-//             setState(() {
-//               currentIndex = index;
-//             });
-//           },
-//           destinations: [
-//             NavigationDestination(
-//               icon: Icon(Icons.home_outlined),
-//               selectedIcon: Icon(Icons.home),
-//               label: t.home,
-//             ),
-//             NavigationDestination(
-//               icon: Icon(Icons.shopping_cart_outlined),
-//               selectedIcon: Icon(Icons.shopping_cart),
-//               label: t.cart,
-//             ),
-//             NavigationDestination(
-//               icon: Icon(Icons.favorite_outline),
-//               selectedIcon: Icon(Icons.favorite),
-//               label: t.favorite,
-//             ),
-//             NavigationDestination(
-//               icon: Icon(Icons.person_outline),
-//               selectedIcon: Icon(Icons.person),
-//               label: t.profile,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

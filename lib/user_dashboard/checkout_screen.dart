@@ -102,25 +102,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         throw Exception("User not logged in");
       }
 
-      // Bank Transfer
-      if (_paymentMethod == PaymentMethod.bankTransfer) {
-        final result = await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const BankTransferScreen()),
-        );
+      final fullName = nameController.text.trim();
+      final nameParts = fullName.split(RegExp(r'\s+'));
 
-        if (result == null || result["confirmed"] != true) {
-          if (mounted) {
-            setState(() => loading = false);
-          }
-          return;
-        }
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .update({
+            "firstName": nameParts.first,
+            "lastName": nameParts.length > 1 ? nameParts.skip(1).join(" ") : "",
+            "phone": completePhoneNumber,
+            "country": countryController.text.trim(),
+            "city": cityController.text.trim(),
+            "address": addressController.text.trim(),
+          });
 
-        paymentProofUrl = result["proofUrl"];
-        paymentBankId = result["bankId"];
-        paymentBankName = result["bankName"];
-      }
-
+      // Convert checkout items to OrderItemModel
       final orderItems = widget.items.map((e) {
         final List images = e["images"] is List ? e["images"] : [];
 
@@ -134,9 +131,71 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           image: image,
           price: (e["price"] as num?)?.toDouble() ?? 0.0,
           quantity: (e["quantity"] as num?)?.toInt() ?? 1,
+          storeId: e["storeId"]?.toString() ?? "",
         );
       }).toList();
 
+      // Get store ID from order items
+      final storeId = orderItems.isNotEmpty ? orderItems.first.storeId : "";
+
+      if (storeId.isEmpty) {
+        throw Exception("Store ID is missing from cart");
+      }
+
+      // Make sure all checkout items belong to the same store
+      for (final item in orderItems) {
+        if (item.storeId != storeId) {
+          throw Exception("Mixed stores are not allowed");
+        }
+      }
+
+      // Verify all checkout products belong to the current store.
+      for (final item in orderItems) {
+        final productId = item.productId;
+
+        if (productId.isEmpty) {
+          throw Exception("Invalid product");
+        }
+
+        final productDoc = await FirebaseFirestore.instance
+            .collection("products")
+            .doc(productId)
+            .get();
+
+        if (!productDoc.exists) {
+          throw Exception("Product not found");
+        }
+
+        final productData = productDoc.data();
+
+        if (productData == null ||
+            productData["storeId"]?.toString() != storeId) {
+          throw Exception("Unauthorized product");
+        }
+      }
+
+      // Bank Transfer
+      if (_paymentMethod == PaymentMethod.bankTransfer) {
+        if (!mounted) return;
+
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => BankTransferScreen(storeId: storeId),
+          ),
+        );
+
+        if (!mounted) return;
+
+        if (result == null || result["confirmed"] != true) {
+          setState(() => loading = false);
+          return;
+        }
+
+        paymentProofUrl = result["proofUrl"];
+        paymentBankId = result["bankId"];
+        paymentBankName = result["bankName"];
+      }
       await OrderService().createOrder(
         userId: user.uid,
         userName: nameController.text.trim(),
@@ -145,6 +204,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         address: addressController.text.trim(),
         city: cityController.text.trim(),
         country: countryController.text.trim(),
+        storeId: storeId,
         items: orderItems,
         totalPrice: widget.total,
         paymentMethod: _paymentMethod == PaymentMethod.cashOnDelivery
@@ -154,6 +214,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         paymentBankId: paymentBankId,
         paymentBankName: paymentBankName,
       );
+
+      debugPrint("CHECKOUT: AFTER ORDER SERVICE");
 
       // Remove ONLY purchased products from cart
       final selectedIds = widget.items
@@ -172,7 +234,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         SnackBar(
           backgroundColor: AppColors.success,
           content: Text(
-            "Order placed successfully 🎉",
+            t.orderPlacedSuccessfully,
             style: TextStyle(
               color: Theme.of(context).colorScheme.onPrimary,
               fontWeight: FontWeight.w600,
@@ -192,13 +254,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('${e.productName}: $message')));
-    } catch (e) {
+    } catch (e, stackTrace) {
+      debugPrint("========== CHECKOUT ERROR ==========");
+      debugPrint("ERROR: $e");
+      debugPrint("STACK: $stackTrace");
+      debugPrint("====================================");
+
       if (!mounted) return;
 
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(t.somethingWentWrong)));
     }
+
     if (mounted) {
       setState(() => loading = false);
     }
@@ -551,7 +619,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "\$${widget.total.toStringAsFixed(2)}",
+                              "${widget.total.toStringAsFixed(2)} ${t.currencySymbol}",
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,

@@ -15,7 +15,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enterEmail => 'Entrez votre e-mail';
 
   @override
-  String get invalidEmail => 'E-mail invalide';
+  String get invalidEmail => 'Veuillez saisir une adresse e-mail valide.';
 
   @override
   String get password => 'Mot de passe';
@@ -77,7 +77,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get register => 'S\'inscrire';
 
   @override
-  String get passwordResetEmailSent => 'E-mail de réinitialisation du mot de passe envoyé ! Vérifiez votre boîte de réception ou vos courriers indésirables.';
+  String get passwordResetEmailSent => 'L’e-mail de réinitialisation du mot de passe a été envoyé.';
 
   @override
   String get anErrorOccurred => 'Une erreur s\'est produite';
@@ -323,9 +323,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get validLastName => 'Veuillez saisir un nom valide';
 
   @override
-  String get usernameOptional => 'Nom d\'utilisateur (facultatif)';
-
-  @override
   String get phoneNumberRequired => 'Numéro de téléphone (obligatoire)';
 
   @override
@@ -362,19 +359,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get streetAddressOptional => 'Adresse (facultatif)';
 
   @override
-  String get zipCodeOptional => 'Code postal (facultatif)';
-
-  @override
   String get additionalInformation => 'Informations supplémentaires';
 
   @override
-  String get genderOptional => 'Genre (facultatif)';
+  String get subscribedStores => 'Magasins abonnés';
 
   @override
-  String get dateOfBirthOptional => 'Date de naissance (facultatif)';
-
-  @override
-  String get selectYourBirthDate => 'Sélectionnez votre date de naissance';
+  String get unsubscribedStores => 'Magasins non abonnés';
 
   @override
   String get profileUpdatedSuccessfully => 'Profil mis à jour avec succès';
@@ -748,6 +739,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get add => 'Ajouter';
 
   @override
+  String get orderStatusCannotBeChanged => 'Le statut de cette commande ne peut pas être modifié.';
+
+  @override
   String get users => 'Utilisateurs';
 
   @override
@@ -806,7 +800,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get account => 'Compte';
 
   @override
-  String get storeManagement => 'Gestion de la boutique';
+  String get storeManagement => 'Gestion des boutiques';
 
   @override
   String get admin => 'Administrateur';
@@ -1043,25 +1037,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lastName => 'Nom';
 
   @override
-  String get username => 'Nom d\'utilisateur';
-
-  @override
   String get phone => 'Téléphone';
-
-  @override
-  String get gender => 'Genre';
 
   @override
   String get male => 'Homme';
 
   @override
   String get female => 'Femme';
-
-  @override
-  String get dateOfBirth => 'Date de naissance';
-
-  @override
-  String get selectDateOfBirth => 'Sélectionner la date de naissance';
 
   @override
   String get shippingAddress => 'Adresse de livraison';
@@ -1074,9 +1056,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get streetAddress => 'Adresse';
-
-  @override
-  String get zipCode => 'Code postal';
 
   @override
   String get firstNameRequired => 'Le prénom est obligatoire';
@@ -1162,7 +1141,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get analytics => 'Analyses';
 
   @override
-  String get system => 'SYSTÈME';
+  String get system => 'Système';
 
   @override
   String get settings => 'Paramètres';
@@ -1344,10 +1323,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enable => 'Activer';
 
   @override
-  String get active => 'Actif';
+  String get active => 'Active';
 
   @override
-  String get inactive => 'Inactif';
+  String get inactive => 'Inactive';
 
   @override
   String get changePassword => 'Changer le mot de passe';
@@ -1383,7 +1362,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get passwordChangedSuccessfully => 'Mot de passe modifié avec succès';
 
   @override
-  String get somethingWentWrong => 'Une erreur s\'est produite';
+  String get somethingWentWrong => 'Une erreur s’est produite';
 
   @override
   String get currentPasswordIncorrect => 'Le mot de passe actuel est incorrect';
@@ -1395,7 +1374,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tooManyAttempts => 'Trop de tentatives. Réessayez plus tard.';
 
   @override
-  String get pleaseSignInAgain => 'Veuillez vous reconnecter et réessayer.';
+  String get pleaseSignInAgain => 'Veuillez vous reconnecter.';
 
   @override
   String get exportOrders => 'Exporter les commandes';
@@ -1561,7 +1540,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String databaseRestoredSuccessfully(int count) {
-    return 'Base de données restaurée avec succès ($count documents)';
+    return 'Restauration terminée : $count nouveaux documents ajoutés';
   }
 
   @override
@@ -1603,9 +1582,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get changeProfilePhoto => 'Modifier la photo de profil';
-
-  @override
-  String get usernameIsRequired => 'Le nom d\'utilisateur est obligatoire';
 
   @override
   String get enterAValidPhoneNumber => 'Entrez un numéro de téléphone valide';
@@ -1689,5 +1665,861 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enterStock => 'Veuillez saisir la quantité en stock.';
 
   @override
+  String get createNewStoreForPlatform => 'Créez une nouvelle boutique pour votre plateforme.';
+
+  @override
+  String get exampleMiloMall => 'Exemple : Milo Mall';
+
+  @override
+  String get exampleMiloMallId => 'Exemple : milo_mall';
+
+  @override
+  String get pleaseEnterStoreName => 'Veuillez saisir le nom de la boutique.';
+
+  @override
+  String get storeNameTooShort => 'Le nom de la boutique est trop court.';
+
+  @override
+  String get storeId => 'ID de la boutique';
+
+  @override
+  String get pleaseEnterStoreId => 'Veuillez saisir l’ID de la boutique.';
+
+  @override
+  String get storeIdTooShort => 'L’ID de la boutique est trop court.';
+
+  @override
+  String get storeIdCharactersError => 'Utilisez uniquement des lettres minuscules, des chiffres et _.';
+
+  @override
+  String get storeActive => 'Boutique active';
+
+  @override
+  String get usersCanAccessStore => 'Les utilisateurs peuvent accéder à cette boutique.';
+
+  @override
+  String get usersCannotAccessStore => 'Les utilisateurs ne peuvent pas accéder à cette boutique.';
+
+  @override
+  String get storeIdAlreadyExists => 'Cet ID de boutique existe déjà.';
+
+  @override
+  String get storeCreatedSuccessfully => 'Boutique créée avec succès.';
+
+  @override
+  String get createAdministrator => 'Créer un administrateur';
+
+  @override
+  String get createAdminAssignStore => 'Créez un administrateur et attribuez-le à une boutique.';
+
+  @override
+  String get pleaseEnterFirstName => 'Veuillez saisir le prénom.';
+
+  @override
+  String get pleaseEnterLastName => 'Veuillez saisir le nom.';
+
+  @override
+  String get pleaseEnterEmail => 'Veuillez saisir l\'adresse e-mail.';
+
+  @override
+  String get pleaseEnterValidEmail => 'Veuillez saisir une adresse e-mail valide.';
+
+  @override
+  String get pleaseEnterPassword => 'Veuillez saisir un mot de passe.';
+
+  @override
+  String get passwordMinCharacters => 'Le mot de passe doit contenir au moins 6 caractères.';
+
+  @override
+  String get assignStore => 'Attribuer une boutique';
+
+  @override
+  String get unableToLoadStores => 'Impossible de charger les boutiques.';
+
+  @override
+  String get noActiveStoresAvailable => 'Aucune boutique active disponible.';
+
+  @override
+  String get adminCreatedSuccessfully => 'Administrateur créé avec succès';
+
+  @override
+  String get failedToCreateAdmin => 'Échec de la création de l’administrateur.';
+
+  @override
+  String get stores => 'Boutiques';
+
+  @override
+  String get createStore => 'Créer une boutique';
+
+  @override
+  String get noStoresYet => 'Aucune boutique pour le moment';
+
+  @override
+  String get superAdmin => 'Super administrateur';
+
+  @override
+  String get platformOverview => 'Vue d’ensemble de la plateforme';
+
+  @override
+  String get manageAllStoresAndAdmins => 'Gérez toutes les boutiques et les administrateurs.';
+
+  @override
+  String get management => 'Gestion';
+
+  @override
+  String get manageStores => 'Gérer les boutiques';
+
+  @override
+  String get createEditManageAllStores => 'Créez, modifiez et gérez toutes les boutiques.';
+
+  @override
+  String get manageAdmins => 'Gérer les administrateurs';
+
+  @override
+  String get createAdminsAndAssignStores => 'Créez des administrateurs et attribuez-les à des boutiques.';
+
+  @override
+  String get ordersCompleted => 'Commandes terminées';
+
+  @override
+  String get admins => 'Administrateurs';
+
+  @override
+  String get createAdmin => 'Créer un administrateur';
+
+  @override
+  String get noAdminsYet => 'Aucun administrateur pour le moment';
+
+  @override
+  String get noStoreAssigned => 'Aucune boutique attribuée';
+
+  @override
+  String get storeInformation => 'Informations sur la boutique';
+
+  @override
+  String get storeName => 'Nom de la boutique';
+
+  @override
+  String get pleaseSelectStore => 'Veuillez sélectionner un magasin.';
+
+  @override
+  String get security => 'Sécurité';
+
+  @override
+  String get passwordResetDescription => 'Envoyer un lien de réinitialisation du mot de passe à votre adresse e-mail.';
+
+  @override
+  String get appearance => 'Apparence';
+
+  @override
+  String get adminManagement => 'Gestion des administrateurs';
+
+  @override
+  String get platform => 'Plateforme';
+
+  @override
+  String get aboutMiloMall => 'À propos de Milo Mall';
+
+  @override
+  String get saasMarketplacePlatform => 'Plateforme marketplace SaaS Milo Mall';
+
+  @override
+  String get emailVerified => 'E-mail vérifié';
+
+  @override
+  String get emailNotVerified => 'E-mail non vérifié';
+
+  @override
+  String get signOut => 'Se déconnecter';
+
+  @override
+  String get signOutConfirmation => 'Êtes-vous sûr de vouloir vous déconnecter ?';
+
+  @override
+  String get close => 'Fermer';
+
+  @override
+  String get editStore => 'Modifier le magasin';
+
+  @override
+  String get updateStoreInformation => 'Mettez à jour les informations de votre magasin.';
+
+  @override
+  String get removeStoreLogo => 'Supprimer le logo du magasin';
+
+  @override
+  String get storeUpdatedSuccessfully => 'Magasin mis à jour avec succès.';
+
+  @override
+  String get store => 'Magasin';
+
+  @override
+  String get editAdmin => 'Modifier l\'administrateur';
+
+  @override
+  String get since => 'Depuis';
+
+  @override
+  String get adminInformation => 'Informations de l\'administrateur';
+
+  @override
+  String get updateAdminInformation => 'Mettez à jour les informations de l\'administrateur.';
+
+  @override
+  String get adminUpdatedSuccessfully => 'Administrateur mis à jour avec succès.';
+
+  @override
+  String get permissionDenied => 'Vous n\'avez pas l\'autorisation d\'effectuer cette action.';
+
+  @override
+  String get adminOrStoreNotFound => 'Administrateur ou magasin introuvable.';
+
+  @override
+  String get emailAlreadyExists => 'Un compte avec cet e-mail existe déjà.';
+
+  @override
+  String get storeInactive => 'Le magasin sélectionné est inactif.';
+
+  @override
+  String get invalidAdminInformation => 'Les informations de l\'administrateur sont invalides.';
+
+  @override
+  String get adminUpdateSecurityInfo => 'Les modifications de l\'administrateur sont traitées de manière sécurisée via le service d\'administration de la plateforme.';
+
+  @override
+  String get allStores => 'Toutes les boutiques';
+
+  @override
+  String get allAdmins => 'Tous les administrateurs';
+
+  @override
+  String get totalStores => 'Total des boutiques';
+
+  @override
+  String get activeStores => 'Boutiques actives';
+
+  @override
+  String get noStores => 'Aucune boutique trouvée';
+
+  @override
+  String get noAdmins => 'Aucun administrateur trouvé';
+
+  @override
+  String get totalAdmins => 'Total des administrateurs';
+
+  @override
+  String get computers => 'Informatique';
+
+  @override
+  String get fashion => 'Mode';
+
+  @override
+  String get lifestyle => 'Style de vie';
+
+  @override
+  String placedNewOrder(Object userName) {
+    return '$userName a passé une nouvelle commande';
+  }
+
+  @override
+  String get currencySymbol => 'MAD';
+
+  @override
+  String get whatsappNumber => 'Numéro WhatsApp';
+
+  @override
+  String get enterWhatsappNumber => 'Veuillez saisir le numéro WhatsApp';
+
+  @override
+  String get invalidWhatsappNumber => 'Veuillez saisir un numéro WhatsApp valide';
+
+  @override
+  String get accountInactive => 'Votre compte est inactif. Veuillez contacter l\'administrateur du magasin.';
+
+  @override
+  String get chooseYourStore => 'Choisissez votre boutique';
+
+  @override
+  String get selectStoreToContinue => 'Sélectionnez une boutique pour continuer';
+
+  @override
+  String get noStoresAvailableAtMoment => 'Aucune boutique n’est disponible pour le moment.';
+
+  @override
+  String get oldPriceMustBeGreaterThanPrice => 'L’ancien prix doit être supérieur au prix actuel.';
+
+  @override
+  String get confirm => 'Confirmer';
+
+  @override
+  String get oldPriceMustBeHigher => 'L’ancien prix doit être supérieur au prix actuel';
+
+  @override
+  String get productRemovedByAdmin => 'Ce produit n’est plus disponible car il a été supprimé par l’administrateur.';
+
+  @override
+  String get subscriptionCenterTitle => 'Centre des abonnements';
+
+  @override
+  String get subscriptionCenterSubtitle => 'Gérez les forfaits mensuels et les dates de paiement';
+
+  @override
+  String get subscriptionTotalStores => 'Nombre total de boutiques';
+
+  @override
+  String get subscriptionConfigured => 'Configurés';
+
+  @override
+  String get subscriptionDueSoon => 'Bientôt à échéance';
+
+  @override
+  String get subscriptionOverdue => 'En retard';
+
+  @override
+  String get subscriptionExpectedRevenue => 'Revenu mensuel prévu';
+
+  @override
+  String get subscriptionStoreSubscriptions => 'Abonnements des boutiques';
+
+  @override
+  String get subscriptionFilterAll => 'Tous';
+
+  @override
+  String get subscriptionStatusActive => 'Actif';
+
+  @override
+  String get subscriptionStatusDueSoon => 'Bientôt à échéance';
+
+  @override
+  String get subscriptionStatusOverdue => 'En retard';
+
+  @override
+  String get subscriptionStatusNotConfigured => 'Non configuré';
+
+  @override
+  String get subscriptionNoStores => 'Aucune boutique ne correspond à ce filtre.';
+
+  @override
+  String get subscriptionOverdueNote => 'Les abonnements en retard affichent uniquement une alerte ici. L’activation des boutiques est gérée séparément.';
+
+  @override
+  String get subscriptionManageTitle => 'Gérer l’abonnement';
+
+  @override
+  String get subscriptionMonthlyPrice => 'Prix mensuel (MAD)';
+
+  @override
+  String get subscriptionPriceHint => 'Ex. : 150';
+
+  @override
+  String get subscriptionNextPayment => 'Prochaine date de paiement';
+
+  @override
+  String get subscriptionNotSet => 'Non définie';
+
+  @override
+  String get subscriptionSaveNote => 'Ces informations sont uniquement enregistrées. Aucun paiement n’est enregistré et la boutique n’est pas désactivée.';
+
+  @override
+  String get subscriptionInvalidPrice => 'Saisissez un prix mensuel valide.';
+
+  @override
+  String get subscriptionSelectPaymentDate => 'Veuillez sélectionner la prochaine date de paiement.';
+
+  @override
+  String get subscriptionSaving => 'Enregistrement...';
+
+  @override
+  String get subscriptionSave => 'Enregistrer l’abonnement';
+
+  @override
+  String get subscriptionStoreEnabled => 'Boutique activée';
+
+  @override
+  String get subscriptionStoreDisabled => 'Boutique désactivée';
+
+  @override
+  String get subscriptionLoadError => 'Impossible de charger les abonnements.';
+
+  @override
+  String subscriptionUpdatedFor(String storeName) {
+    return 'Abonnement mis à jour pour $storeName.';
+  }
+
+  @override
+  String subscriptionSaveError(String error) {
+    return 'Impossible d’enregistrer l’abonnement : $error';
+  }
+
+  @override
+  String get subscriptions => 'Abonnements';
+
+  @override
+  String get accessDeniedSuperAdminOnly => 'Accès refusé. Réservé au SuperAdmin.';
+
+  @override
+  String get selectAtLeastOneCollection => 'Sélectionnez au moins une collection à sauvegarder.';
+
+  @override
+  String get existingDocumentsKeptUnchanged => 'Les documents existants resteront inchangés.';
+
+  @override
+  String get onlyNewDocumentsAdded => 'Seuls les nouveaux documents seront ajoutés.';
+
+  @override
+  String restoreFinished(int added, int skipped) {
+    return 'Restauration terminée : $added documents ajoutés, $skipped documents ignorés.';
+  }
+
+  @override
+  String get storeSubscriptionSignInAgain => 'Veuillez vous reconnecter.';
+
+  @override
+  String get storeSubscriptionNoStore => 'Aucun magasin n\'est associé à ce compte.';
+
+  @override
+  String get storeSubscriptionStoreNotFound => 'Magasin introuvable.';
+
+  @override
+  String get storeSubscriptionChooseFileType => 'Choisissez un fichier JPG, PNG, WEBP ou PDF.';
+
+  @override
+  String get storeSubscriptionFileTooLarge => 'Le fichier doit faire moins de 10 Mo.';
+
+  @override
+  String get storeSubscriptionFileReadError => 'Impossible de lire le fichier sélectionné.';
+
+  @override
+  String storeSubscriptionFileSelectError(Object error) {
+    return 'Impossible de sélectionner le fichier : $error';
+  }
+
+  @override
+  String get storeSubscriptionSelectDateAndProof => 'Veuillez d\'abord sélectionner la date du virement et le justificatif.';
+
+  @override
+  String get storeSubscriptionFileUnavailable => 'Le fichier sélectionné n\'est plus disponible. Veuillez le sélectionner à nouveau.';
+
+  @override
+  String get storeSubscriptionPriceNotConfigured => 'Le prix de l\'abonnement n\'a pas été configuré.';
+
+  @override
+  String get storeSubscriptionBankUnavailable => 'Le compte bancaire pour l\'abonnement est actuellement indisponible.';
+
+  @override
+  String get storeSubscriptionPaymentSubmitted => 'Justificatif de paiement envoyé. Votre paiement est en attente de vérification.';
+
+  @override
+  String storeSubscriptionSubmitPaymentError(Object error) {
+    return 'Impossible d\'envoyer le paiement : $error';
+  }
+
+  @override
+  String get storeSubscriptionTitle => 'Abonnement et paiements';
+
+  @override
+  String get storeSubscriptionYourSubscription => 'Votre abonnement';
+
+  @override
+  String get storeSubscriptionPriceLabel => 'Prix de l\'abonnement';
+
+  @override
+  String get storeSubscriptionNextPaymentDate => 'Date du prochain paiement';
+
+  @override
+  String get storeSubscriptionStatusLabel => 'Statut de l\'abonnement';
+
+  @override
+  String get storeSubscriptionBankTransfer => 'Virement bancaire';
+
+  @override
+  String get storeSubscriptionBankUnavailableContact => 'Le virement bancaire est actuellement indisponible. Veuillez contacter le support.';
+
+  @override
+  String get storeSubscriptionBankTransferDetails => 'Coordonnées bancaires';
+
+  @override
+  String get storeSubscriptionTransferInstructions => 'Effectuez le virement du montant de l\'abonnement vers ce compte.';
+
+  @override
+  String get storeSubscriptionBankName => 'Nom de la banque';
+
+  @override
+  String get storeSubscriptionAccountHolder => 'Titulaire du compte';
+
+  @override
+  String get storeSubscriptionRib => 'RIB';
+
+  @override
+  String get storeSubscriptionIban => 'IBAN';
+
+  @override
+  String get storeSubscriptionSwiftBic => 'SWIFT/BIC';
+
+  @override
+  String get storeSubscriptionSubmitProofTitle => 'Envoyer un justificatif de paiement';
+
+  @override
+  String get storeSubscriptionUploadReceiptSubtitle => 'Téléversez votre reçu de virement pour une vérification manuelle.';
+
+  @override
+  String get storeSubscriptionTransferDate => 'Date du virement';
+
+  @override
+  String get storeSubscriptionTransactionReferenceOptional => 'Référence de transaction (facultatif)';
+
+  @override
+  String get storeSubscriptionTransactionReferenceHint => 'Saisissez la référence de votre transaction bancaire';
+
+  @override
+  String get storeSubscriptionTransferReceiptRequired => 'Justificatif du virement *';
+
+  @override
+  String get storeSubscriptionChooseImageOrPdf => 'Choisir une image ou un PDF';
+
+  @override
+  String get storeSubscriptionAllowedFileTypes => 'JPG, PNG, WEBP ou PDF · 10 Mo maximum';
+
+  @override
+  String get storeSubscriptionBrowseFiles => 'Parcourir les fichiers';
+
+  @override
+  String get storeSubscriptionChangeFile => 'Changer de fichier';
+
+  @override
+  String get storeSubscriptionSubmitting => 'Envoi en cours...';
+
+  @override
+  String get storeSubscriptionSubmitForVerification => 'Envoyer pour vérification';
+
+  @override
+  String get storeSubscriptionManualVerificationNotice => 'L\'envoi du justificatif ne renouvelle pas automatiquement votre abonnement. Votre paiement doit être vérifié par l\'administrateur de la plateforme.';
+
+  @override
+  String get storeSubscriptionPaymentHistory => 'Historique des paiements';
+
+  @override
+  String get storeSubscriptionPaymentHistorySubtitle => 'Suivez vos demandes de paiement d\'abonnement.';
+
+  @override
+  String storeSubscriptionLoadHistoryError(Object error) {
+    return 'Impossible de charger l\'historique des paiements : $error';
+  }
+
+  @override
+  String get storeSubscriptionNoPayments => 'Aucun paiement d\'abonnement envoyé pour le moment.';
+
+  @override
+  String get storeSubscriptionPaymentApproved => 'Approuvé';
+
+  @override
+  String get storeSubscriptionPaymentRejected => 'Rejeté';
+
+  @override
+  String get storeSubscriptionPaymentPendingReview => 'En attente de vérification';
+
+  @override
+  String get storeSubscriptionReference => 'Référence';
+
+  @override
+  String get storeSubscriptionAdminNote => 'Note de l\'administrateur';
+
+  @override
+  String storeSubscriptionLoadDetailsError(Object error) {
+    return 'Impossible de charger les détails de l\'abonnement : $error';
+  }
+
+  @override
+  String get storeSubscriptionLoadBankError => 'Impossible de charger les coordonnées bancaires. Veuillez contacter le support.';
+
+  @override
+  String get storeSubscriptionManageTitle => 'Gérer votre abonnement';
+
+  @override
+  String get storeSubscriptionManageSubtitle => 'Consultez votre forfait, effectuez le paiement et envoyez votre reçu pour vérification.';
+
+  @override
+  String get storeSubscriptionTryAgain => 'Réessayer';
+
+  @override
+  String get storeSubscriptionMonthlyPlan => 'Mensuel';
+
+  @override
+  String get reviewSubscriptionPayments => 'Vérifier les paiements d’abonnement';
+
+  @override
+  String get reviewSubscriptionPaymentsSubtitle => 'Vérifiez les virements bancaires et approuvez ou refusez les paiements.';
+
+  @override
+  String get subscriptionPayments => 'Paiements des abonnements';
+
+  @override
+  String get subscriptionAndPayments => 'Abonnement et paiements';
+
+  @override
+  String get manageAllSubscriptions => 'Gérer tous les abonnements';
+
+  @override
+  String get subscriptionPaymentPending => 'En attente';
+
+  @override
+  String get subscriptionPaymentAll => 'Tous';
+
+  @override
+  String get subscriptionPaymentProof => 'Justificatif de paiement';
+
+  @override
+  String get subscriptionPaymentNoProof => 'Aucun justificatif de paiement n’a été fourni.';
+
+  @override
+  String get subscriptionPaymentOpenUploadedFile => 'Ouvrez le fichier envoyé à l’aide du lien ci-dessous :';
+
+  @override
+  String subscriptionPaymentCouldNotOpenProof(Object error) {
+    return 'Impossible d’ouvrir le justificatif de paiement : $error';
+  }
+
+  @override
+  String get subscriptionPaymentApproveTitle => 'Approuver le paiement';
+
+  @override
+  String get subscriptionPaymentRejectTitle => 'Rejeter le paiement';
+
+  @override
+  String get subscriptionPaymentRejectionReason => 'Motif du rejet *';
+
+  @override
+  String get subscriptionPaymentReviewNoteOptional => 'Note de vérification (facultative)';
+
+  @override
+  String get subscriptionPaymentRequestMissing => 'La demande de paiement n’existe plus.';
+
+  @override
+  String get subscriptionPaymentMissingStoreId => 'La demande de paiement ne contient aucun identifiant de boutique.';
+
+  @override
+  String get subscriptionPaymentStoreMissing => 'La boutique n’existe pas.';
+
+  @override
+  String get subscriptionPaymentAlreadyReviewed => 'Ce paiement a déjà été vérifié.';
+
+  @override
+  String get subscriptionPaymentApprovedUpdated => 'Paiement approuvé et abonnement mis à jour.';
+
+  @override
+  String get subscriptionPaymentRejectedMessage => 'Paiement rejeté.';
+
+  @override
+  String subscriptionPaymentReviewError(Object error) {
+    return 'Impossible de vérifier le paiement : $error';
+  }
+
+  @override
+  String get subscriptionPaymentBank => 'Banque';
+
+  @override
+  String get subscriptionPaymentTransferReference => 'Référence du virement';
+
+  @override
+  String get subscriptionPaymentTransferDate => 'Date du virement';
+
+  @override
+  String get subscriptionPaymentSubmitted => 'Soumis le';
+
+  @override
+  String get subscriptionPaymentViewProof => 'Voir le justificatif de paiement';
+
+  @override
+  String subscriptionPaymentLoadError(Object error) {
+    return 'Impossible de charger les demandes de paiement :\n$error';
+  }
+
+  @override
+  String get subscriptionPaymentNoRequests => 'Aucune demande de paiement trouvée.';
+
+  @override
+  String get save => 'Enregistrer';
+
+  @override
+  String get activeBankDetailsVisibleToStoreAdmins => 'Les coordonnées bancaires actives sont visibles par les administrateurs des boutiques.';
+
+  @override
+  String get paymentInstructions => 'Instructions de paiement';
+
+  @override
+  String get subscriptionBankAccount => 'Compte bancaire d’abonnement';
+
+  @override
+  String get couldNotLoadBankDetails => 'Impossible de charger les coordonnées bancaires';
+
+  @override
+  String get bankDetailsSavedSuccessfully => 'Coordonnées bancaires enregistrées avec succès';
+
+  @override
+  String get storeCategories => 'Catégories de la boutique';
+
+  @override
+  String get selectStoreCategories => 'Sélectionnez les catégories disponibles dans cette boutique';
+
+  @override
+  String get androidPhones => 'Téléphones Android';
+
+  @override
+  String get iphones => 'iPhones';
+
+  @override
+  String get phoneAccessories => 'Accessoires pour téléphones';
+
+  @override
+  String get desktopComputers => 'Ordinateurs de bureau';
+
+  @override
+  String get computerAccessories => 'Accessoires informatiques';
+
+  @override
+  String get monitors => 'Écrans';
+
+  @override
+  String get printers => 'Imprimantes';
+
+  @override
+  String get televisions => 'Téléviseurs';
+
+  @override
+  String get cameras => 'Appareils photo';
+
+  @override
+  String get smartHome => 'Maison connectée';
+
+  @override
+  String get electronicAccessories => 'Accessoires électroniques';
+
+  @override
+  String get women => 'Femmes';
+
+  @override
+  String get men => 'Hommes';
+
+  @override
+  String get kids => 'Enfants';
+
+  @override
+  String get unisex => 'Unisexe';
+
+  @override
+  String get sunglasses => 'Lunettes de soleil';
+
+  @override
+  String get wallets => 'Portefeuilles';
+
+  @override
+  String get skincare => 'Soins de la peau';
+
+  @override
+  String get makeup => 'Maquillage';
+
+  @override
+  String get bodyCare => 'Soins du corps';
+
+  @override
+  String get hairCare => 'Soins capillaires';
+
+  @override
+  String get livingRoom => 'Salon';
+
+  @override
+  String get bedroom => 'Chambre à coucher';
+
+  @override
+  String get office => 'Bureau';
+
+  @override
+  String get kitchen => 'Cuisine';
+
+  @override
+  String get outdoorFurniture => 'Mobilier d’extérieur';
+
+  @override
+  String get fitness => 'Fitness';
+
+  @override
+  String get training => 'Entraînement';
+
+  @override
+  String get sportswear => 'Vêtements de sport';
+
+  @override
+  String get sportsEquipment => 'Équipements sportifs';
+
+  @override
+  String get consoles => 'Consoles';
+
+  @override
+  String get games => 'Jeux';
+
+  @override
+  String get gamingAccessories => 'Accessoires de gaming';
+
+  @override
+  String get otherProducts => 'Autres produits';
+
+  @override
+  String get gold => 'Or';
+
+  @override
+  String get silver => 'Argent';
+
+  @override
+  String get rings => 'Bagues';
+
+  @override
+  String get necklaces => 'Colliers';
+
+  @override
+  String get bracelets => 'Bracelets';
+
+  @override
+  String get anklets => 'Bracelets de cheville';
+
+  @override
+  String get earrings => 'Boucles d’oreilles';
+
+  @override
+  String get goldChains => 'Chaînes en or';
+
+  @override
+  String get silverChains => 'Chaînes en argent';
+
+  @override
+  String get pendants => 'Pendentifs';
+
+  @override
+  String get goldSets => 'Parures en or';
+
+  @override
+  String get silverSets => 'Parures en argent';
+
+  @override
+  String get crownsAndTiaras => 'Couronnes et diadèmes';
+
+  @override
+  String get otherGoldJewelry => 'Autres bijoux en or';
+
+  @override
+  String get otherSilverJewelry => 'Autres bijoux en argent';
+
+  @override
   String get continueAsGuest => 'Continuer en tant qu’invité';
+
+  @override
+  String get subcategory => 'Sous-catégorie';
+
+  @override
+  String get pleaseSelectSubcategory => 'Veuillez sélectionner une sous-catégorie';
+
+  @override
+  String get alreadyHaveAnAccount => 'Vous avez déjà un compte ?';
+
+  @override
+  String get signIn => 'Se connecter';
 }

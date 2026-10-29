@@ -1,0 +1,54 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ==============================
+    // CHECK AUTHENTICATION
+    // ==============================
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // ==============================
+    // GET CURRENT USER
+    // ==============================
+
+    function currentUser() {
+      return firestore.get(
+        /databases/(default)/documents/users/$(request.auth.uid)
+      );
+    }
+
+    // ==============================
+    // CHECK SUPER ADMIN
+    // ==============================
+
+    function isSuperAdmin() {
+      return isSignedIn()
+          && currentUser().data.role == 'superAdmin';
+    }
+
+    // ==============================
+    // STORE LOGOS
+    // ==============================
+
+    match /stores/{storeId}/logo.jpg {
+
+      // Super Admin can upload/update logo
+      allow write: if isSuperAdmin();
+
+      // Store logos can be displayed publicly
+      allow read: if true;
+    }
+
+    // ==============================
+    // DEFAULT DENY
+    // ==============================
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
